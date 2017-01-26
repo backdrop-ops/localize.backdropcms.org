@@ -1,0 +1,52 @@
+<?php
+
+/**
+ * @file
+ *   Localization community UI installation, update and uninstallation.
+ */
+
+/**
+ * Implements hook_install().
+ */
+function l10n_community_install() {
+  $theme_key = variable_get('theme_default', 'bartik');
+  // Set up these blocks.
+  $blocks = array(
+    -6 => 'stats',
+    -7 => 'jump',
+    8 => 'contributions',
+  );
+  $module = 'l10n_community';
+  foreach ($blocks as $weight => $delta) {
+    // Insert or update all instances of this block even if we just added it.
+    db_merge('block')
+      ->key(array(
+          'module' => $module,
+          'delta'  => $delta,
+        ))
+      ->insertFields(array(
+          'module' => $module,
+          'delta'  => $delta,
+          'cache'  => -1,
+          'status' => 1,
+          'weight' => $weight,
+          'region' => 'sidebar_second',
+          'theme'  => $theme_key,
+          'pages'  => '',
+        ))
+      ->updateFields(array(
+          'cache'  => -1,
+          'status' => 1,
+          'weight' => $weight,
+        ))
+      ->execute();
+  }
+  cache_clear_all();
+}
+
+/**
+ * Implements hook_update_last_removed().
+ */
+function l10n_community_update_last_removed() {
+  return 6024;
+}

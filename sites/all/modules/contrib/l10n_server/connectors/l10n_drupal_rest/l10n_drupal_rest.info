@@ -1,0 +1,14 @@
+name = Localization server for Drupal (REST API)
+description = Fetch Drupal projects from drupal.org.
+core = 7.x
+package = Localization server connectors
+dependencies[] = l10n_server
+dependencies[] = l10n_drupal
+dependencies[] = potx
+
+; Information added by Drupal.org packaging script on 2015-09-23
+version = "7.x-1.0-alpha1"
+core = "7.x"
+project = "l10n_server"
+datestamp = "1443027541"
+
