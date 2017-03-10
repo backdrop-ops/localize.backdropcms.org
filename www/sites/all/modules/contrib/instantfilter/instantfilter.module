@@ -1,0 +1,184 @@
+<?php
+
+/**
+ * Implements hook_library().
+ */
+function instantfilter_library() {
+  $path = drupal_get_path('module', 'instantfilter');
+  $libraries['instantfilter'] = array(
+    'title' => 'Instant filter',
+    'website' => 'http://drupal.org/project/instantfilter',
+    'version' => '',
+    'css' => array(
+      $path . '/instantfilter.css' => array(),
+    ),
+  );
+
+  $implementations = array(
+    'system_modules',
+    'user_admin_permissions',
+    'simpletest_test_form',
+  );
+  foreach ($implementations as $implementation) {
+    $libraries[$implementation] = array(
+      'title' => "Instant Filter $implementation implementation",
+      'website' => 'http://drupal.org/project/instantfilter',
+      'version' => '',
+      'js' => array(
+        $path . '/js/' . $implementation . '.js' => array(),
+      ),
+      'library' => array(
+        array('instantfilter', 'instantfilter'),
+      ),
+    );
+  }
+
+  return $libraries;
+}
+
+/**
+ * Implements hook_theme().
+ */
+function instantfilter_theme() {
+  return array(
+    'instantfilter_form_wrapper' => array(
+      'render element' => 'element',
+    ),
+  );
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function instantfilter_form_system_modules_alter(&$form, $form_state) {
+  // Do not alter the form when confirming.
+  if (!empty($form_state['storage'])) {
+    return;
+  }
+
+  // Add special span elements around the searchable elements.
+  foreach (element_children($form['modules']) as $group) {
+    foreach (element_children($form['modules'][$group]) as $module) {
+      $form['modules'][$group][$module]['name']['#prefix'] = '<span class="table-filter-text-source">';
+      $form['modules'][$group][$module]['name']['#suffix'] = '</span>';
+      $form['modules'][$group][$module]['description']['#prefix'] = '<span class="table-filter-text-source">';
+      $form['modules'][$group][$module]['description']['#suffix'] = '</span>';
+    }
+  }
+
+  // JS-only table filters.
+  $form['filters'] = array(
+    '#type' => 'container',
+    '#attributes' => array(
+      'class' => array('table-filter', 'js-show'),
+    ),
+    '#weight' => -100,
+  );
+  $form['filters']['text'] = array(
+    '#type' => 'searchfield',
+    '#title' => t('Search'),
+    '#size' => 30,
+    '#placeholder' => t('Enter module name'),
+    '#attributes' => array(
+      'class' => array('table-filter-text'),
+      'data-table' => '#system-modules',
+      'autocomplete' => 'off',
+      'title' => t('Enter a part of the module name or description to filter by.'),
+    ),
+  );
+  $form['#attached']['library'][] = array('instantfilter', 'system_modules');
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function instantfilter_form_user_admin_permissions_alter(&$form, $form_state) {
+  // Add special span elements around the searchable elements.
+  foreach (element_children($form['permission']) as $permission) {
+    if (!is_numeric($permission)) {
+      $form['permission'][$permission]['#prefix'] = '<span class="table-filter-text-source">';
+      $form['permission'][$permission]['#suffix'] = '</span>';
+    }
+  }
+
+  // JS-only table filters.
+  $form['filters'] = array(
+    '#type' => 'container',
+    '#attributes' => array(
+      'class' => array('table-filter', 'js-show'),
+    ),
+    '#attached' => array(
+      'library' => array(
+        array('instantfilter', 'user_admin_permissions'),
+      ),
+    ),
+    '#weight' => -100,
+    '#printed' => TRUE,
+  );
+  $form['filters']['text'] = array(
+    '#type' => 'searchfield',
+    '#title' => t('Search'),
+    '#size' => 30,
+    '#placeholder' => t('Enter permission name'),
+    '#attributes' => array(
+      'class' => array('table-filter-text'),
+      'data-table' => '#user-admin-permissions',
+      'autocomplete' => 'off',
+      'title' => t('Enter a part of the permission name or description to filter by.'),
+    ),
+  );
+  $form['#attached']['library'][] = array('instantfilter', 'user_admin_permissions');
+
+  // theme_user_admin_permissions is strange and doesn't actually output form
+  // elements in the correct order. So we need to use a theme wrapper in order
+  // to have the filter output at the top of the table.
+  array_unshift($form['#theme_wrappers'], 'instantfilter_form_wrapper');
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function instantfilter_form_simpletest_test_form_alter(&$form, $form_state) {
+  // Add special span elements around the searchable elements.
+  foreach (element_children($form['tests']['table']) as $group) {
+    foreach (element_children($form['tests']['table'][$group]) as $class) {
+      $form['tests']['table'][$group][$class]['#title'] = '<span class="table-filter-text-source">' . $form['tests']['table'][$group][$class]['#title'] . '</span>';
+      $form['tests']['table'][$group][$class]['#description'] = '<span class="table-filter-text-source">' . $form['tests']['table'][$group][$class]['#description'] . '</span>';
+    }
+  }
+
+  // JS-only table filters.
+  $form['filters'] = array(
+    '#type' => 'container',
+    '#attributes' => array(
+      'class' => array('table-filter', 'js-show'),
+    ),
+    '#attached' => array(
+      'library' => array(
+        array('instantfilter', 'simpletest_test_form'),
+      ),
+    ),
+    '#weight' => -100,
+  );
+  $form['filters']['text'] = array(
+    '#type' => 'searchfield',
+    '#title' => t('Search'),
+    '#size' => 30,
+    '#placeholder' => t('Enter test name'),
+    '#attributes' => array(
+      'class' => array('table-filter-text'),
+      'data-table' => '#simpletest-test-form',
+      'autocomplete' => 'off',
+      'title' => t('Enter at least 3 characters of the test name or description to filter by.'),
+    ),
+  );
+  $form['#attached']['library'][] = array('instantfilter', 'simpletest_test_form');
+}
+
+/**
+ * Theme wrapper callback for outputting the filter element first.
+ */
+function theme_instantfilter_form_wrapper($variables) {
+  $element = $variables['element'];
+  return render($element['filters']) . $element['#children'];
+}

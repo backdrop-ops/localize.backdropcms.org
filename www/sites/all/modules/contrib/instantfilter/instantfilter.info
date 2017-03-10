@@ -1,0 +1,11 @@
+name = Instant Filter
+description = Provides instant search functionality.
+core = 7.x
+dependencies[] = elements
+
+; Information added by Drupal.org packaging script on 2015-03-11
+version = "7.x-2.0"
+core = "7.x"
+project = "instantfilter"
+datestamp = "1426109724"
+
