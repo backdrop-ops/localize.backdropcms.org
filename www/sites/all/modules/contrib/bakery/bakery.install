@@ -1,6 +1,11 @@
 <?php
 
 /**
+ * @file
+ * Install file for Bakery.
+ */
+
+/**
  * Implements hook_schema().
  */
 function bakery_schema() {
@@ -47,4 +52,13 @@ function bakery_uninstall() {
   variable_del('bakery_help_text');
   variable_del('bakery_freshness');
   variable_del('bakery_cookie_extension');
+  variable_del('bakery_subsite_login');
+}
+
+/**
+ * Keep legacy support for subsite log in & registration. Disabling this
+ * deprecated feature is recommended.
+ */
+function bakery_update_7001() {
+  variable_set('bakery_subsite_login', 1);
 }
