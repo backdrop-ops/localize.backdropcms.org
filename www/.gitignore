@@ -5,3 +5,7 @@ sites/*/settings.local.php
 files
 sites/*/files
 sites/*/private
+
+# Ignore developer things.
+.*.swp
+
