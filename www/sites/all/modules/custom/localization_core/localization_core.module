@@ -1,0 +1,5 @@
+<?php
+/**
+ * @file localization_core.php
+ * Handle core operations and config.
+ */
