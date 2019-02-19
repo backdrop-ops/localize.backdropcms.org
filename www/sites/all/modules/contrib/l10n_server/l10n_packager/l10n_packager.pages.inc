@@ -145,7 +145,11 @@ function l10n_packager_show_downloads($project) {
         '#title' => t($language->name),
         '#href' => 'translate/languages/' . $langcode,
       ));
-    foreach (array_keys($branches) as $branch) {
+    $versions = array_keys($branches);
+    natsort($versions);
+    $versions = array_reverse($versions, TRUE);
+
+    foreach ($versions as $branch) {
       // Generate a cell for each major version.
       if (!empty($files[$langcode][$branch])) {
         krsort($files[$langcode][$branch]);

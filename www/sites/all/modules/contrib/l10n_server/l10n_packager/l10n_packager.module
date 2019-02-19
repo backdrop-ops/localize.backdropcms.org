@@ -419,12 +419,14 @@ function l10n_packager_project_downloads($project, $language, $summary = FALSE, 
     return array(array($project->title, array('data' => t('Not available for download yet.'), 'colspan' => 4)));
   }
 
-  ksort($branches);
+  $versions = array_keys($branches);
+  natsort($versions);
+  $versions = array_reverse($versions, TRUE);
 
   $rows = array();
   $summary_list = array();
   $uri_class = str_replace('_', '-', $project->uri);
-  foreach (array_keys($branches) as $branch) {
+  foreach ($versions as $branch) {
 
     // Grab the latest item and compute its up to date stats.
     krsort($files[$branch]);

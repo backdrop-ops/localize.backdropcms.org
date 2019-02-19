@@ -204,7 +204,14 @@ function l10n_server_admin_releases_form($form, &$form_state, $project, $release
   );
 
   list($connector, $source) = l10n_server_split_connector($project->connector_module);
+
+  // Sort releases by version.
+  uasort($releases, '_l10n_server_sort_version');
+  $releases = array_reverse($releases, TRUE);
+
   foreach ($releases as $release) {
+    $version = strip_tags($release->title);
+
     $form['releases'][$release->rid] = array(
       'title' => array(
         '#markup' => $release->title,
@@ -236,6 +243,21 @@ function l10n_server_admin_releases_form($form, &$form_state, $project, $release
 
   $form['#theme'] = 'l10n_server_admin_releases_form';
   return $form;
+}
+
+function _l10n_server_sort_version($a, $b) {
+  // Cast both objects to arrays.
+  $a = (array) $a;
+  $b = (array) $b;
+
+  if (!isset($b['title'])) {
+    return -1;
+  }
+  if (!isset($a['title'])) {
+    return 1;
+  }
+
+  return version_compare($a['title'], $b['title']);
 }
 
 /**

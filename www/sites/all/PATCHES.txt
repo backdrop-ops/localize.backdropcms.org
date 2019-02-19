@@ -1,0 +1,18 @@
+CORE:
+======
+
+* none
+
+
+CONTRIB:
+=========
+
+* l10_packager: fix sort orders for seamnitc versioning:
+
+* l10_server: fix sort orders for seamnitc versioning:
+
+
+Developer Notes
+=================
+
+None.
