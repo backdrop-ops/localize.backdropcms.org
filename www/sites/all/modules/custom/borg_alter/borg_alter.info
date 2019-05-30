@@ -1,0 +1,4 @@
+name = Backdropcms.org Alterations
+description = Customizations of various interfaces.
+package = Custom
+core = 7.x
