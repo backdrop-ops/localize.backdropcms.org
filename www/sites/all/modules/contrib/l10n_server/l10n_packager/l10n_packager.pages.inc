@@ -61,9 +61,17 @@ function l10n_packager_explore_downloads() {
  */
 function l10n_packager_download_project_form($form, &$form_state, $projects) {
   if (empty($form_state['values'])) {
-    $form_state['values'] = array(
+    // @jen changed this for Backdrop.
+    if (module_exists('l10n_community')) {
+      $project = l10n_community_get_highlighted_project();
+      $project_title = $project->title;
+    }
+    else {
       // @todo: bad, bad hardcoding of Drupal as project.
-      'project' => (isset($_GET['project']) && isset($projects[$_GET['project']]) ? $projects[$_GET['project']]->title : 'Drupal core'),
+      $project_title = 'Drupal core';
+    }
+    $form_state['values'] = array(
+      'project' => (isset($_GET['project']) && isset($projects[$_GET['project']]) ? $projects[$_GET['project']]->title : $project_title),
     );
   }
   $form['project'] = array(
@@ -123,7 +131,9 @@ function l10n_packager_show_downloads($project) {
   $result = db_query('SELECT r.*, pr.*, pr.checked as release_checked, lf.*, f.* FROM {l10n_server_release} r INNER JOIN {l10n_packager_release} pr ON r.rid = pr.rid INNER JOIN {l10n_packager_file} lf ON r.rid = lf.rid INNER JOIN {file_managed} f ON lf.fid = f.fid WHERE r.pid = :pid', array(':pid' => $project->pid));
   foreach ($result as $item) {
     // @todo: bad, bad harcoding of Drupal versioning schemes.
-    $branch = preg_replace(($project->uri == 'drupal' ? '!^(\d\.)(.+)$!' : '!^(\d\.x-\d\.)(.+)$!'), '\1', $item->title) . 'x';
+    //$branch = preg_replace(($project->uri == 'drupal' ? '!^(\d\.)(.+)$!' : '!^(\d\.x-\d\.)(.+)$!'), '\1', $item->title) . 'x';
+    // @todo Jen fixed this for Backdrop CMS
+    $branch = $item->title . '.x';
     $branches[$branch] = TRUE;
     $files[$item->language][$branch][$item->rid] = $item;
   }
