@@ -7,9 +7,13 @@ CORE:
 CONTRIB:
 =========
 
-* l10_packager: fix sort orders for seamnitc versioning:
+l10_packager
+  * Fix sort orders for seamnitc versioning
+  * Fix branch names for Backdrop
+  * Fix hard-coding of projects for Backdrop
 
-* l10_server: fix sort orders for seamnitc versioning:
+l10_server
+  * fix sort orders for seamnitc versioning
 
 
 Developer Notes
