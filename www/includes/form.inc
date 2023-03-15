@@ -2087,7 +2087,7 @@ function _form_builder_handle_input_element($form_id, &$element, &$form_state) {
   // #access=FALSE on an element usually allow access for some users, so forms
   // submitted with drupal_form_submit() may bypass access restriction and be
   // treated as high-privilege users instead.
-  $process_input = empty($element['#disabled']) && (($form_state['programmed'] && $form_state['programmed_bypass_access_check']) || ($form_state['process_input'] && (!isset($element['#access']) || $element['#access'])));
+  $process_input = empty($element['#disabled']) && ($element['#type'] !== 'value') && (($form_state['programmed'] && $form_state['programmed_bypass_access_check']) || ($form_state['process_input'] && (!isset($element['#access']) || $element['#access'])));
 
   // Set the element's #value property.
   if (!isset($element['#value']) && !array_key_exists('#value', $element)) {
@@ -4327,10 +4327,14 @@ function theme_form_required_marker($variables) {
  * required. That is especially important for screenreader users to know
  * which field is required.
  *
+ * To associate the label with a different field, set the #label_for property
+ * to the ID of the desired field.
+ *
  * @param $variables
  *   An associative array containing:
  *   - element: An associative array containing the properties of the element.
- *     Properties used: #required, #title, #id, #value, #description.
+ *     Properties used: #required, #title, #id, #value, #description,
+ *     #label_for.
  *
  * @ingroup themeable
  */
@@ -4359,7 +4363,14 @@ function theme_form_element_label($variables) {
     $attributes['class'] = 'element-invisible';
   }
 
-  if (!empty($element['#id'])) {
+  // Use the element's ID as the default value of the "for" attribute (to
+  // associate the label with this form element), but allow this to be
+  // overridden in order to associate the label with a different form element
+  // instead.
+  if (!empty($element['#label_for'])) {
+    $attributes['for'] = $element['#label_for'];
+  }
+  elseif (!empty($element['#id'])) {
     $attributes['for'] = $element['#id'];
   }
 
