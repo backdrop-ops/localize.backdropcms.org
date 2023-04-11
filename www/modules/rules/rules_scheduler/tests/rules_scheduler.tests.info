@@ -1,0 +1,10 @@
+[RulesSchedulerTestCase]
+name = Rules scheduler tests
+description = Test scheduling components.
+group = Rules
+file = rules_scheduler.test
+
+; Added by Backdrop CMS packaging script on 2023-02-23
+project = rules
+version = 1.x-2.3.3
+timestamp = 1677198508

@@ -1,4 +1,0 @@
-name = Localization Core
-description = Handle localization core config and operations.
-package = Custom
-core = 7.x

@@ -1,0 +1,17 @@
+<?php
+
+/**
+ * @file
+ * Module file for Entity Tokens.
+ * 
+ * Version 2 of Entity Tokens:
+ * - Allows the use of chained field tokens that mimic the chained properties of entity metadata 
+ *   wrappers for fields that contain structures (e.g. formatted text fields) and chained multi-value fields
+ * - Automatically provides tokens for custom entity properties and fields
+ * - Avoids providing replacements for unchained field tokens (which are provided by core)
+ * - Avoids trying to provide replacements for image and date fields, as those are handled very well in core
+ * - Provides token info that "plays nice" with info provided by core
+ * - Moves all metadata property definition to Entity Plus, its correct location
+ * 
+ * Version 2.x requires the latest Entity Plus >=1.0.14
+ */

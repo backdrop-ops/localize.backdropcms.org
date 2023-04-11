@@ -1,0 +1,16 @@
+[RulesUiTestCase]
+name = Rules UI tests
+description = Tests Rules UI.
+group = Rules
+file = rules_admin.test
+
+[RulesAdminMinimalProfileTestCase]
+name = Rules UI minimal profile tests
+description = Tests UI support for minimal profile.
+group = Rules
+file = rules_admin_minimal_profile.test
+
+; Added by Backdrop CMS packaging script on 2023-02-23
+project = rules
+version = 1.x-2.3.3
+timestamp = 1677198508

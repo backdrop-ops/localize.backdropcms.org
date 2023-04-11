@@ -1,0 +1,226 @@
+<?php
+
+/**
+ * @file
+ *   Tests to ensure that the template extractor works as intended.
+ */
+
+class PotxTestCase extends BackdropWebTestCase {
+  /**
+   * @var string
+   */
+  protected $potx_output;
+
+  /**
+   * @var array|NULL
+   */
+  protected $potx_status;
+
+  public static function getInfo() {
+    return array(
+      'name' => t('Translation template extractor'),
+      'description' => t('Ensure that the translation template extractor functions properly.'),
+      'group' => t('Translation template extractor'),
+    );
+  }
+
+  public function setUp() {
+    // Set up required modules for potx.
+    parent::setUp('locale', 'potx');
+
+    // Add potx.inc which we test for its functionality.
+    include_once(__DIR__ . '/../potx.inc');
+    include_once(__DIR__ . '/../potx.local.inc');
+    potx_local_init();
+    // Store empty error message for reuse in multiple cases.
+    $this->empty_error = t('Empty string attempted to be localized. Please do not leave test code for localization in your source.');
+  }
+
+  /**
+   * Test parsing of a Backdrop 1.x module.
+   */
+  public function testBackdropModule() {
+    // Parse and build the Backdrop module file.
+    $filename = __DIR__ . '/potx_test/potx_test.module';
+    $this->parseFile($filename, POTX_API_1);
+
+    // Assert strings found in module source code.
+    $this->assertMsgID('Test menu item');
+    $this->assertMsgID('This is a test menu item');
+    $this->assertMsgID('This is a test string.');
+    $this->assertMsgID('test watchdog type');
+    $this->assertMsgID('My watchdog message');
+
+    // No support for hook_perm() anymore. t() in hook_permissions().
+    $this->assertNoMsgID('test potx permission');
+    $this->assertNoMsgID('one more test potx permission');
+    $this->assertMsgID('Test potx permission');
+    $this->assertMsgID('Test potx permission description');
+    $this->assertMsgID('One more test potx permission');
+    $this->assertMsgID('One more test potx permission description');
+
+    $this->assertPluralID('1 test string', '@count test strings');
+    $this->assertPluralIDContext('1 test string in context', '@count test strings in context', 'Test context');
+
+    $this->assertMsgID('Test menu item description');
+    $this->assertMsgID('Test menu item description altered (1)');
+    $this->assertMsgID('Test menu item description altered (2)');
+    $this->assertMsgID('Test menu item title altered');
+
+    $this->assertNoMsgID('Installer only test string');
+    $this->assertMsgID('Dynamic callback test string');
+    $this->assertNoMsgIDContext('Installer string in context', 'Installer context');
+    $this->assertMsgIDContext('Dynamic string in context', 'Dynamic context');
+    $this->assertMsgID('PHP Syntax error gracefully handled');
+
+    // Context support added.
+    $this->assertMsgIDContext('Test string in context', 'Test context');
+
+    // Drush support.
+    $this->assertMsgID('This could have been in a drush file');
+
+    // Look at installer strings.
+    $this->parseFile($filename, POTX_API_1, POTX_STRING_INSTALLER);
+    $this->assertMsgID('Installer only test string');
+    $this->assertMsgID('Dynamic callback test string');
+    $this->assertNoMsgID('1 test string');
+    $this->assertNoMsgID('This is a test string.');
+    $this->assertMsgIDContext('Installer string in context', 'Installer context');
+    $this->assertMsgIDContext('Dynamic string in context', 'Dynamic context');
+
+    // Check error messages during parsing.
+    $this->assert(count($this->potx_status) == 3, '3 error messages found');
+    $this->assert($this->potx_status[0][0] == $this->empty_error, 'First empty error found.');
+    $this->assert($this->potx_status[1][0] == t('Unexpected ;'), 'Unexpected semi-colon error found.');
+    $this->assert($this->potx_status[2][0] == $this->empty_error, 'Second empty error found.');
+
+  }
+
+  /**
+   * Test parsing of Backdrop info files.
+   */
+  public function testBackdropInfo() {
+    // Parse and build the Backdrop module file.
+    $filename = __DIR__ . '/potx_test/potx_test.info';
+    $this->parseFile($filename, POTX_API_1);
+
+    // Look for name, description and package name extracted.
+    $this->assertMsgID('Translation template extractor tester');
+    $this->assertMsgID('Provides example translation strings for testing potx.module');
+    $this->assertMsgID('Test package');
+  }
+
+  /**
+   * Test parsing of a Backdrop JS file.
+   */
+  public function testBackdropJS() {
+    // Parse and build the Backdrop JS file.
+    $filename = __DIR__ . '/potx_test/potx_test.js';
+    $this->parseFile($filename, POTX_API_1);
+
+    // Assert strings found in JS source code.
+    $this->assertMsgID('Test string in JS');
+    $this->assertPluralID('1 test string in JS', '@count test strings in JS');
+    $this->assertMsgID('String with @placeholder value');
+    $this->assertMsgIDContext('Test string in JS in test context', 'Test context');
+    $this->assertMsgIDContext('Test string in JS in context and with @placeholder', 'Test context');
+    $this->assertMsgIDContext('Multiline string for the test with @placeholder', 'Test context');
+
+    $this->assertPluralIDContext('1 test string in JS in test context', '@count test strings in JS in test context', 'Test context');
+    $this->assertPluralIDContext('1 test string in JS with context and @placeholder', '@count test strings in JS with context and @placeholder', 'Test context');
+
+    $this->assert(count($this->potx_status) == 1, t('1 error message found'));
+    $this->assert($this->potx_status[0][0] == $this->empty_error, t('Empty error found.'));
+  }
+
+  /**
+   * Parse the given file with the given API version.
+   */
+  private function parseFile($filename, $api_version, $string_mode = POTX_STRING_RUNTIME) {
+    global $_potx_store, $_potx_strings, $_potx_install;
+    $_potx_store = $_potx_strings = $_potx_install = array();
+
+    potx_status('set', POTX_STATUS_STRUCTURED);
+    _potx_process_file($filename, 0, '_potx_save_string', '_potx_save_version', $api_version);
+    _potx_build_files($string_mode, POTX_BUILD_SINGLE, 'general', '_potx_save_string', '_potx_save_version', '_potx_get_header', NULL, NULL, $api_version);
+
+    // Grab .po representation of parsed content.
+    ob_start();
+    _potx_write_files('potx-test.po');
+    $this->potx_output = ob_get_clean();
+    //debug(var_export($this->potx_output, TRUE));
+    $this->potx_status = potx_status('get', TRUE);
+    //debug(var_export($this->potx_status, TRUE));
+  }
+
+  /**
+   * Helper function to assert an msgid construct in the .po file.
+   */
+  private function assertMsgID($string, $message = '', $group = 'Other') {
+    if (!$message) {
+      $message = t('MsgID "@raw" found', array('@raw' => check_plain($string)));
+    }
+    $this->assert(strpos($this->potx_output, 'msgid "'. _potx_format_quoted_string('"'. $string . '"') .'"') !== FALSE, $message, $group);
+  }
+
+  /**
+   * Helper function to assert a missing msgid construct in the .po file.
+   */
+  private function assertNoMsgID($string, $message = '', $group = 'Other') {
+    if (!$message) {
+      $message = t('MsgID "@raw" not found', array('@raw' => check_plain($string)));
+    }
+    $this->assert(strpos($this->potx_output, 'msgid "'. _potx_format_quoted_string('"'. $string . '"') .'"') === FALSE, $message, $group);
+  }
+
+  /**
+   * Helper function to assert an msgid with context in the .po file.
+   */
+  private function assertMsgIDContext($string, $context, $message = '', $group = 'Other') {
+    if (!$message) {
+      $message = t('MsgID "@raw" in context "@context" found', array('@raw' => check_plain($string), '@context' => check_plain($context)));
+    }
+    $this->assert(strpos($this->potx_output, 'msgctxt "'. _potx_format_quoted_string('"'. $context . '"') . "\"\nmsgid \"". _potx_format_quoted_string('"'. $string . '"') .'"') !== FALSE, $message, $group);
+  }
+
+  /**
+   * Helper function to assert an msgid with context in the .po file.
+   */
+  private function assertNoMsgIDContext($string, $context, $message = '', $group = 'Other') {
+    if (!$message) {
+      $message = t('No MsgID "@raw" in context "@context" found', array('@raw' => check_plain($string), '@context' => check_plain($context)));
+    }
+    $this->assert(strpos($this->potx_output, 'msgid "'. _potx_format_quoted_string('"'. $string . '"') .'"'. "\nmsgctxt \"". _potx_format_quoted_string('"'. $context . '"') . '"') === FALSE, $message, $group);
+  }
+
+  /**
+   * Helper function to assert an msgid_plural construct in the .po file.
+   */
+  private function assertPluralID($string, $plural, $message = '', $group = 'Other') {
+    if (!$message) {
+      $message = t('Plural ID "@raw" found', array('@raw' => check_plain($string)));
+    }
+    $this->assert(strpos($this->potx_output, 'msgid "'. _potx_format_quoted_string('"'. $string . '"') ."\"\nmsgid_plural \"". _potx_format_quoted_string('"'. $plural . '"') .'"') !== FALSE, $message, $group);
+  }
+
+  /**
+   * Helper function to assert an msgid_plural with context in the .po file.
+   */
+  private function assertPluralIDContext($string, $plural, $context, $message = '', $group = 'Other') {
+    if (!$message) {
+      $message = t('Plural ID "@raw" found with context "@context"', array('@raw' => check_plain($string), '@context' => $context));
+    }
+    $this->assert(strpos($this->potx_output, 'msgctxt "'. _potx_format_quoted_string('"'. $context . '"') . "\"\nmsgid \"". _potx_format_quoted_string('"'. $string . '"') ."\"\nmsgid_plural \"". _potx_format_quoted_string('"'. $plural . '"') .'"') !== FALSE, $message, $group);
+  }
+
+  /**
+   * Helper function to assert lack of msgid_plural with context in the .po file.
+   */
+  private function assertNoPluralIDContext($string, $plural, $context, $message = '', $group = 'Other') {
+    if (!$message) {
+      $message = t('No plural ID "@raw" found with context "@context"', array('@raw' => check_plain($string), '@context' => $context));
+    }
+    $this->assert(strpos($this->potx_output, 'msgctxt "'. _potx_format_quoted_string('"'. $context . '"') . "\"\nmsgid \"". _potx_format_quoted_string('"'. $string . '"') ."\"\nmsgid_plural \"". _potx_format_quoted_string('"'. $plural . '"') .'"') === FALSE, $message, $group);
+  }
+
+}

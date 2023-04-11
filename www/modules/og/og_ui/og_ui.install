@@ -1,0 +1,35 @@
+<?php
+
+
+/**
+ * @file
+ * Install, update, and uninstall functions for the Organic groups UI module.
+ */
+
+/**
+ * Implements hook_uninstall().
+ */
+function og_ui_uninstall() {
+
+}
+
+/**
+ * Implements hook_update_last_removed().
+ */
+function og_ui_update_last_removed() {
+  return 7200;
+}
+
+/**
+ * Implements hook_update_N().
+ */
+function og_ui_update_1000() {
+  $config = config('og_ui.settings');
+  $config->set('og_ui_7000_add_field', update_variable_get('og_ui_7000_add_field', 'FALSE'));
+  $config->set('og_ui_admin_people_view', update_variable_get('og_ui_admin_people_view', 'og_members_admin:default'));
+  $config->set('og_ui_deny_subscribe_without_approval', update_variable_get('og_ui_deny_subscribe_without_approval', 'TRUE'));
+  $config->save();
+  update_variable_del('og_ui_7000_add_field');
+  update_variable_del('og_ui_admin_people_view');
+  update_variable_del('og_ui_deny_subscribe_without_approval');
+}

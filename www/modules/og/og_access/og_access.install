@@ -1,0 +1,31 @@
+<?php
+
+
+/**
+ * @file
+ * Install, update, and uninstall functions for the Organic groups access module.
+ */
+
+/**
+ * Implements hook_uninstall().
+ */
+function og_access_uninstall() {
+
+}
+
+/**
+ * Implements hook_update_N().
+ */
+function og_access_update_1000() {
+  $config = config('og_access.settings');
+  $config->set('og_access_privacy_change_batch_processing', update_variable_get('og_access_privacy_change_batch_processing', 'TRUE'));
+  $config->save();
+  update_variable_del('og_access_privacy_change_batch_processing');
+}
+
+/**
+ * Implements hook_update_last_removed().
+ */
+function og_access_update_last_removed() {
+  return 7200;
+}

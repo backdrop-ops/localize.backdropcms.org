@@ -1,0 +1,124 @@
+<?php
+
+
+/**
+ * @file
+ * Test organic groups field access module.
+ */
+
+/**
+ * Test OG access.
+ */
+class OgFieldAccessTestCase extends BackdropWebTestCase {
+
+  function setUp() {
+    parent::setUp('og_field_access');
+  }
+
+  /**
+   * Group with access field.
+   */
+  function testOgFieldAccess() {
+    $user1 = $this->backdropCreateUser();
+    $user2 = $this->backdropCreateUser();
+    $this->backdropLogin($user1);
+
+    // Create group and group content node types.
+    $group_type = $this->backdropCreateContentType();
+    og_create_field(OG_GROUP_FIELD, 'node', $group_type->type);
+
+    $group_content_type = $this->backdropCreateContentType();
+    og_create_field(OG_AUDIENCE_FIELD, 'node', $group_content_type->type);
+
+    $og_roles = og_roles('node', $group_type->type);
+
+    // Set global permissions.
+    $anon_rid = array_search(OG_ANONYMOUS_ROLE, $og_roles);
+    $permissions = array(
+      'view body field' => 0,
+      'update body field' => 0,
+      // Allow non-members to edit the group, so we can test the node-edit page.
+      'update group' => 1,
+    );
+    og_role_change_permissions($anon_rid, $permissions);
+
+    $this->backdropLogin($user1);
+    // Create a group node.
+    $settings = array();
+    $settings['type'] = $group_type->type;
+    $settings[OG_GROUP_FIELD][LANGUAGE_NONE][0]['value'] = 1;
+    $settings['body'][LANGUAGE_NONE][0]['value'] = $this->randomName();
+
+    $node = $this->backdropCreateNode($settings);
+
+    // Assert another user is not a group member.
+    $this->backdropLogin($user2);
+    $this->assertFalse(og_is_member('node', $node->nid, 'user', $user2), t('User is not a group member.'));
+
+    // Assert user can't view the field.
+    $this->backdropGet('node/' . $node->nid);
+    $this->assertResponse('200', t('Non group member can view node.'));
+    $this->assertNoText($node->body[LANGUAGE_NONE][0]['value'], t('Non group member can not view field.'));
+
+    // Change permissions and assert user can view the field.
+    $permissions['view body field'] = 1;
+    og_role_change_permissions($anon_rid, $permissions);
+    $this->backdropGet('node/' . $node->nid);
+    $this->assertText($node->body[LANGUAGE_NONE][0]['value'], t('Non group member can now view field.'));
+
+    // Assert user can't edit the field.
+    $this->backdropGet('node/' . $node->nid . '/edit');
+    $this->assertResponse('200', t('Non group member can edit node.'));
+    $this->assertNoText($node->body[LANGUAGE_NONE][0]['value'], t('Non group member can not edit field.'));
+
+    // Change permissions and assert user can view the field.
+    $permissions['update body field'] = 1;
+    og_role_change_permissions($anon_rid, $permissions);
+    $this->backdropGet('node/' . $node->nid . '/edit');
+    $langcode = LANGUAGE_NONE;
+    $this->assertFieldByName("body[$langcode][0][value]", $node->body[LANGUAGE_NONE][0]['value'], t('Non group member can now edit field.'));
+
+    // Assert field permissions on group content.
+    $permissions['view body field'] = 0;
+    og_role_change_permissions($anon_rid, $permissions);
+
+    $settings = array();
+    $settings['uid'] = $user1->uid;
+    $settings['type'] = $group_content_type->type;
+    $settings[OG_AUDIENCE_FIELD][LANGUAGE_NONE][0]['target_id'] = $node->nid;
+    $settings['body'][LANGUAGE_NONE][0]['value'] = $this->randomName();
+    $node = $this->backdropCreateNode($settings);
+
+    $this->backdropLogin($user1);
+    $this->backdropGet('node/' . $node->nid);
+    $this->assertText($node->body[LANGUAGE_NONE][0]['value'], t('Group member can view field of a group content.'));
+
+    $this->backdropLogin($user2);
+    $this->backdropGet('node/' . $node->nid);
+    $this->assertNoText($node->body[LANGUAGE_NONE][0]['value'], t('Non member can not view field of a group content.'));
+
+    // Assert field permissions on orphan group content.
+    $settings = array();
+    $settings['type'] = $group_content_type->type;
+    $settings['uid'] = $user1->uid;
+    $node = $this->backdropCreateNode($settings);
+
+    $this->backdropGet('node/' . $node->nid);
+    $this->assertText($node->body[LANGUAGE_NONE][0]['value'], t('Non member can view field of an orphan group content.'));
+
+    // Assert fields of nodes not related to OG are not being restricted.
+    $user3 = $this->backdropCreateUser(array(
+      'access content',
+      'create page content',
+      'edit any page content',
+    ));
+    $this->backdropLogin($user3);
+
+    $node = $this->backdropCreateNode();
+    $this->backdropGet('node/' . $node->nid);
+    $this->assertText($node->body[LANGUAGE_NONE][0]['value'], t('User can view field of content not related to Organic groups.'));
+
+    $this->backdropGet('node/' . $node->nid . '/edit');
+    $this->assertText($node->body[LANGUAGE_NONE][0]['value'], t('User can edit field of content not related to Organic groups.'));
+  }
+}

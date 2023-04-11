@@ -1,0 +1,119 @@
+[OgAccess]
+name = OG entity access
+description = Test the access provided by OG API.
+group = Organic groups
+file = og.test
+
+[OgNodeAccess]
+name = OG node access
+description = Test strict node access permissions for group nodes and group content.
+group = Organic groups
+file = og.test
+
+[OgMetaData]
+name = OG metadata
+description = Test the metadata properties.
+group = Organic groups
+file = og.test
+
+[OgGroupAndUngroup]
+name = OG group and ungroup
+description = Test the group and ungrouping of content with a group.
+group = Organic groups
+file = og.test
+
+[OgPermissionsTestCase]
+name = OG permissions
+description = Verify that permissions can be added and removed via API.
+group = Organic groups
+file = og.test
+
+[OgDefaultAccessFieldTestCase]
+name = OG default access field
+description = Test groups with default access field.
+group = Organic groups
+file = og.test
+
+[OgFieldWidgetTestCase]
+name = OG reference widget
+description = Test the OG reference widget behavior.
+group = Organic groups
+file = og.test
+
+[OgRoleRevoke]
+name = OG roles revoke
+description = Test the revocation of group roles
+group = Organic groups
+file = og.test
+
+[OgEntityFieldQueryTestCase]
+name = OG audience fields query
+description = Test querying group-audience fields using entityFieldQuery.
+group = Organic groups
+file = og.test
+
+[OgEntityFieldQueryFieldConditionTestCase]
+name = OG field condition query
+description = Test querying field condition fields using entityFieldQuery.
+group = Organic groups
+file = og.test
+
+[OgAudienceFieldAutoCreateTestCase]
+name = OG audience fields auto-create
+description = Test auto attaching a group-audience field to the user entity, if needed, upon adding a new group field.
+group = Organic groups
+file = og.test
+
+[OgBehaviorHandlerTestCase]
+name = OG widget behavior
+description = Test the widget behavior of group-audience fields.
+group = Organic groups
+file = og.test
+
+[OgDeleteOrphansTestCase]
+name = OG orphan delete
+description = Verifying for deleting orphan group content.
+group = Organic groups
+file = og.test
+
+[OgNonMembersPublishingContentTestCase]
+name = OG non members publishing
+description = Grant access to non members users publishing content with the group passed in the query string. <a href="https://backdropcms.org/project/entityreference_prepopulate/">Entity reference prepopulate module</a> is required!
+group = Organic groups
+file = og.test
+
+[OgUserCanPublishGroupContentTypeOnlyInGroup]
+name = User can publish group content only inside group
+description = User with permission to create a group content only in a group can't publish outside of a group.
+group = Organic groups
+file = og.test
+
+[OgAutoCompleteAccessibleGroupsValidation]
+name = Auto complete for non accessible groups
+description = Verify the user cannot fill in the auto complete field with the name of a un-accessible group name.
+group = Organic groups
+file = og.test
+
+[OgSelectAccessibleGroupsValidation]
+name = Select widget for non accessible groups
+description = Verify the user cannot fill in the select field with the name of a un-accessible group name.
+group = Organic groups
+file = og.test
+
+[OgAudienceFieldAccessOverrideTestCase]
+name = OG audience field access settings
+description = Test the ability to use entity access instead of field access for the audience field.
+group = Organic groups
+file = og.test
+
+[OgAudienceFieldDeltaTestCase]
+name = OG audience field wrapper delta
+description = Testing OG audience field returns the expected values when using entity metadata wrapper delta.
+group = Organic groups
+file = og.test
+
+
+; Added by Backdrop CMS packaging script on 2022-05-28
+project = og
+version = 1.x-2.10.0-beta
+timestamp = 1653748905

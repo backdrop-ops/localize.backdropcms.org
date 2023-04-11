@@ -1,0 +1,12 @@
+name = Mail System
+description = Provides a user interface for per-module and site-wide mail_system selection.
+backdrop = 1.x
+type = module
+package = Mail
+configure = admin/config/system/mailsystem
+dependencies[] = filter
+
+; Added by Backdrop CMS packaging script on 2020-10-07
+project = mailsystem
+version = 1.x-3.0.6
+timestamp = 1602130501

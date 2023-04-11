@@ -1,0 +1,167 @@
+<?php
+
+/**
+ * @file
+ * Entity Token tests.
+ */
+
+
+/**
+ * Tests provided entity property info of the core modules.
+ */
+class EntityTokenTestCase extends BackdropWebTestCase {
+  protected $profile = 'standard';
+
+  function setUp() {
+    parent::setUp('entity_token', 'entity_plus', 'field', 'field_ui');
+    $admin_user = $this->backdropCreateUser(array('bypass node access', 'administer nodes', 'access content', 'administer content types', 'administer fields',));
+    $this->backdropLogin($admin_user);
+
+    module_load_include('inc', 'node', 'content_types');
+    module_load_include('inc', 'field', 'field.crud');
+
+    // Tests require cache clear since all installations 
+    // and tests are done all in one request. 
+    field_cache_clear();
+    entity_property_info_cache_clear();
+
+    $edit = array();
+    $edit['name'] = 'Story';
+    $edit['type'] = 'story';
+    $this->backdropPost('admin/structure/types/add', $edit, t('Save content type'));
+    $this->assertText('The content type Story has been added.', 'Content type added.');
+  }
+
+  /**
+   * Creates field from an array of settings values.
+   *
+   * All values have defaults, only need to specify values that need to be
+   * different.
+   */
+  protected function createLinkField() {
+
+    $field = array(
+      'field_name' => 'field_links',
+      'type' => 'link_field',
+      'cardinality' => '2',
+      'bundles' => array (
+        'node' => array (
+          'story',
+        ),
+      ),
+    );
+
+    $instance = array(
+      'field_name' => 'field_links',
+      'entity_type' => 'node',
+      'bundle' => 'story',
+      'label' => 'My links',
+      'description' => '',
+      'required' => 0,
+      'deleted' => 0,
+      'default_value' => NULL,
+      'default_value_function' => NULL,
+      'display' => array (
+        'default' => array (
+          'label' => 'hidden',
+          'type' => 'link_default',
+          'module' => 'link',
+          'weight' => 4,
+        ),
+      ),
+    );
+
+    field_create_field($field);
+    field_create_instance($instance);
+
+  }
+
+  /**
+   * Tests whether token support is basically working.
+   */
+  function testTokenSupport() {
+
+    // Test basic tokens.
+    $node = $this->backdropCreateNode(array('sticky' => TRUE, 'promote' => FALSE));
+    $text = "Sticky: [node:sticky] Promote: [node:promote] User: [site:current_user:name]";
+    $true = t('true');
+    $false = t('false');
+    $user_name = $GLOBALS['user']->name;
+    $target = "Sticky: $true Promote: $false User: $user_name";
+    $replace = token_replace($text, array('node' => $node));
+    $this->assertEqual($replace, $target, 'Provided tokens basically work.');
+
+    //Test multiple-value tokens using the tags field of articles.
+
+    for ($i = 0; $i < 4; $i++) {
+      $tags[$i] = entity_plus_property_values_create_entity('taxonomy_term', array(
+        'name' => $this->randomName(),
+        'vocabulary' => 'tags',
+      ))->save();
+      $field_value[LANGUAGE_NONE][$i]['tid'] = $tags[$i]->getIdentifier();
+      $labels[$i] = $tags[$i]->label();
+    }
+    $node = $this->backdropCreateNode(array('title' => 'foo', 'type' => 'post', 'field_tags' => $field_value));
+    $this->verbose('<pre>' . print_r($node, TRUE) . '</pre>');
+    $this->verbose('<pre>' . print_r($tags, TRUE) . '</pre>');
+
+    // Test chained field replacements
+    $text = "Tags: [node:field_tags] First: [node:field_tags:0] 2nd name: [node:field_tags:1:name] 1st vocab [node:field_tags:0:vocabulary]";
+    $tag_labels = implode(', ', $labels);
+    $target = "Tags: $tag_labels First: $labels[0] 2nd name: $labels[1] 1st vocab {$tags[0]->vocabulary->label()}";
+    $replace = token_replace($text, array('node' => $node));
+    $this->assertEqual($replace, $target, 'Multiple-value token replacements have been replaced.');
+
+    // Make sure not existing values are not handled.
+    $replace = token_replace("[node:field_tags:43]", array('node' => $node));
+    $this->assertEqual($replace, "[node:field_tags:43]", 'Not existing values are not replaced.');
+
+    // Test data-structure tokens like [site:current-page:url].
+    $replace = token_replace("[site:current_page:url]", array());
+    $this->verbose('<pre>' . print_r($replace, TRUE) . '</pre>');
+    $this->assertEqual($replace, $GLOBALS['base_root'] . request_uri(), 'Token replacements of data structure properties replaced.');
+
+
+    // Test multi-value field with multiple properties.
+    $this->createLinkField();
+    $wrapper = entity_plus_property_values_create_entity('node', array(
+      'type' => 'story',
+      'title' => 'Test',
+      'field_links' => array(
+        array('url' => 'https://example.com', 'title' => 'Example 1'),
+        array('url' => 'https://example2.com', 'title' => 'Example 2'),
+      )
+    ));
+    $node = $wrapper->value();
+
+    // Create several tokens. Include dashes or underscores.
+    $tokens = array(
+      'field_links:0:url' => $wrapper->field_links[0]->url->value(),
+      'field-links:1:url' => $wrapper->field_links[1]->url->value(),
+      'field_links:1:title' => $wrapper->field_links[1]->title->value(),
+      'field-links:2:url' => NULL,
+    );
+
+    $input = $this->mapTokenNames('node', array_keys($tokens));
+    $replacements = token_generate('node', $input, array('node' => $node));
+    foreach ($tokens as $name => $expected) {
+      $token = $input[$name];
+      if (!isset($expected)) {
+        $this->assertTrue(!isset($replacements[$token]), t("Token value for @token was not generated.", array('@token' => $token)));
+      } else {
+        $this->assertIdentical($replacements[$token], $expected, t("Token value for @token was '@actual', expected value '@expected'.", array('@token' => $token, '@actual' => $replacements[$token], '@expected' => $expected)));
+      }
+    }
+  }
+
+  /**
+   * Helper function that creates a properly formatted token map. 
+   */
+  function mapTokenNames($type, array $tokens = array()) {
+    $return = array();
+    foreach ($tokens as $token) {
+      $return[$token] = "[$type:$token]";
+    }
+    return $return;
+  }
+}

@@ -1,0 +1,11 @@
+name = Translation template extractor tester
+description = Provides example translation strings for testing potx.module
+package = Test package
+type = module
+backdrop = 1.x
+hidden = TRUE
+
+; Added by Backdrop CMS packaging script on 2019-02-11
+project = potx
+version = 1.x-1.0.0
+timestamp = 1549922200

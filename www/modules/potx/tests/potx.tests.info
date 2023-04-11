@@ -1,0 +1,10 @@
+[PotxTestCase]
+name = Translation template extractor
+description = Ensure that the translation template extractor functions properly.
+group = Translation template extractor
+file = potx.test
+
+; Added by Backdrop CMS packaging script on 2019-02-11
+project = potx
+version = 1.x-1.0.0
+timestamp = 1549922200

@@ -1,11 +1,12 @@
+# Ignore this file so it can be changed.
+.gitignore
+
 # Ignore configuration files that may contain sensitive information.
-sites/*/settings.local.php
+/settings*.php
+sites/*/settings*.php
 
 # Ignore paths that contain user-generated content.
-files
+/files
+/private
 sites/*/files
 sites/*/private
-
-# Ignore developer things.
-.*.swp
-

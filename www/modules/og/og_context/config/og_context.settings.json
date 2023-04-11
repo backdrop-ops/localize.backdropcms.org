@@ -1,0 +1,11 @@
+{
+    "_config_name": "og_context.settings",
+    "og_context_negotiation_group_context": {
+      "url": -5,
+      "node": -4
+    },
+    "og_context_providers_weight_group_context": {
+      "url": -5,
+      "node": -4
+    }
+}

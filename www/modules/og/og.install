@@ -1,0 +1,481 @@
+<?php
+
+/**
+ * @file
+ * Install, update, and uninstall functions for the Organic groups module.
+ */
+
+/**
+ * Implements hook_install().
+ */
+function og_install() {
+  // Add "User request" to the default group membership type.
+  $field_name = OG_MEMBERSHIP_REQUEST_FIELD;
+  $field_info = field_info_field($field_name);
+  if (empty($field_info) || !empty($field_info['deleted']))  {
+    $field = array(
+      'field_name' => $field_name,
+      'type' => 'text_long',
+      'entity_types' => array('og_membership'),
+      'cardinality' => 1,
+      // Although we would prefer to not allow deleting this field, we can not
+      // lock it, as it will not allow adding it to other bundles.
+      'locked' => FALSE,
+    );
+    $field = field_create_field($field);
+  }
+
+  if (!field_info_instance('og_membership', $field_name, OG_MEMBERSHIP_TYPE_DEFAULT)) {
+    $instance = array(
+      'field_name' => $field_name,
+      'bundle' => OG_MEMBERSHIP_TYPE_DEFAULT,
+      'entity_type' => 'og_membership',
+      'label' => t('Request message'),
+      'description' => t('This is the text a user may send to the group administrators.'),
+      'required' => FALSE,
+    );
+    field_create_instance($instance);
+  }
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function og_uninstall() {
+
+  // Take care of deleting field instances attached to bundles of og_membership.
+  // Query the database, since field_info_instances() will not include bundles
+  // of og_membership at this point.
+  $query = db_select('og_membership_type', 'ogt');
+  $query->addField('ogt', 'name');
+  $bundles = $query->execute()->fetchCol(0);
+  foreach ($bundles as $bundle) {
+    // Instruct field.module to remove fields attached to these bundles.
+    field_attach_delete_bundle('og_membership', $bundle);
+  }
+
+  // Remove all instances attached to core entities.
+  $og_fields = array(
+    'group_group',
+    'og_description',
+  );
+  foreach (field_info_instances() as $bundles) {
+    foreach ($bundles as $instances) {
+      foreach ($instances as $instance) {
+        if (in_array($instance['field_name'], $og_fields)) {
+          field_delete_instance($instance);
+        }
+        else {
+          $field = field_info_field($instance['field_name']);
+          if ($field['type'] == 'entityreference' && ($field['settings']['handler'] == 'og' || strpos($field['settings']['handler'], 'og_') === 0)) {
+            // Last instance will take care also of deleting the field itself.
+            field_delete_instance($instance);
+          }
+        }
+      }
+    }
+  }
+  field_purge_batch(100);
+}
+
+/**
+ * Implements hook_schema().
+ */
+function og_schema() {
+  $schema = array();
+
+  $schema['og_role_permission'] = array(
+    'description' => 'Stores the permissions assigned to user roles per group.',
+    'fields' => array(
+      'rid' => array(
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'description' => 'Foreign Key: {role}.rid.',
+      ),
+      'permission' => array(
+        'type' => 'varchar',
+        'length' => 128,
+        'not null' => TRUE,
+        'default' => '',
+        'description' => 'A single permission granted to the role identified by rid.',
+      ),
+      'module' => array(
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'default' => '',
+        'description' => "The module declaring the permission.",
+      ),
+    ),
+    'primary key' => array('rid', 'permission'),
+    'indexes' => array(
+      'permission' => array('permission'),
+    ),
+    'foreign keys' => array(
+      'og_role' => array(
+        'table' => 'og_role',
+        'columns' => array('rid' => 'rid'),
+      ),
+    ),
+  );
+
+  $schema['og_role'] = array(
+    'description' => 'Stores user roles per group.',
+    'fields' => array(
+      'rid' => array(
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'description' => 'Primary Key: Unique role ID.',
+      ),
+      'gid' => array(
+        'description' => "The group's unique ID.",
+        'type' => 'int',
+        'size' => 'normal',
+        'not null' => TRUE,
+      ),
+      'group_type' => array(
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'default' => '',
+        'description' => "The group's entity type.",
+      ),
+      'group_bundle' => array(
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'default' => '',
+        'description' => "The group's bundle name.",
+      ),
+      'name' => array(
+        'type' => 'varchar',
+        'length' => 64,
+        'not null' => TRUE,
+        'default' => '',
+        'description' => 'Unique role name per group.',
+      ),
+    ),
+    'primary key' => array('rid'),
+    'indexes' => array(
+      'lookup' => array('group_type', 'group_bundle', 'gid'),
+    ),
+  );
+
+  $schema['og_users_roles'] = array(
+    'description' => 'Maps users to roles.',
+    'fields' => array(
+      'uid' => array(
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => 'Primary Key: {users}.uid for user.',
+      ),
+      'rid' => array(
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => 'Primary Key: {og_role}.rid for role.',
+      ),
+      'gid' => array(
+        'description' => "The group's unique ID.",
+        'type' => 'int',
+        'size' => 'normal',
+        'not null' => TRUE,
+      ),
+      'group_type' => array(
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'default' => '',
+        'description' => "The group's entity type.",
+      ),
+    ),
+    'primary key' => array('uid', 'rid', 'gid'),
+    'indexes' => array(
+      'rid' => array('rid'),
+    ),
+    'foreign keys' => array(
+      'user' => array(
+        'table' => 'users',
+        'columns' => array('uid' => 'uid'),
+      ),
+      'og_role' => array(
+        'table' => 'og_role',
+        'columns' => array('rid' => 'rid'),
+      ),
+    ),
+  );
+
+  $schema['og_membership_type'] = array(
+    'description' => 'The group membership type.',
+    'fields' => array(
+      // Although the "name" should be enough as the primary key, the numeric ID
+      // is required for the internal use of entity API.
+      'id' => array(
+        'type' => 'serial',
+        'not null' => TRUE,
+        'description' => 'Primary Key: Numeric group membership type ID.',
+      ),
+      'name' => array(
+        'description' => 'The unified identifier for a group membership type.',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'default' => '',
+      ),
+      'description' => array(
+        'description' => 'Description for this group membership type.',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'default' => '',
+      ),
+      'status' => array(
+        'type' => 'int',
+        'not null' => TRUE,
+        // This is equivilent to ENTITY_CUSTOM.
+        'default' => 0x01,
+        'size' => 'tiny',
+        'description' => 'The exportable status of the entity.',
+      ),
+      'module' => array(
+        'description' => 'The name of the providing module if the entity has been defined in code.',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => FALSE,
+      ),
+      'language' => array(
+        'description' => 'The {languages}.language of this membership type.',
+        'type' => 'varchar',
+        'length' => 12,
+        'not null' => TRUE,
+        'default' => '',
+      ),
+    ),
+    'primary key' => array('id'),
+    'unique keys' => array(
+      'name' => array('name'),
+    ),
+  );
+
+  $schema['og_membership'] = array(
+    'description' => 'The group membership table.',
+    'fields' => array(
+      'id' => array(
+        'description' => "The group membership's unique ID.",
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ),
+      'type' => array(
+        'description' => 'Reference to a group membership type.',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'default' => '',
+      ),
+      'etid' => array(
+        'description' => "The entity ID.",
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'default' => 0,
+      ),
+      'entity_type' => array(
+        'description' => "The entity type (e.g. node, comment, etc').",
+        'type' => 'varchar',
+        'length' => '32',
+        'not null' => TRUE,
+        'default' => '',
+      ),
+      'gid' => array(
+        'description' => "The group's unique ID.",
+        'type' => 'int',
+        'size' => 'normal',
+        'not null' => TRUE,
+      ),
+      'group_type' => array(
+        'description' => "The group's entity type (e.g. node, comment, etc').",
+        'type' => 'varchar',
+        'length' => '32',
+        'not null' => TRUE,
+        'default' => '',
+      ),
+      'state' => array(
+        'description' => 'The state of the group content.',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => FALSE,
+        'default' => '',
+      ),
+      'created' => array(
+        'description' => 'The Unix timestamp when the group content was created.',
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+      ),
+      'field_name' => array(
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'default' => '',
+        'description' => "The name of the field holding the group ID, the OG memebership is associated with.",
+      ),
+      'language' => array(
+        'description' => 'The {languages}.language of this membership.',
+        'type' => 'varchar',
+        'length' => 12,
+        'not null' => TRUE,
+        'default' => '',
+      ),
+    ),
+    'primary key' => array('id'),
+    'indexes' => array(
+      // Entity index; When searching for an entity, we use both the id and type.
+      'entity' => array('etid', 'entity_type'),
+      'group' => array('gid', 'group_type'),
+      'group_type' => array('group_type'),
+    ),
+    'foreign keys' => array(
+      'og_membership_type' => array(
+        'table' => 'og_membership_type',
+        'columns' => array('name' => 'name'),
+      ),
+      'group' => array(
+        'table' => 'og',
+        'columns' => array('gid' => 'gid'),
+      ),
+    ),
+  );
+
+  // Cache bins for Entity-cache module.
+  $cache_schema = backdrop_get_schema_unprocessed('system', 'cache');
+  $types = array(
+    'og_membership_type',
+    'og_membership',
+  );
+
+  foreach ($types as $type) {
+    $schema["cache_entity_$type"] = $cache_schema;
+    $schema["cache_entity_$type"]['description'] = "Cache table used to store $type entity records.";
+  }
+
+  return $schema;
+}
+
+/**
+ * Implements hook_field_schema().
+ */
+function og_field_schema($field) {
+  $columns = array(
+    'gid' => array(
+      'description' => 'The group unique ID.',
+      'type' => 'float',
+      'unsigned' => TRUE,
+      'not null' => FALSE,
+    ),
+    // This columns should be deprecated and removed, as the group membership
+    // entity takes care of it. However, there is currently no way to remove
+    // them.
+    'state' => array(
+      'description' => 'The state of the group content.',
+      'type' => 'varchar',
+      'length' => 255,
+      'not null' => FALSE,
+      'default' => '',
+    ),
+    'created' => array(
+      'description' => 'The Unix timestamp when the group content was created.',
+      'type' => 'int',
+      'not null' => TRUE,
+      'default' => 0,
+    ),
+  );
+  return array(
+    'columns' => $columns,
+    'indexes' => array(
+      'gid' => array('gid'),
+    ),
+    'foreign keys' => array(
+      'og' => array(
+        'table' => 'og',
+        'columns' => array('gid' => 'gid'),
+      ),
+    ),
+  );
+}
+
+/**
+ * Implements hook_update_last_removed().
+ */
+function og_update_last_removed() {
+  return 7205;
+}
+
+/**
+ * Implements hook_update_N().
+ */
+function og_update_1000() {
+  // Save the settings coming from the D7 database.
+  $config = config('og.settings');
+  $config->set('og_7000_add_field', update_variable_get('og_7000_add_field', 'FALSE'));
+  $config->set('og_7200_ogur_roles', update_variable_get('og_7200_ogur_roles', 'FALSE'));
+  $config->set('og_node_access_strict', update_variable_get('og_node_access_strict', 'TRUE'));
+  $config->set('og_use_queue', update_variable_get('og_use_queue', 'FALSE'));
+  $config->set('og_orphans_delete', update_variable_get('og_orphans_delete', 'FALSE'));
+  $config->set('og_group_manager_full_access', update_variable_get('og_group_manager_full_access', 'TRUE'));
+  $config->set('og_maintain_overridden_roles', update_variable_get('og_maintain_overridden_roles', 'TRUE'));
+  $config->set('og_features_ignore_og_fields', update_variable_get('og_features_ignore_og_fields', 'FALSE'));
+  $config->save();
+  update_variable_del('og_7000_add_field');
+  update_variable_del('og_7200_ogur_roles');
+  update_variable_del('og_node_access_strict');
+  update_variable_del('og_use_queue');
+  update_variable_del('og_orphans_delete');
+  update_variable_del('og_group_manager_full_access');
+  update_variable_del('og_maintain_overridden_roles');
+  update_variable_del('og_features_ignore_og_fields');
+
+  $result = db_select('variable', 'v')
+    ->fields('v', array('name'))
+    ->condition('name', 'og_group_manager_default_rids_%', 'LIKE')
+    ->execute()
+    ->fetchCol();
+  foreach($result as $name) {
+    $config->set($name, update_variable_get($name, array()));
+    update_variable_del($name);
+  }
+  $result = db_select('variable', 'v')
+    ->fields('v', array('name'))
+    ->condition('name', 'og_is_group_default_access__%__%', 'LIKE')
+    ->execute()
+    ->fetchCol();
+  foreach($result as $name) {
+    $config->set($name, update_variable_get($name, 'TRUE'));
+    update_variable_del($name);
+  }
+  $result = db_select('variable', 'v')
+    ->fields('v', array('name'))
+    ->condition('name', 'og_is_group__%__%', 'LIKE')
+    ->execute()
+    ->fetchCol();
+  foreach($result as $name) {
+    $config->set($name, update_variable_get($name, 'FALSE'));
+    update_variable_del($name);
+  }
+  $config->save();
+
+  if (db_index_exists('og_role', 'lookup')) {
+    db_drop_index('og_role', 'lookup');
+  }
+  db_add_index('og_role', 'lookup', array('group_type', 'group_bundle', 'gid'));
+
+  // Install the default OG views. This will NOT overwrite any views previously
+  // installed by views_update_1000(), nor will it overwrite the settings config
+  // created above.
+  config_install_default_config('og');
+}

@@ -1,0 +1,68 @@
+<?php
+
+/**
+ * @file
+ * Installation and update functions.
+ */
+
+/**
+ * Convert D7 VBO action names present in Views to Backdrop VBO action names. 
+ */
+function views_bulk_operations_update_1000(&$sandbox) {
+  // Process 5 views at a time. 
+  $limit = 5; 
+  if (!isset($sandbox['progress'])) {
+    $sandbox['views'] = config_get_names_with_prefix('views.view');
+    $sandbox['progress'] = 0;
+    $sandbox['max'] = count($sandbox['views']) - 1;
+    $sandbox['map'] = array(
+      'action::views_bulk_operations_archive_action' => 'action::views_bulk_operations_archive_vboaction',
+      'action::views_bulk_operations_argument_selector_action' => 'action::views_bulk_operations_argument_selector_vboaction',
+      'action::views_bulk_operations_move_to_book_action' => 'action::views_bulk_operations_move_to_book_vboaction',
+      'action::views_bulk_operations_remove_from_book_action' => 'action::views_bulk_operations_remove_from_book_vboaction',
+      'action::views_bulk_operations_change_owner_action' => 'action::views_bulk_operations_change_owner_vboaction',
+      'action::comment_unpublish_by_keyword_action' => 'action::views_bulk_operations_comment_unpublish_by_keyword_vboaction',
+      'action::views_bulk_operations_delete_item' => 'action::views_bulk_operations_delete_item_vboaction',
+      'action::views_bulk_operations_delete_revision' => 'action::views_bulk_operations_delete_revision_vboaction',
+      'action::system_message_action' => 'action::views_bulk_operations_display_message_vboaction',
+      'action::system_goto_action' => 'action::views_bulk_operations_goto_vboaction',
+      'action::views_bulk_operations_modify_action' => 'action::views_bulk_operations_modify_vboaction',
+      'action::node_unpublish_by_keyword_action' => 'action::views_bulk_operations_node_unpublish_by_keyword_vboaction',
+      'action::system_send_email_action' => 'action::views_bulk_operations_send_email_vboaction',
+      'action::views_bulk_operations_script_action' => 'action::views_bulk_operations_script_vboaction',
+      'action::views_bulk_operations_user_roles_action' => 'action::views_bulk_operations_user_roles_vboaction',
+      'action::pathauto_node_update_action' => 'action::path_node_update_action',
+      'action::pathauto_taxonomy_term_update_action' => 'action::path_taxonomy_term_update_action',
+      'action::pathauto_user_update_action' => 'action::path_user_update_action',
+    );
+  }
+
+  while ($limit > 0 && $sandbox['progress'] < $sandbox['max']) {
+    $name = $sandbox['views'][$sandbox['progress']];
+    $fixed = FALSE;
+    $config = config($name);
+    $view = $config->get();
+    foreach ($view['display'] as $display_name => $info) {
+      if (isset($info['display_options']['fields'])) {
+        foreach ($info['display_options']['fields'] as $field_name => $field_info) {
+          if (strpos($field_name, 'views_bulk_operations') === 0 && !empty($field_info['vbo_operations'])) {
+            foreach ($field_info['vbo_operations'] as $operation_name => $operation_info) {
+              if (!empty($sandbox['map'][$operation_name])) {
+                $new_name = $sandbox['map'][$operation_name];
+                $config->set("display.$display_name.display_options.fields.$field_name.vbo_operations.$new_name", $operation_info);
+                $config->clear("display.$display_name.display_options.fields.$field_name.vbo_operations.$operation_name");
+                $fixed = TRUE;
+              }
+            }
+          }
+        }
+      }
+    }
+    if ($fixed) {
+      $config->save();
+    }
+    $sandbox['progress']++;
+    $limit--;
+  }
+  $sandbox['#finished'] = empty($sandbox['max']) ? 1 : ($sandbox['progress'] / $sandbox['max']);
+}

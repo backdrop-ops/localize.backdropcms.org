@@ -1,0 +1,11 @@
+[OgContextTestCase]
+name = OG context
+description = Check if context is returning only if user has right permissions.
+group = Organic groups context
+file = og_context.test
+
+
+; Added by Backdrop CMS packaging script on 2022-05-28
+project = og
+version = 1.x-2.10.0-beta
+timestamp = 1653748905

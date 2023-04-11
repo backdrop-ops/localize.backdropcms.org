@@ -1,0 +1,11 @@
+name = Rules Scheduler
+description = Schedule the execution of Rules components using actions.
+package = Rules
+backdrop = 1.x
+
+dependencies[] = rules
+
+; Added by Backdrop CMS packaging script on 2023-02-23
+project = rules
+version = 1.x-2.3.3
+timestamp = 1677198508

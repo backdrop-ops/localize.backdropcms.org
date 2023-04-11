@@ -1,0 +1,40 @@
+[RulesTestCase]
+name = Rules engine tests
+description = Test using the rules API to create and evaluate rules.
+group = Rules
+file = rules.test
+
+[RulesTestDataCase]
+name = Rules data tests
+description = Tests rules data saving and type matching.
+group = Rules
+file = rules.test
+
+[RulesTriggerTestCase]
+name = Reaction rules
+description = Tests triggering reactive rules.
+group = Rules
+file = rules.test
+
+[RulesIntegrationTestCase]
+name = Rules core integration
+description = Tests provided integration for Backdrop core.
+group = Rules
+file = rules.test
+
+[RulesEventDispatcherTestCase]
+name = Rules event dispatchers
+description = Tests event dispatcher functionality.
+group = Rules
+file = rules.test
+
+[RulesInvocationEnabledTestCase]
+name = Rules invocation enabled
+description = Tests that Rules events are enabled during menu item loads.
+group = Rules
+file = rules.test
+
+; Added by Backdrop CMS packaging script on 2023-02-23
+project = rules
+version = 1.x-2.3.3
+timestamp = 1677198508

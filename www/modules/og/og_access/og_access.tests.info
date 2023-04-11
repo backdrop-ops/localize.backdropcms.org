@@ -1,0 +1,23 @@
+[OgAccessTestCase]
+name = OG access
+description = Test the visibility of nodes that are handled by OG access.
+group = Organic groups access
+file = og_access.test
+
+[OgAccessUseGroupDefaultsTestCase]
+name = Use group defaults
+description = Verify for an exception when OG access field is missing from the group, but exists on the group content.
+group = Organic groups access
+file = og_access.test
+
+[OgAccessModeratedGroup]
+name = OG moderated group membership
+description = Test groups that require membership approval.
+group = Organic groups access
+file = og_access.test
+
+
+; Added by Backdrop CMS packaging script on 2022-05-28
+project = og
+version = 1.x-2.10.0-beta
+timestamp = 1653748905

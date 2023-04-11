@@ -1,0 +1,243 @@
+<?php
+
+/**
+ * @file
+ * Test module for OG tests that provides test entities.
+ */
+
+/**
+ * Implements hook_entity_info().
+ */
+function og_entity_test_entity_info() {
+  $return = array(
+    'og_entity_test' => array(
+      'label' => t('Test Entity'),
+      'plural label' => t('Test Entities'),
+      'description' => t('An entity type used by the entity API tests.'),
+      'entity class' => 'EntityClass',
+      'controller class' => 'EntityPlusController',
+      'base table' => 'og_entity_test',
+      'fieldable' => TRUE,
+      'entity keys' => array(
+        'id' => 'pid',
+        'bundle' => 'name',
+      ),
+      // Make use the class' label() and uri() implementation by default.
+      'label callback' => 'entity_class_label',
+      'uri callback' => 'entity_class_uri',
+      'bundles' => array(),
+      'bundle keys' => array(
+        'bundle' => 'name',
+      ),
+      'field cache' => FALSE,
+      'entity cache' => TRUE,
+      'module' => 'og_entity_test',
+    ),
+    'og_entity_test_type' => array(
+      'label' => t('Test entity type'),
+      'entity class' => 'EntityClassType',
+      'controller class' => 'EntityPlusControllerExportable',
+      'base table' => 'og_entity_test_type',
+      'fieldable' => FALSE,
+      'bundle of' => 'og_entity_test',
+      'exportable' => TRUE,
+      'entity keys' => array(
+        'id' => 'id',
+        'name' => 'name',
+      ),
+      'module' => 'og_entity_test',
+    ),
+
+    'og_entity_test2' => array(
+      'label' => t('Test Entity (revision support)'),
+      'entity class' => 'EntityClassRevision',
+      'controller class' => 'EntityPlusController',
+      'base table' => 'og_entity_test2',
+      'revision table' => 'og_entity_test2_revision',
+      'fieldable' => TRUE,
+      'entity keys' => array(
+        'id' => 'pid',
+        'revision' => 'revision_id',
+      ),
+      // Make use of the class label() and uri() implementation by default.
+      'label callback' => 'entity_class_label',
+      'uri callback' => 'entity_class_uri',
+      'bundles' => array(),
+      'bundle keys' => array(
+        'bundle' => 'name',
+      ),
+    ),
+  );
+
+  // Add bundle info but bypass entity_load() as we cannot use it here.
+  $types = db_select('og_entity_test_type', 'et')
+    ->fields('et')
+    ->execute()
+    ->fetchAllAssoc('name');
+
+  foreach ($types as $name => $type) {
+    $return['og_entity_test']['bundles'][$name] = array(
+      'label' => $type->label,
+    );
+  }
+
+  return $return;
+}
+
+/**
+ * Gets an array of all test entity types, keyed by the name.
+ *
+ * @param $name
+ *   If set, the type with the given name is returned.
+ */
+function og_entity_test_get_types($name = NULL) {
+  $types = entity_load_multiple_by_name('og_entity_test_type', isset($name) ? array($name) : FALSE);
+  return isset($name) ? reset($types) : $types;
+}
+
+/**
+ * Load multiple test entities based on certain conditions.
+ *
+ * @param $pids
+ *   An array of entity IDs.
+ * @param $conditions
+ *   An array of conditions to match against the {entity} table.
+ * @param $reset
+ *   A boolean indicating that the internal cache should be reset.
+ *
+ * @return array
+ *   An array of test entity objects, indexed by pid.
+ */
+function og_entity_test_load_multiple($pids = array(), $conditions = array(), $reset = FALSE) {
+  return entity_load('og_entity_test', $pids, $conditions, $reset);
+}
+
+/**
+ * Delete multiple test entities.
+ *
+ * @param $pids
+ *   An array of test entity IDs.
+ */
+function og_entity_test_delete_multiple(array $pids) {
+  entity_get_controller('og_entity_test')->delete($pids);
+}
+
+/**
+ * Some hook implementations used by the tests.
+ */
+
+/**
+ * Implements hook_entity_insert().
+ */
+function og_entity_test_entity_insert($entity, $entity_type) {
+  if ($entity_type == 'og_entity_test_type') {
+    $_SESSION['entity_hook_test']['entity_insert'][] = $entity->id();
+  }
+}
+
+/**
+ * Implements hook_entity_update().
+ */
+function og_entity_test_entity_update($entity, $entity_type) {
+  $_SESSION['entity_hook_test']['entity_update'][] = $entity->id();
+}
+
+/**
+ * Implements hook_entity_delete().
+ */
+function og_entity_test_entity_delete($entity, $entity_type) {
+  if ($entity_type == 'og_entity_test_type') {
+    $_SESSION['entity_hook_test']['entity_delete'][] = $entity->id();
+  }
+}
+
+/**
+ * Implements hook_og_entity_test_type_insert().
+ */
+function og_entity_test_og_entity_test_type_insert($entity) {
+  $_SESSION['entity_hook_test']['og_entity_test_type_insert'][] = $entity->id();
+}
+
+/**
+ * Implements hook_og_entity_test_type_update().
+ */
+function og_entity_test_og_entity_test_type_update($entity) {
+  $_SESSION['entity_hook_test']['og_entity_test_type_update'][] = $entity->id();
+
+  // Determine changes on update.
+  if (!empty($entity->original) && $entity->original->label == 'test_changes') {
+    if ($entity->original->label != $entity->label) {
+      $entity->label .= '_update';
+    }
+  }
+}
+
+/**
+ * Implements hook_og_entity_test_type_delete().
+ */
+function og_entity_test_og_entity_test_type_delete($entity) {
+  $_SESSION['entity_hook_test']['og_entity_test_type_delete'][] = $entity->id();
+}
+
+/**
+ * Implements hook_og_entity_test_type_presave().
+ */
+function og_entity_test_og_entity_test_type_presave($entity) {
+  // Determine changes.
+  if (!empty($entity->original) && $entity->original->label == 'test_changes') {
+    if ($entity->original->label != $entity->label) {
+      $entity->label .= '_presave';
+    }
+  }
+}
+
+/**
+ * Implements hook_entity_property_info_alter() for testing an property of type
+ * 'entity'.
+ */
+function og_entity_test_entity_property_info_alter(&$info) {
+  $info['node']['properties']['reference'] = array(
+    'label' => t('Test reference'),
+    'description' => t('A generic entity reference.'),
+    'getter callback' => 'og_entity_test_entity_getter',
+    'setter callback' => 'og_entity_test_entity_setter',
+    'type' => 'entity',
+  );
+}
+
+/**
+ * Getter callback for the 'reference' property.
+ */
+function og_entity_test_entity_getter($node) {
+  if (empty($node->entity)) {
+    $node->entity = array('type' => 'user', 'id' => $node->uid);
+  }
+
+  // We have to return the entity wrapped.
+  // Special handling for anonymous user.
+  if ($node->entity['type'] === 'user' && empty($node->entity['id'])) {
+    return entity_metadata_wrapper('user', drupal_anonymous_user());
+  }
+  else {
+    return entity_metadata_wrapper($node->entity['type'], $node->entity['id']);
+  }
+}
+
+/**
+ * Setter callback for the 'reference' property.
+ */
+function og_entity_test_entity_setter($node, $property_name, $wrapper) {
+  // The entity has to be passed wrapped.
+  $node->entity = array('type' => $wrapper->type(), 'id' => $wrapper->getIdentifier());
+}
+
+/**
+ * Implements hook_autoload_info().
+ */
+function og_entity_test_autoload_info() {
+  return array(
+    'EntityClass' => 'og_entity_test.entity.inc',
+    'EntityClassType' => 'og_entity_test.entity.inc',
+    'EntityClassRevision' => 'og_entity_test.entity.inc',
+  );
+}

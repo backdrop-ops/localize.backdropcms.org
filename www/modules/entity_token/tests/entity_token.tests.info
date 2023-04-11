@@ -1,0 +1,10 @@
+[EntityTokenTestCase]
+name = Entity token functionality
+description = Tests provided tokens for entity properties.
+group = Entity token
+file = entity_token.test
+
+; Added by Backdrop CMS packaging script on 2022-10-10
+project = entity_token
+version = 1.x-2.0.3
+timestamp = 1665448387

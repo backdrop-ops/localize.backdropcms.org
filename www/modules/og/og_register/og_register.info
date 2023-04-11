@@ -1,0 +1,12 @@
+; $Id:$
+name = Organic groups register
+description = "Allow subscribing to groups during the user registration."
+package = "Organic groups"
+dependencies[] = og
+backdrop = 1.x
+type = module
+
+; Added by Backdrop CMS packaging script on 2022-05-28
+project = og
+version = 1.x-2.10.0-beta
+timestamp = 1653748905

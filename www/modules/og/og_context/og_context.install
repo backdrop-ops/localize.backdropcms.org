@@ -1,0 +1,32 @@
+<?php
+
+
+/**
+ * @file
+ * Install, update, and uninstall functions for the Group context module.
+ */
+
+/**
+ * Implements hook_uninstall().
+ */
+function og_context_uninstall() {
+
+}
+
+/**
+ * Implements hook_update_N().
+ */
+function og_context_update_1000() {
+  $config = config('og_context.settings');
+  $config->set('og_context_negotiation_group_context', update_variable_get('og_context_negotiation_group_context', array(
+    'url' => -5,
+    'node' => -4,
+  )));
+  $config->set('og_context_providers_weight_group_context', update_variable_get('og_context_providers_weight_group_context', array(
+    'url' => -5,
+    'node' => -4,
+  )));
+  $config->save();
+  update_variable_del('og_context_providers_weight_group_context');
+  update_variable_del('og_context_negotiation_group_context');
+}

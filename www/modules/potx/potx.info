@@ -1,0 +1,15 @@
+name = Translation template extractor
+description = Provides a web interface and an API to extract translatable text from the sources of installed components.
+type = module
+dependencies[] = locale
+files[] = potx.inc
+files[] = potx.local.inc
+files[] = tests/potx.test
+core = 7.x
+backdrop = 1.x
+package = Multilingual
+
+; Added by Backdrop CMS packaging script on 2019-02-11
+project = potx
+version = 1.x-1.0.0
+timestamp = 1549922200

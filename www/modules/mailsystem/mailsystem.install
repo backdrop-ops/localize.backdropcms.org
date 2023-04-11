@@ -1,0 +1,64 @@
+<?php
+
+/**
+ * @file
+ *   Mailsystem module install/schema hooks.
+ */
+
+/**
+ * Implements hook_requirements().
+ */
+function mailsystem_requirements($phase) {
+  $requirements = array();
+  // Ensure translations don't break at install time
+  $t = get_t();
+
+  if ($phase == 'runtime') {
+    $available_classes = mailsystem_get_classes()['labels'];
+    $settings = mailsystem_read_settings();
+    // Collect missing classes by comparing the classes used in the settings to
+    // the available ones.
+    $missing_classes = array();
+    foreach ($settings as $key => $setting) {
+      foreach ($setting as $classname) {
+        if (!isset($available_classes[$classname])) {
+          $missing_classes[$classname] = $classname;
+        }
+      }
+    }
+
+    if (!empty($missing_classes)) {
+      $requirements['mailsystem_classes'] = array(
+        'title' => $t('Mailsystem'),
+        'value' => $t('Missing mailsystem classes'),
+        'description' => '<p>' . $t('The following classes are configured in your <code>mail_system</code> variable but they seem to be missing from your system. This will prevent sending email from your site and will lead to severe PHP errors. Please install and enable the modules providing the missing classes or fix your configuration by visiting the mailsystem <a href="!mailsystem_settings_link">settings</a> page.', array('!mailsystem_settings_link' => url('admin/config/system/mailsystem'))) . '</p>' .
+          '<p>Missing classes</p>' .
+          theme('item_list', array('items' => $missing_classes)),
+        'severity' => REQUIREMENT_ERROR,
+      );
+    }
+  }
+
+  return $requirements;
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function mailsystem_uninstall() {
+  // Set mail system back to the default.
+  config_set('system.mail', 'default-system', 'DefaultMailSystem');
+}
+
+/**
+ * Migrate variables from Drupal 7 to Backdrop.
+ */
+function mailsystem_update_1000() {
+  // migrate variables
+  config_set('system.mail', 'default-system', update_variable_get('mail_system'), 'DefaultMailSystem');
+  config_set('mailsystem.settings', 'mailsystem_theme', update_variable_get('mailsystem_theme'), 'current');
+
+  // Delete variables.
+  update_variable_del('mail_system');
+  update_variable_del('mailsystem_theme');
+}

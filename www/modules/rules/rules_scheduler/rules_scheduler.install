@@ -1,0 +1,109 @@
+<?php
+/**
+ * @file
+ * Rules Scheduler - Installation file.
+ */
+
+/**
+ * Implements hook_schema().
+ */
+function rules_scheduler_schema() {
+  $schema['rules_scheduler'] = array(
+    'description' => 'Stores scheduled tasks.',
+    'fields' => array(
+      'tid' => array(
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'description' => "The scheduled task's id.",
+      ),
+      'config' => array(
+        'type' => 'varchar',
+        'length' => '64',
+        'default' => '',
+        'not null' => TRUE,
+        'description' => "The scheduled configuration's name.",
+      ),
+      'date' => array(
+        'description' => 'The Unix timestamp of when the task is to be scheduled.',
+        'type' => 'int',
+        'not null' => TRUE,
+      ),
+      'data' => array(
+        'type' => 'blob',
+        'size' => 'big',
+        'not null' => FALSE,
+        'serialize' => TRUE,
+        'description' => 'The whole, serialized evaluation data.',
+      ),
+      'identifier' => array(
+        'type' => 'varchar',
+        'length' => '255',
+        'default' => '',
+        'not null' => FALSE,
+        'description' => 'The user defined string identifying this task.',
+      ),
+      'handler' => array(
+        'type' => 'varchar',
+        'length' => '255',
+        'not null' => FALSE,
+        'description' => 'The fully-qualified class name of the queue item handler.',
+      ),
+    ),
+    'primary key' => array('tid'),
+    'indexes' => array(
+      'date' => array('date'),
+    ),
+    'unique key' => array(
+      'id' => array('config', 'identifier'),
+    ),
+  );
+  return $schema;
+}
+
+/**
+ * Implements hook_install().
+ */
+function rules_scheduler_install() {
+  // Create the queue to hold scheduled tasks.
+  $queue = BackdropQueue::get('rules_scheduler_tasks', TRUE);
+  $queue->createQueue();
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function rules_scheduler_uninstall() {
+  // Clean up after ourselves by deleting the queue and all items in it.
+  $queue = BackdropQueue::get('rules_scheduler_tasks');
+  $queue->deleteQueue();
+}
+
+/**
+ * Implements hook_update_last_removed().
+ */
+function rules_scheduler_update_last_removed() {
+  return 7204;
+}
+
+/**
+ * Move book settings from variables to config.
+ */
+function rules_scheduler_update_1000() {
+  // Migrate variables to config.
+}
+
+/**
+ * Use blob:big for rules_scheduler.data for compatibility with D7 upgrades.
+ */
+function rules_scheduler_update_1200() {
+  if (db_field_exists('rules_scheduler', 'data')) {
+    db_change_field('rules_scheduler', 'data', 'data', array(
+      'type' => 'blob',
+      'size' => 'big',
+      'not null' => FALSE,
+      'serialize' => TRUE,
+      'description' => 'The whole, serialized evaluation data.',
+    ));
+  }
+}

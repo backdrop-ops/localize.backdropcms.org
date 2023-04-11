@@ -1,0 +1,594 @@
+<?php
+
+/**
+ * @file Entity UI module
+ */
+
+/**
+ * A bit flag used to let us know if an entity has been customly defined.
+ */
+define('ENTITY_CUSTOM', 0x01);
+
+/**
+ * Deprecated, but still here for backward compatibility.
+ */
+define('ENTITY_IN_DB', 0x01);
+
+/**
+ * A bit flag used to let us know if an entity is a 'default' in code.
+ */
+define('ENTITY_IN_CODE', 0x02);
+
+/**
+ * A bit flag used to mark entities as overridden, e.g. they were originally
+ * definded in code and are saved now in the database. Same as
+ * (ENTITY_CUSTOM | ENTITY_IN_CODE).
+ */
+define('ENTITY_OVERRIDDEN', 0x03);
+
+/**
+ * A bit flag used to mark entities as fixed, thus not changeable for any
+ * user.
+ */
+define('ENTITY_FIXED', 0x04 | 0x02);
+
+/**
+ * Implements hook_menu().
+ *
+ * @see EntityDefaultUIController::hook_menu()
+ */
+function entity_ui_menu() {
+  $items = array();
+  foreach (entity_ui_controller() as $controller) {
+    $items += $controller->hook_menu();
+  }
+  return $items;
+}
+
+/**
+ * Menu loader function: load an entity from its path.
+ *
+ * This can be used to load entities of all types in menu paths:
+ *
+ * @code
+ * $items['myentity/%entity_ui_object'] = array(
+ *   'load arguments' => array('myentity'),
+ *   'title' => ...,
+ *   'page callback' => ...,
+ *   'page arguments' => array(...),
+ *   'access arguments' => array(...),
+ * );
+ * @endcode
+ *
+ * @param $entity_id
+ *   The ID of the entity to load, passed by the menu URL.
+ * @param $entity_type
+ *   The type of the entity to load.
+ * @return
+ *   A fully loaded entity object, or FALSE in case of error.
+ */
+function entity_ui_object_load($entity_id, $entity_type) {
+  return entity_load($entity_type, $entity_id);
+}
+
+/**
+ * Implements hook_theme().
+ */
+function entity_ui_theme() {
+  return array(
+    'entity_ui_entity_status' => array(
+      'variables' => array('status' => NULL, 'html' => TRUE),
+    ),
+    'entity_ui_overview_item' => array(
+      'variables' => array('label' => NULL, 'entity_type' => NULL, 'url' => FALSE, 'name' => FALSE),
+    ),
+  );
+}
+
+/**
+ * Implements hook_forms().
+ *
+ * @see EntityDefaultUIController::hook_forms()
+ * @see entity_ui_get_form()
+ */
+function entity_ui_forms($form_id, $args) {
+  // For efficiency only invoke an entity types controller, if a form of it is
+  // requested. Thus if the first (overview and operation form) or the third
+  // argument (edit form) is an entity type name, add in the types forms.
+  if (isset($args[0]) && is_string($args[0]) && entity_get_info($args[0])) {
+    $type = $args[0];
+  }
+  elseif (isset($args[2]) && is_string($args[2]) && entity_get_info($args[2])) {
+    $type = $args[2];
+  }
+  if (isset($type) && $controller = entity_ui_controller($type)) {
+    return $controller->hook_forms();
+  }
+}
+
+/**
+ * A wrapper around drupal_get_form() that helps building entity forms.
+ *
+ * This function may be used by entities to build their entity form. It has to
+ * be used instead of calling drupal_get_form().
+ * Entity forms built with this helper receive useful defaults suiting for
+ * editing a single entity, whereas the special cases of adding and cloning
+ * of entities are supported too.
+ *
+ * While this function is intended to be used to get entity forms for entities
+ * using the entity ui controller, it may be used for entity types not using
+ * the ui controller too.
+ *
+ * @param $entity_type
+ *   The entity type for which to get the form.
+ * @param $entity
+ *   The entity for which to return the form.
+ *   If $op is 'add' the entity has to be either initialized before calling this
+ *   function, or NULL may be passed. If NULL is passed, an entity will be
+ *   initialized with empty values using entity_create(). Thus entities, for
+ *   which this is problematic have to care to pass in an initialized entity.
+ * @param $op
+ *   (optional) One of 'edit', 'add' or 'clone'. Defaults to edit.
+ * @param $form_state
+ *   (optional) A pre-populated form state, e.g. to add in form include files.
+ *   See entity_metadata_form_entity_ui().
+ *
+ * @return
+ *   The fully built and processed form, ready to be rendered.
+ *
+ * @see EntityDefaultUIController::hook_forms()
+ * @see entity_ui_form_submit_build_entity()
+ */
+function entity_ui_get_form($entity_type, $entity, $op = 'edit', $form_state = array()) {
+  if (isset($entity)) {
+    list(, , $bundle) = entity_extract_ids($entity_type, $entity);
+  }
+  $form_id = (!isset($bundle) || $bundle == $entity_type) ? $entity_type . '_form' : $entity_type . '_edit_' . $bundle . '_form';
+
+  if (!isset($entity) && $op == 'add') {
+    $entity = entity_create($entity_type, array());
+  }
+
+  // Do not use drupal_get_form(), but invoke drupal_build_form() ourself so
+  // we can prepulate the form state.
+  $form_state['wrapper_callback'] = 'entity_ui_main_form_defaults';
+  $form_state['entity_type'] = $entity_type;
+  form_load_include($form_state, 'inc', 'entity_ui', 'entity.ui');
+
+  // Handle cloning. We cannot do that in the wrapper callback as it is too late
+  // for changing arguments.
+  if ($op == 'clone') {
+    $entity = entity_ui_clone_entity($entity_type, $entity);
+  }
+
+  // We don't pass the entity type as first parameter, as the implementing
+  // module knows the type anyway. However, in order to allow for efficient
+  // hook_forms() implementiations we append the entity type as last argument,
+  // which the module implementing the form constructor may safely ignore.
+  // @see entity_forms()
+  $form_state['build_info']['args'] = array($entity, $op, $entity_type);
+  return backdrop_build_form($form_id, $form_state);
+}
+
+
+/**
+ * Determines the UI controller class for a given entity type.
+ *
+ * @return EntityDefaultUIController
+ *   If a type is given, the controller for the given entity type. Else an array
+ *   of all enabled UI controllers keyed by entity type is returned.
+ */
+function entity_ui_controller($type = NULL) {
+  $static = &backdrop_static(__FUNCTION__);
+
+  if (!isset($type)) {
+    // Invoke the function for each type to ensure we have fully populated the
+    // static variable.
+    foreach (entity_get_info() as $entity_type => $info) {
+      entity_ui_controller($entity_type);
+    }
+    return array_filter($static);
+  }
+
+  if (!isset($static[$type])) {
+    $info = entity_get_info($type);
+    $class = isset($info['admin ui']['controller class']) ? $info['admin ui']['controller class'] : 'EntityDefaultUIController';
+    $static[$type] = (isset($info['admin ui']['path']) && $class) ? new $class($type, $info) : FALSE;
+  }
+
+  return $static[$type];
+}
+
+/**
+ * Determines whether the given user can perform actions on an entity.
+ *
+ * For backward compatibility with Drupal 7 Entity API, this function is an
+ * adaptation of Drupal 7 Entity API's entity_access(). If the key 
+ * 'access callback' is not included in the entity definition, then this
+ * function will fall back to Backdrop's entity_access(). 
+ * 
+ * @param $op
+ *   The operation being performed. One of 'view', 'update', 'create' or
+ *   'delete'.
+ * @param $entity_type
+ *   The entity type of the entity to check for.
+ * @param $entity
+ *   Optionally an entity to check access for. If no entity is given, it will be
+ *   determined whether access is allowed for all entities of the given type.
+ * @param $account
+ *   The user to check for. Leave it to NULL to check for the global user.
+ *
+ * @return bool
+ *   Whether access is allowed or not. If the entity type does not specify any
+ *   access information, NULL is returned.
+ *
+ * @see entity_type_supports()
+ */
+function entity_ui_access($op, $entity_type, $entity = NULL, $account = NULL) {
+  $info = entity_get_info($entity_type);
+  if (isset($info['access callback'])) {
+    // Note that access callbacks use the following args.
+    return $info['access callback']($op, $entity, $account, $entity_type);
+  } 
+  else {
+    return entity_access($op, $entity_type, $entity, $account);
+  }
+}
+
+
+/**
+ * Page callback to show links to add an entity of a specific bundle.
+ *
+ * Entity modules that provide a further description to their bundles may wish
+ * to implement their own version of this to show these.
+ *
+ * @param $entity_type
+ *   The type of the entity.
+ */
+function entity_ui_bundle_add_page($entity_type) {
+  // Set the title, as we're a MENU_LOCAL_ACTION and hence just get tab titles.
+  backdrop_set_title(entity_ui_get_action_title('add', $entity_type));
+
+  // Get entity info for our bundles.
+  $info = entity_get_info($entity_type);
+  $items = array();
+  foreach ($info['bundles'] as $bundle_name => $bundle_info) {
+    // Create an empty entity with just the bundle set to check for access.
+    $dummy_entity = entity_create($entity_type, array(
+      $info['entity keys']['bundle'] => $bundle_name,
+    ));
+    // If modules use a uid, they can default to the current-user
+    // in their create() method on the storage controller.
+    if (entity_ui_access('create', $entity_type, $dummy_entity, $account = NULL)) {
+      $add_path = $info['admin ui']['path'] . '/add/' . $bundle_name;
+      $items[] = l(t('Add @label', array('@label' => $bundle_info['label'])), $add_path);
+    }
+  }
+  return theme('item_list', array('items' => $items));
+}
+
+/**
+ * Page callback to add an entity of a specific bundle.
+ *
+ * @param $entity_type
+ *   The type of the entity.
+ * @param $bundle_name
+ *   The bundle machine name.
+ */
+function entity_ui_get_bundle_add_form($entity_type, $bundle_name) {
+  $info = entity_get_info($entity_type);
+  $bundle_key = $info['entity keys']['bundle'];
+
+  // Make a stub entity of the right bundle to pass to the entity_ui_get_form().
+  $values = array(
+    $bundle_key => $bundle_name,
+  );
+  $entity = entity_create($entity_type, $values);
+
+  return entity_ui_get_form($entity_type, $entity, 'add');
+}
+
+/**
+ * Page callback for viewing an entity.
+ *
+ * @param Entity $entity
+ *   The entity to be rendered.
+ *
+ * @return array
+ *   A renderable array of the entity in full view mode.
+ */
+function entity_ui_entity_page_view($entity) {
+  if (method_exists($entity, 'view')) {
+    return $entity->view('full', NULL, TRUE);
+  }
+}
+
+/**
+ * Gets the page title for the passed operation.
+ */
+function entity_ui_get_page_title($op, $entity_type, $entity = NULL) {
+  if (isset($entity)) {
+    $label = entity_label($entity_type, $entity);
+    list(, , $bundle) = entity_extract_ids($entity_type, $entity);
+  }
+  else {
+    $info = entity_get_info($entity_type);
+    $label = $info['label'];
+    $bundle = NULL;
+  }
+
+  switch ($op) {
+    case 'view':
+      return $label;
+    case 'edit':
+      return t('Edit @label', array('@label' => $label));
+    case 'clone':
+      return t('Clone @label', array('@label' => $label));
+    case 'revert':
+      return t('Revert @label', array('@label' => $label));
+    case 'delete':
+      return t('Delete @label', array('@label' => $label));
+    case 'export':
+      return t('Export @label', array('@label' => $label));
+  }
+
+  return entity_ui_get_action_title($op, $entity_type, $bundle);
+}
+
+/**
+ * Returns the entity identifier, i.e. the entities name or numeric id.
+ *
+ * Unlike entity_extract_ids() this function returns the name of the entity
+ * instead of the numeric id, in case the entity type has specified a name key.
+ *
+ * @param $entity_type
+ *   The type of the entity.
+ * @param $entity
+ *   An entity object.
+ *
+ * @see entity_extract_ids()
+ */
+function entity_ui_id($entity_type, $entity) {
+  if (method_exists($entity, 'identifier')) {
+    return $entity->identifier();
+  }
+  $info = entity_get_info($entity_type);
+  $key = isset($info['entity keys']['name']) ? $info['entity keys']['name'] : $info['entity keys']['id'];
+  return isset($entity->$key) ? $entity->$key : NULL;
+}
+
+/**
+ * Gets the page/menu title for local action operations.
+ *
+ * @param $op
+ *  The current operation. One of 'add' or 'import'.
+ * @param $entity_type
+ *  The entity type.
+ * @param $bundle_name
+ *  (Optional) The name of the bundle. May be NULL if the bundle name is not
+ *  relevant to the current page. If the entity type has only one bundle, or no
+ *  bundles, this will be the same as the entity type.
+ */
+function entity_ui_get_action_title($op, $entity_type, $bundle_name = NULL) {
+  $info = entity_get_info($entity_type);
+  switch ($op) {
+    case 'add':
+      if (isset($bundle_name) && $bundle_name != $entity_type) {
+        return t('Add @bundle_name @entity_type', array(
+          '@bundle_name' => backdrop_strtolower($info['bundles'][$bundle_name]['label']),
+          '@entity_type' => backdrop_strtolower($info['label']),
+        ));
+      }
+      else {
+        return t('Add @entity_type', array('@entity_type' => backdrop_strtolower($info['label'])));
+      }
+    case 'import':
+      return t('Import @entity_type', array('@entity_type' => backdrop_strtolower($info['label'])));
+  }
+}
+
+/**
+ * Form builder function for the overview form.
+ *
+ * @see EntityDefaultUIController::overviewForm()
+ */
+function entity_ui_overview_form($form, &$form_state, $entity_type) {
+  return entity_ui_controller($entity_type)->overviewForm($form, $form_state);
+}
+
+/**
+ * Form builder for the entity operation form.
+ *
+ * @see EntityDefaultUIController::operationForm()
+ */
+function entity_ui_operation_form($form, &$form_state, $entity_type, $entity, $op) {
+  $form_state['op'] = $op;
+  return entity_ui_controller($entity_type)->operationForm($form, $form_state, $entity, $op);
+}
+
+/**
+ * Form wrapper the main entity form.
+ *
+ * @see entity_ui_form_defaults()
+ */
+function entity_ui_main_form_defaults($form, &$form_state, $entity = NULL, $op = NULL) {
+  // Now equals entity_ui_form_defaults() but is still here to keep backward
+  // compatability.
+  return entity_ui_form_defaults($form, $form_state, $form_state['entity_type'], $entity, $op);
+}
+
+/**
+ * Clones the entity object and makes sure it will get saved as new entity.
+ *
+ * @return
+ *   The cloned entity object.
+ */
+function entity_ui_clone_entity($entity_type, $entity) {
+  // Clone the entity and make sure it will get saved as a new entity.
+  $entity = clone $entity;
+
+  $entity_info = entity_get_info($entity_type);
+  $entity->{$entity_info['entity keys']['id']} = FALSE;
+  if (!empty($entity_info['entity keys']['name'])) {
+    $entity->{$entity_info['entity keys']['name']} = FALSE;
+  }
+  $entity->is_new = TRUE;
+
+  // Make sure the status of a cloned exportable is custom.
+  if (!empty($entity_info['exportable'])) {
+    $status_key = isset($entity_info['entity keys']['status']) ? $entity_info['entity keys']['status'] : 'status';
+    $entity->$status_key = ENTITY_CUSTOM;
+  }
+  return $entity;
+}
+
+/**
+ * Form wrapper callback for all entity ui forms.
+ *
+ * This callback makes sure the form state is properly initialized and sets
+ * some useful default titles.
+ *
+ * @see EntityDefaultUIController::hook_forms()
+ */
+function entity_ui_form_defaults($form, &$form_state, $entity_type, $entity = NULL, $op = NULL) {
+  $defaults = array(
+    'entity_type' => $entity_type,
+  );
+  if (isset($entity)) {
+    $defaults[$entity_type] = $entity;
+  }
+  if (isset($op)) {
+    $defaults['op'] = $op;
+  }
+  $form_state += $defaults;
+  if (isset($op)) {
+    //backdrop_set_title(entity_ui_get_page_title($op, $entity_type, $entity), PASS_THROUGH);
+  }
+  // Add in handlers pointing to the controller for the forms implemented by it.
+  if (isset($form_state['build_info']['base_form_id']) && $form_state['build_info']['base_form_id'] != $entity_type . '_form') {
+    $form['#validate'][] = 'entity_ui_controller_form_validate';
+    $form['#submit'][] = 'entity_ui_controller_form_submit';
+  }
+  return $form;
+}
+
+/**
+ * Validation callback for forms implemented by the UI controller.
+ */
+function entity_ui_controller_form_validate($form, &$form_state) {
+  // Remove 'entity_ui_' prefix and the '_form' suffix.
+  $base = substr($form_state['build_info']['base_form_id'], 10, -5);
+  $method = $base . 'FormValidate';
+  entity_ui_controller($form_state['entity_type'])->$method($form, $form_state);
+}
+
+/**
+ * Submit callback for forms implemented by the UI controller.
+ */
+function entity_ui_controller_form_submit($form, &$form_state) {
+  // Remove 'entity_ui_' prefix and the '_form' suffix.
+  $base = substr($form_state['build_info']['base_form_id'], 10, -5);
+  $method = $base . 'FormSubmit';
+  entity_ui_controller($form_state['entity_type'])->$method($form, $form_state);
+}
+
+/**
+ * Submit builder for the main entity form, which extracts the form values and updates the entity.
+ *
+ * This is a helper function for entities making use of the entity UI
+ * controller.
+ *
+ * @return
+ *   The updated entity.
+ *
+ * @see EntityDefaultUIController::hook_forms()
+ * @see EntityDefaultUIController::entityFormSubmitBuildEntity()
+ */
+function entity_ui_form_submit_build_entity($form, &$form_state) {
+  return entity_ui_controller($form_state['entity_type'])->entityFormSubmitBuildEntity($form, $form_state);
+}
+
+/**
+ * Validation callback for machine names of exportables.
+ *
+ * We don't allow numeric machine names, as entity_load() treats them as the
+ * numeric identifier and they are easily confused with ids in general.
+ */
+function entity_ui_validate_machine_name($element, &$form_state) {
+  if (is_numeric($element['#value'])) {
+    form_error($element, t('Machine-readable names must not consist of numbers only.'));
+  }
+}
+
+/**
+ * Checks if a given entity has a certain exportable status.
+ *
+ * @param $entity_type
+ *   The type of the entity.
+ * @param $entity
+ *   The entity to check the status on.
+ * @param $status
+ *   The constant status like ENTITY_CUSTOM, ENTITY_IN_CODE, ENTITY_OVERRIDDEN
+ *   or ENTITY_FIXED.
+ *
+ * @return
+ *   TRUE if the entity has the status, FALSE otherwise.
+ */
+function entity_ui_entity_has_status($entity_type, $entity, $status) {
+  $info = entity_get_info($entity_type);
+  $status_key = empty($info['entity keys']['status']) ? 'status' : $info['entity keys']['status'];
+  return isset($entity->{$status_key}) && ($entity->{$status_key} & $status) == $status;
+}
+
+/**
+ * Returns HTML for an entity on the entity overview listing.
+ *
+ * @ingroup themeable
+ */
+function theme_entity_ui_overview_item($variables) {
+  $output = $variables['url'] ? l($variables['label'], $variables['url']['path'], $variables['url']['options']) : check_plain($variables['label']);
+  if ($variables['name']) {
+    $output .= ' <small> (' . t('Machine name') . ': ' . check_plain($variables['name']) . ')</small>';
+  }
+  return $output;
+}
+
+/**
+ * Themes the exportable status of an entity.
+ */
+function theme_entity_ui_entity_status($variables) {
+  $status = $variables['status'];
+  $html = $variables['html'];
+  if (($status & ENTITY_FIXED) == ENTITY_FIXED) {
+    $label = t('Fixed');
+    $help = t('The configuration is fixed and cannot be changed.');
+    return $html ? "<span class='entity-status-fixed' title='$help'>" . $label . "</span>" : $label;
+  }
+  elseif (($status & ENTITY_OVERRIDDEN) == ENTITY_OVERRIDDEN) {
+    $label = t('Overridden');
+    $help = t('This configuration is provided by a module, but has been changed.');
+    return $html ? "<span class='entity-status-overridden' title='$help'>" . $label . "</span>" : $label;
+  }
+  elseif ($status & ENTITY_IN_CODE) {
+    $label = t('Default');
+    $help = t('A module provides this configuration.');
+    return $html ? "<span class='entity-status-default' title='$help'>" . $label . "</span>" : $label;
+  }
+  elseif ($status & ENTITY_CUSTOM) {
+    $label = t('Custom');
+    $help = t('A custom configuration by a user.');
+    return $html ? "<span class='entity-status-custom' title='$help'>" . $label . "</span>" : $label;
+  }
+}
+
+/**
+ * Implements hook_autoload_info().
+ */
+function entity_ui_autoload_info() {
+  return array(
+    'EntityBundleableUIController' => 'entity.ui.inc',
+    'EntityContentUIController' => 'entity.ui.inc',
+    'EntityDefaultUIController' => 'entity.ui.inc',
+  );
+}
+
