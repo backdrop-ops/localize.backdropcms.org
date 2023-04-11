@@ -5,3 +5,8 @@ backdrop = 1.x
 package = Multilingual
 dependencies[] = locale
 dependencies[] = language
+
+; Added by Backdrop CMS packaging script on 2023-04-04
+project = l10n_pconfig
+version = 1.x-1.0.0-alpha
+timestamp = 1680623299

@@ -4,3 +4,8 @@ description = "Translation packaging tools for the localization server"
 package = "Localization server"
 dependencies[] = l10n_community
 backdrop = 1.x
+
+; Added by Backdrop CMS packaging script on 2023-04-10
+project = l10n_server
+version = 1.x-1.0.1-alpha
+timestamp = 1681158304
