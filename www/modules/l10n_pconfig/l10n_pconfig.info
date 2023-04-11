@@ -1,0 +1,7 @@
+type = module
+name = Plural formula configurator
+description = Configure plural formulas for site languages.
+backdrop = 1.x
+package = Multilingual
+dependencies[] = locale
+dependencies[] = language
