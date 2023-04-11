@@ -1,0 +1,35 @@
+<?php
+/**
+ * @file
+ *   Localization community UI installation, update and uninstallation.
+ */
+
+/**
+ * Implements hook_update_N().
+ * 
+ * Move Drupal 7 variables into config. 
+ */
+function l10n_community_update_1000() {
+  $config = config('l10n_community.settings');
+  $config->set('l10n_community_project_per_page', update_variable_get('l10n_community_project_per_page', 10));
+  $config->set('l10n_community_stats_enabled', update_variable_get('l10n_community_stats_enabled', TRUE));
+  $config->set('l10n_community_stats_explore_projects_enabled', update_variable_get('l10n_community_stats_explore_projects_enabled', TRUE));
+  $config->set('l10n_community_package_count', update_variable_get('l10n_community_package_count', TRUE));
+  $config->set('l10n_cron_stats', update_variable_get('l10n_cron_stats', 1));
+  $config->set('l10n_community_import_user', update_variable_get('l10n_community_import_user', NULL));
+  $config->set('l10n_community_highlighted_project', update_variable_get('l10n_community_highlighted_project', ''));
+  $config->save();
+  update_variable_del('l10n_community_project_per_page');
+  update_variable_del('l10n_community_stats_enabled');
+  update_variable_del('l10n_community_stats_explore_projects_enabled');
+  update_variable_del('l10n_community_package_count');
+  update_variable_del('l10n_cron_stats');
+  update_variable_del('l10n_community_import_user');
+  update_variable_del('l10n_community_highlighted_project');
+
+  // Move the new layout configurations
+  config_install_default_config('l10n_community', 'layout.layout.languages_plus');
+  config_install_default_config('l10n_community', 'layout.layout.languages');
+  config_install_default_config('l10n_community', 'layout.layout.projects');
+  config_install_default_config('l10n_community', 'layout.layout.translate');
+}

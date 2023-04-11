@@ -1,0 +1,248 @@
+<?php
+
+/**
+ * @file
+ *   Localization packager for localization server installer.
+ */
+
+/**
+ * Implements hook_schema().
+ */
+function l10n_packager_schema() {
+  $schema['l10n_packager_release'] = array(
+    'description' => 'Information about packaging for each release.',
+    'fields' => array(
+      'rid' => array(
+        'description' => 'Reference to {l10n_server_release}.rid',
+        'type' => 'int',
+        'not null' => TRUE,
+        'unsigned' => TRUE,
+      ),
+      'status' => array(
+        'description' => 'Packaging status for this release. One of L10N_PACKAGER_DISABLED, L10N_PACKAGER_ACTIVE and L10N_PACKAGER_ERROR.',
+        'type' => 'int',
+        'not null' => TRUE,
+        'default value' => 1,
+      ),
+      'checked' => array(
+        'description' => 'Unix timestamp of last time this release was checked.',
+        'type' => 'int',
+        'not null' => FALSE,
+      ),
+      'updated' => array(
+        'description' => 'Unix timestamp of last time files for this release were updated.',
+        'type' => 'int',
+        'not null' => FALSE,
+      ),
+    ),
+    'primary key' => array('rid'),
+  );
+  $schema['l10n_packager_file'] = array(
+    'description' => 'Links releases and languages to files.',
+    'fields' => array(
+      'drid' => array(
+        'description' => 'Internal numeric identifier for a release file.',
+        'type' => 'serial',
+        'not null' => TRUE,
+      ),
+      'rid' => array(
+        'description' => 'Reference to {l10n_server_release}.rid',
+        'type' => 'int',
+        'not null' => TRUE,
+        'unsigned' => TRUE,
+      ),
+      'language' => array(
+        'description' => 'Reference to the {languages}.language for the translation package.',
+        'type' => 'varchar',
+        'length' => '12',
+        'not null' => TRUE,
+      ),
+      'fid' => array(
+        'description' => 'Reference to {file_managed}.fid.',
+        'type' => 'int',
+        'not null' => TRUE,
+        'unsigned' => TRUE,
+      ),
+      'checked' => array(
+        'description' => 'Unix timestamp of last time translation for this language was checked.',
+        'type' => 'int',
+        'not null' => FALSE,
+      ),
+      'sid_count' => array(
+        'description' => 'Count of source strings exported in this file.',
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+      ),
+    ),
+    'indexes' => array(
+      'rid' => array('rid'),
+    ),
+    'primary key' => array('drid'),
+  );
+  $schema['cache_l10n_packager'] = backdrop_get_schema_unprocessed('system', 'cache');
+  $schema['cache_l10n_packager']['description'] = 'Cache table for localization packager containing processed status data keyed by project URI.';
+  return $schema;
+}
+
+/**
+ * Implements hook_update_last_removed().
+ */
+function l10n_packager_update_last_removed() {
+  return 7000;
+}
+
+/**
+ * Implements hook_update_N().
+ * 
+ * Move D7 variables to config.
+ */
+function l10n_packager_update_1000() {
+  $config = config('l10n_packager.settings');
+  $config->set('l10n_packager_update', update_variable_get('l10n_packager_update', 0));
+  $config->set('l10n_packager_file_limit', update_variable_get('l10n_packager_file_limit', 1));
+  $config->set('l10n_packager_release_limit', update_variable_get('l10n_packager_release_limit', 10));
+  $config->set('l10n_packager_update_url', update_variable_get('l10n_packager_update_url', ''));
+  $config->set('l10n_packager_filepath', update_variable_get('l10n_packager_filepath', L10N_PACKAGER_FILEPATH));
+  $config->set('l10n_packager_directory', update_variable_get('l10n_packager_directory', file_default_scheme() . '://l10n_packager'));
+  $config->set('l10n_packager_cron', update_variable_get('l10n_packager_cron',0));
+  $config->save();
+  update_variable_del('l10n_packager_update');
+  update_variable_del('l10n_packager_file_limit');
+  update_variable_del('l10n_packager_release_limit');
+  update_variable_del('l10n_packager_update_url');
+  update_variable_del('l10n_packager_filepath');
+  update_variable_del('l10n_packager_directory');
+  update_variable_del('l10n_packager_cron');
+}
+
+/**
+ * Migrate packaged translation files to D7 managed files.
+ */
+// function l10n_packager_update_7000(&$sandbox) {
+//   // Killswitch as localize.backdrop.org implements this in its own hook.
+//   if (variable_get('l10n_packager_skip_update_7000', FALSE)) {
+//     variable_del('l10n_packager_skip_update_7000');
+//     return NULL;
+//   }
+
+//   // Remove existing stale packages.
+//   if (!variable_get('l10n_packager_update_7000_inprogress', false)) {
+//     db_delete('file_managed')
+//       ->condition('uid', 0)
+//       ->execute();
+//     db_delete('file_usage')
+//       ->condition('module', 'l10n_packager')
+//       ->execute();
+//     variable_set('l10n_packager_update_7000_inprogress', true);
+//   }
+
+//   $fid = variable_get('l10n_packager_update_7000_fid', -1);
+//   if (!isset($sandbox['progress'])) {
+//     // Delete stale rows from {upload} where the fid is not in the {files} table.
+//     db_delete('l10n_packager_file')
+//       ->notExists(
+//         db_select('files', 'f')
+//         ->fields('f', array('fid'))
+//         ->where('f.fid = {l10n_packager_file}.fid')
+//       )
+//       ->execute();
+//     // Initialize batch update information.
+//     $sandbox['progress'] = variable_get('l10n_packager_update_7000_progress', 0);
+//     $sandbox['last_fid_processed'] = $fid;
+//     $sandbox['max'] = db_query("SELECT COUNT(*) FROM {l10n_packager_file}")->fetchField();
+//   }
+
+//   $basename = variable_get('file_directory_path', conf_path() . '/files');
+//   $scheme = file_default_scheme() . '://';
+
+//   // Determine vids for this batch.
+//   // Process all files attached to a given revision during the same batch.
+//   $limit = variable_get('l10n_packager_update_7000_batch_size', 5000);
+//   $count = 0;
+
+//   $query = db_select('files', 'fi');
+//   $query->join('l10n_packager_file', 'pf', 'fi.fid = pf.fid');
+//   $query->fields('fi', array('fid', 'uid', 'filename', 'filepath', 'filemime', 'filesize', 'status', 'timestamp'))
+//     ->fields('pf', array('drid'))
+//     ->condition('fi.fid', $sandbox['last_fid_processed'], '>')
+//     ->orderBy('fi.fid', 'ASC')
+//     ->range($count, $limit);
+//   $result = $query->execute();
+
+//   while($file = $result->fetchAssoc()) {
+//     // We will convert filepaths to URI using the default scheme
+//     // and stripping off the existing file directory path.
+//     $file['uri'] = $scheme . preg_replace('!^' . preg_quote($basename) . '!', '', $file['filepath']);
+//     // Normalize the URI but don't call file_stream_wrapper_uri_normalize()
+//     // directly, since that is a higher-level API function which invokes
+//     // hooks while validating the scheme, and those will not work during
+//     // the upgrade. Instead, use a simpler version that just assumes the
+//     // scheme from above is already valid.
+//     if (($file_uri_scheme = file_uri_scheme($file['uri'])) && ($file_uri_target = file_uri_target($file['uri']))) {
+//       $file['uri'] = $file_uri_scheme . '://' . $file_uri_target;
+//     }
+//     unset($file['filepath']);
+//     // Insert into the file_managed table.
+//     // Each fid and uri should only be stored once in file_managed.
+//     try {
+//       db_insert('file_managed')
+//         ->fields(array(
+//           'fid' => $file['fid'],
+//           'uid' => $file['uid'],
+//           'filename' => $file['filename'],
+//           'uri' => $file['uri'],
+//           'filemime' => $file['filemime'],
+//           'filesize' => $file['filesize'],
+//           'status' => $file['status'],
+//           'timestamp' => $file['timestamp'],
+//         ))
+//         ->execute();
+
+//         // Add the usage entry for the file.
+//         $file = (object) $file;
+//         file_usage_add($file, 'l10n_packager', 'l10n_package', $file->drid);
+//     }
+//     catch (PDOException $e) {
+//       $file = (object) $file;
+//     }
+//     $fid = $file->fid;
+//     $count++;
+//   }
+
+//   $sandbox['last_fid_processed'] = $fid;
+//   variable_set('l10n_packager_update_7000_fid', $fid);
+
+//   // If less than limit node revisions were processed, the update process is
+//   // finished.
+//   if ($count < $limit) {
+//     $finished = TRUE;
+//   }
+//   // Update our progress information for the batch update.
+//   $sandbox['progress'] += $count;
+//   variable_set('l10n_packager_update_7000_progress', $sandbox['progress']);
+
+//   // If there's no max value then there's nothing to update and we're finished.
+//   if (empty($sandbox['max']) || isset($finished)) {
+//     variable_del('l10n_packager_update_7000_inprogress');
+//     variable_del('l10n_packager_update_7000_progress');
+//     variable_del('l10n_packager_update_7000_fid');
+
+//     // Remove stale file duplicates from the l10n_packager_file table.
+//     db_delete('l10n_packager_file')
+//       ->notExists(
+//         db_select('file_managed', 'f')
+//         ->fields('f', array('fid'))
+//         ->where('f.fid = {l10n_packager_file}.fid')
+//       )
+//       ->execute();
+//     return t('Translation files have been successfully migrated.');
+//   }
+//   else {
+//     // Indicate our current progress to the batch update system.
+//     $sandbox['#finished'] = $sandbox['progress'] / $sandbox['max'];
+//     if (function_exists('drush_log')) {
+//       drush_log("Processed " . $sandbox['progress'] . " of " . $sandbox['max'] . "(" . $sandbox['#finished'] . "%)");
+//     }
+//   }
+// }

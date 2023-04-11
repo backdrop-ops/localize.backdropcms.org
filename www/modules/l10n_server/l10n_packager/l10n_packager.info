@@ -1,0 +1,6 @@
+name = "Localization packager"
+type = module
+description = "Translation packaging tools for the localization server"
+package = "Localization server"
+dependencies[] = l10n_community
+backdrop = 1.x

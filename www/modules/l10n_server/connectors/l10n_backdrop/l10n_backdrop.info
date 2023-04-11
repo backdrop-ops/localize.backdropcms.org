@@ -1,0 +1,8 @@
+name = "Localization server for Backdrop"
+type = module
+description = Extracts translatable strings from Backdrop packages.
+dependencies[] = l10n_server
+dependencies[] = potx
+package = "Localization server connectors"
+backdrop = 1.x
+

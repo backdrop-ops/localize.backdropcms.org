@@ -1,0 +1,436 @@
+<?php
+/**
+ * @file
+ *   Localization server installation, update and uninstallation.
+ */
+
+
+/**
+ * Implements hook_schema().
+ */
+function l10n_server_schema() {
+  $schema = array();
+
+  $schema['l10n_server_project'] = array(
+    'description' => 'Projects for which translation is running on the server.',
+    'fields' => array(
+      'pid' => array(
+        'description' => 'Internal numeric identifier for a project.',
+        'type' => 'serial',
+        'not null' => TRUE,
+      ),
+      'uri' => array(
+        'description' => 'A unique short name to identify the project nicely in paths.',
+        'type' => 'varchar',
+        'length' => '50',
+        'not null' => TRUE,
+      ),
+      'title' => array(
+        'description' => 'Human readable name for project used on the interface.',
+        'type' => 'varchar',
+        'length' => '128',
+        'not null' => TRUE,
+      ),
+      'home_link' => array(
+        'description' => 'Link to project home page.',
+        'type' => 'text',
+        'not null' => TRUE,
+      ),
+      'last_parsed' => array(
+        'description' => 'Unix timestamp of last time project was parsed.',
+        'type' => 'int',
+        'not null' => FALSE,
+      ),
+      'connector_module' => array(
+        'description' => 'Connector module for this project, such as l10n_localpacks or l10n_drupalorg.',
+        'type' => 'varchar',
+        'length' => '50',
+        'not null' => TRUE,
+      ),
+      'status' => array(
+        'description' => 'Status flag. 1 if new project releases should be looked for, 0 if new scanning and parsing is disabled.',
+        'type' => 'int',
+        'not null' => TRUE,
+      ),
+      'weight' => array(
+        'description' => 'Project weight used for sorting. Lower weights float up to the top.',
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+      ),
+    ),
+    'primary key' => array('pid'),
+    'indexes' => array(
+      'uri' => array('uri'),
+      'weight' => array('weight'),
+    ),
+    'unique keys' => array(
+      'uri_connector_module' => array('uri', 'connector_module'),
+    ),
+  );
+
+  $schema['l10n_server_release'] = array(
+    'description' => 'The releases we handle for each project.',
+    'fields' => array(
+      'rid' => array(
+        'description' => 'Internal numeric identifier for a release.',
+        'type' => 'serial',
+        'not null' => TRUE,
+      ),
+      'pid' => array(
+        'description' => 'Reference to the {l10n_server_project}.pid of the parent project.',
+        'type' => 'int',
+        'not null' => FALSE,
+      ),
+      'title' => array(
+        'description' => 'Human readable name for release used on the interface.',
+        'type' => 'varchar',
+        'length' => '128',
+        'not null' => TRUE,
+      ),
+      'download_link' => array(
+        'description' => 'Link to download this release.',
+        'type' => 'text',
+        'not null' => TRUE,
+      ),
+      'file_date' => array(
+        'description' => 'Unix timestamp with release file date. Used to identify file changes.',
+        'type' => 'int',
+        'not null' => FALSE,
+      ),
+      'file_hash' => array(
+        'description' => 'Hash of file for easy identification of changed files.',
+        'type' => 'varchar',
+        'length' => '32',
+        'not null' => FALSE,
+      ),
+      'last_parsed' => array(
+        'description' => 'Unix timestamp of last parsing time for this release package.',
+        'type' => 'int',
+        'not null' => FALSE,
+      ),
+      'weight' => array(
+        'description' => 'Release weight used for sorting. Lower weights float up to the top.',
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+      ),
+      'sid_count' => array(
+        'description' => 'Count of source strings in this project release.',
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+      ),
+    ),
+    'primary key' => array('rid'),
+    'indexes' => array(
+      'pid' => array('pid'),
+      'weight' => array('weight'),
+    ),
+  );
+
+  $schema['l10n_server_error'] = array(
+    'description' => 'Errors found while parsing release packages. Although we find errors in the release files, we store error notes on a release level, to make them easily accessible without the need for extraneous detail.',
+    'fields' => array(
+      'eid' => array(
+        'description' => 'Internal numeric identifier for an error.',
+        'type' => 'serial',
+        'not null' => TRUE,
+      ),
+      'rid' => array(
+        'description' => 'Reference to the {l10n_server_release}.rid of the affected release.',
+        'type' => 'int',
+        'not null' => FALSE,
+      ),
+      'value' => array(
+        'description' => 'Text of the error message.',
+        'type' => 'text',
+        'not null' => TRUE,
+      ),
+    ),
+    'primary key' => array('eid'),
+    'indexes' => array(
+      'rid' => array('rid'),
+    ),
+  );
+
+  $schema['l10n_server_file'] = array(
+    'description' => 'Information on files found and parsed in a release.',
+    'fields' => array(
+      'fid' => array(
+        'description' => 'Internal numeric identifier for a file.',
+        'type' => 'serial',
+        'not null' => TRUE,
+      ),
+      'pid' => array(
+        'description' => 'Reference to the {l10n_server_project}.pid of the parent project.',
+        'type' => 'int',
+        'not null' => FALSE,
+      ),
+      'rid' => array(
+        'description' => 'Reference to the {l10n_server_release}.rid of the parent release.',
+        'type' => 'int',
+        'not null' => FALSE,
+      ),
+      'location' => array(
+        'description' => 'Path to the file within the release package.',
+        'type' => 'varchar',
+        'length' => '255',
+        'not null' => TRUE,
+      ),
+      'revision' => array(
+        'description' => 'CVS revision number extracted for reuse in exports.',
+        'type' => 'varchar',
+        'length' => '255',
+        'not null' => TRUE,
+      ),
+    ),
+    'primary key' => array('fid'),
+    'indexes' => array(
+      'rid' => array('rid'),
+      'pid' => array('pid'),
+    ),
+  );
+
+  $schema['l10n_server_line'] = array(
+    'description' => 'Information on occurances of strings on lines of specific files.',
+    'fields' => array(
+      'pid' => array(
+        'description' => 'Reference to the {l10n_server_project}.pid of the parent project.',
+        'type' => 'int',
+        'not null' => FALSE,
+      ),
+      'rid' => array(
+        'description' => 'Reference to the {l10n_server_release}.rid of the parent release.',
+        'type' => 'int',
+        'not null' => FALSE,
+      ),
+      'fid' => array(
+        'description' => 'Reference to the {l10n_server_file}.fid of the parent file.',
+        'type' => 'int',
+        'not null' => FALSE,
+      ),
+      'lineno' => array(
+        'description' => 'Number of line where the string occurance was found.',
+        'type' => 'int',
+        'not null' => FALSE,
+      ),
+      'type' => array(
+        'description' => 'Type of occurance. Possible values are constants POTX_STRING_INSTALLER, POTX_STRING_RUNTIME or POTX_STRING_BOTH.',
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+      ),
+      'sid' => array(
+        'description' => 'Reference to the {l10n_server_string}.sid found on this line.',
+        'type' => 'int',
+        'not null' => FALSE,
+      ),
+    ),
+    'indexes' => array(
+      'fid' => array('fid'),
+      'pid_sid' => array('pid', 'sid'),
+      'rid' => array('rid'),
+      'sid' => array('sid'),
+    ),
+  );
+
+  $schema['l10n_server_string'] = array(
+    'description' => 'Value of translatable strings found.',
+    'fields' => array(
+      'sid' => array(
+        'description' => 'Internal numeric identifier for a source string.',
+        'type' => 'serial',
+        'not null' => TRUE,
+      ),
+      'value' => array(
+        'description' => 'The actual translatable string. For strings with multiple plural versions, we store them as the same translatable with a \0 separator (unlike Drupal itself), because it is easier to match translations with them (for multiple plural versions) this way, and we can force people to translate both at once.',
+        'type' => 'text',
+        'not null' => TRUE,
+      ),
+      'context' => array(
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'default' => '',
+        'description' => 'The context this string applies to. Only applicable to some strings in Drupal 7 and its modules.',
+      ),
+      'hashkey' => array(
+        'description' => 'MD5 hash of the concatenation of value and context, used for quick lookups when these two are known (imports, new releases, remote submissions).',
+        'type' => 'char',
+        'length' => 32,
+        'not null' => TRUE,
+      ),
+    ),
+    'primary key' => array('sid'),
+    'unique keys' => array(
+      'hashkey' => array('hashkey'),
+    ),
+  );
+
+  $schema['l10n_server_translation'] = array(
+    'fields' => array(
+      'tid' => array(
+        'description' => 'Internal numeric identifier for a translation.',
+        'type' => 'serial',
+        'not null' => TRUE,
+      ),
+      'sid' => array(
+        'description' => 'Reference to the {l10n_server_string}.sid which is being translated.',
+        'type' => 'int',
+        'not null' => TRUE,
+      ),
+      'language' => array(
+        'description' => 'Reference to the {languages}.language to which the string is being translated.',
+        'type' => 'varchar',
+        'length' => '12',
+        'not null' => TRUE,
+      ),
+      'translation' => array(
+        'description' => 'The actual translation or suggestion.',
+        'type' => 'text',
+        'not null' => TRUE,
+        'binary' => TRUE,
+      ),
+      'uid_entered' => array(
+        'description' => 'Reference to the {users}.uid who entered this translation or suggestion.',
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+      ),
+      'time_entered' => array(
+        'description' => 'Unix timestamp of when the string was entered into the database.',
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+      ),
+      'time_changed' => array(
+        'description' => 'Unix timestamp of last action (cached version of MAX({l10n_server_translation_history}.time_action) for this tid).',
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+      ),
+      'is_suggestion' => array(
+        'description' => 'Flag of whether this is a suggestion (1) or not (0). If 0, *_approved fields should also be 0.',
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+      ),
+      'is_active' => array(
+        'description' => 'Flag of whether this is an active (1) suggestion or translation. Older suggestions and translations are kept (0). Unprocessed suggestions and active translations have this as 1.',
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+      ),
+    ),
+    'primary key' => array('tid'),
+    'indexes' => array(
+      'uid_entered' => array('uid_entered'),
+      'is_suggestion_is_active_language' => array('is_suggestion', 'is_active', 'language'),
+      'sid_language_is_suggestion_is_active' => array('sid', 'language', 'is_suggestion', 'is_active'),
+    ),
+  );
+
+  $schema['l10n_server_translation_history'] = array(
+    'fields' => array(
+      'tid' => array(
+        'description' => 'References {l10n_server_translation}.tid',
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+      ),
+      'uid_action' => array(
+        'description' => 'Reference to the {users}.uid who performed the action.',
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+      ),
+      'time_action' => array(
+        'description' => 'Unix timestamp of time when the action happened.',
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+      ),
+      'type_action' => array(
+        'description' => 'Numeric identifier of the action that happened.',
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+      ),
+      'medium_action' => array(
+        'description' => 'Numeric identifier of the medium the action happened through.',
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+      ),
+    ),
+    'indexes' => array(
+      'tid' => array('tid'),
+    ),
+  );
+
+  $schema['l10n_server_status_flag'] = array(
+    'fields' => array(
+      'sid' => array(
+        'description' => 'Reference to the {l10n_server_string}.sid which is being translated.',
+        'type' => 'int',
+        'not null' => TRUE,
+      ),
+      'language' => array(
+        'description' => 'Reference to the {languages}.language to which the string is being translated.',
+        'type' => 'varchar',
+        'length' => '12',
+        'not null' => TRUE,
+      ),
+      'has_suggestion' => array(
+        'description' => 'Cached status flag of whether there is at least one row in {l10n_server_translation} where is_suggestion = 1, is_active = 1 and sid and language is the same as this one.',
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+      ),
+      'has_translation' => array(
+        'description' => 'Cached status flag of whether there is at least one row in {l10n_server_translation} where is_suggestion = 0, is_active = 1, translation is not empty and sid and language is the same as this one.',
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+      ),
+    ),
+    'primary key' => array('sid', 'language'),
+    'indexes' => array(
+      'sid_language_has_suggestion' => array('sid', 'language', 'has_suggestion'),
+      'sid_language_has_translation' => array('sid', 'language', 'has_translation'),
+    ),
+  );
+
+  return $schema;
+}
+
+/**
+ * Implements hook_update_last_removed().
+ */
+function l10n_server_update_last_removed() {
+  return 7004;
+}
+
+/**
+ * Implements hook_update_N().
+ * 
+ * Move connector variables into config values.
+ */
+function l10n_server_update_1000() {
+  $query = db_query("SELECT v.name AS name
+    FROM 
+    {variable} v
+    WHERE  (name LIKE 'l10n_server_connector_%')"
+  );
+  $variables = $query->fetchAll();
+  if (!empty($variables)) {
+    $config = config('l10n_server.settings');
+    foreach ($variables as $variable) {
+      $value = update_variable_get($variable->name);
+      $config->set($variable->name, $value);
+      update_variable_del($variable->name);
+    }
+    $config->save();
+  }
+}

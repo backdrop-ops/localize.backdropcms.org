@@ -1,0 +1,79 @@
+<?php
+/**
+ * @file
+ *   Localization groups installation, update and uninstallation.
+ */
+
+/**
+ * Implements hook_install().
+ */
+function l10n_groups_install() {
+  // Create OG node type for translation groups.
+  $l10n_group_node_type = array(
+    'type' => 'l10n_group',
+    'name' => t('Translation group'),
+    'base' => 'l10n_groups',
+    'description' => t('A language community around Backdrop project translations.'),
+    'custom' => 1,
+    'modified' => 1,
+    'locked' => 0,
+    'is_new' => TRUE,
+    'settings' => array(
+      'promote_enabled' => FALSE,
+    ),
+  );
+
+  $l10n_group_node_type = node_type_set_defaults($l10n_group_node_type);
+  node_type_save($l10n_group_node_type);
+  node_add_body_field($l10n_group_node_type);
+
+  // Define l10n_group content as groups.
+  config_set('og.settings', 'og_group_type_l10n_group', TRUE);
+  og_create_field(OG_GROUP_FIELD, 'node', 'l10n_group');
+
+  // Enable OG context negotiation and weight for translate_path
+  $negotiation_info = config_get('og_context.settings', 'og_context_negotiation_group_context');
+  $negotiation_info['translate_path'] = array();
+  config_set('og_context.settings', 'og_context_negotiation_group_context', $negotiation_info);
+  $providers_weight = config_get('og_context.settings', 'og_context_providers_weight_group_context');
+  $providers_weight['translate_path'] = 0;
+  config_set('og_context.settings', 'og_context_providers_weight_group_context', $providers_weight);
+}
+
+/**
+ * Implements hook_schema().
+ *
+ * With this module, the translations are maintained by communities,
+ * who share a common space based on organic groups. We need to store
+ * their language association.
+ */
+function l10n_groups_schema() {
+  $schema = array();
+  $schema['l10n_groups_group'] = array(
+    'description' => 'Organic groups mapper for the localization server. Each language team is a group.',
+    'fields' => array(
+      'nid' => array(
+        'description' => 'References {node}.nid, pointing to the organic group node for this translation group.',
+        'type' => 'int',
+        'not null' => TRUE,
+      ),
+      'language' => array(
+        'description' => 'References {language}.language, pointing to the language of this translation group.',
+        'type' => 'varchar',
+        'length' => '12',
+        'not null' => TRUE,
+      ),
+    ),
+    'indexes' => array(
+      'l10n_groups_group_nid' => array('nid'),
+    ),
+  );
+  return $schema;
+}
+
+/**
+ * Implements hook_update_last_removed().
+ */
+function l10n_groups_update_last_removed() {
+  return 7100;
+}

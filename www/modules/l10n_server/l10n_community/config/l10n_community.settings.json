@@ -1,0 +1,8 @@
+{
+    "_config_name": "l10n_community.settings",
+    "l10n_community_project_per_page": 10,
+    "l10n_community_stats_enabled": true,
+    "l10n_community_stats_explore_projects_enabled": true,
+    "l10n_community_package_count": true,
+    "l10n_cron_stats": 1
+}

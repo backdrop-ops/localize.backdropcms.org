@@ -1,0 +1,38 @@
+Modules required in 7.x-1.x
+---------------------------
+
+ - ctools
+ - entity
+ - entityreference
+ - jquery_update
+ - l10n_pconfig
+ - l10n_server
+ - l10n_update
+ - libraries
+ - migrate
+ - og-7.x-2.x-dev
+ - potx-7.x-3.x-dev
+ - views
+ - views_bulk_operations
+
+Steps to upgrade
+---------------------------
+
+1. Upgrade core by deleting all D6 files except sites folder
+2. Extract D7 core files to the site root, update all modules and add their
+dependencies listed above.
+3. Run update.php in webbrowser and complete all db changes
+4. Now place the D7 modules into sites/all/modules
+5. drush -y en l10n_update entity entityreference ctools og og_access og_ui
+migrate migrate_ui views_bulk_operations views views_ui l10n_server
+l10n_packager l10n_groups l10n_community l10n_drupal l10n_pconfig potx
+6. (Optional) You may uninstall jQuery update
+7. See https://www.drupal.org/node/1839652 how to migrate OG data. Start by
+going to admin/content/migrate/configure and press Register statically defined
+classes.
+8. Go to admin/content/migrate and run all OG migrations.
+9. Check that all blocks are still assigned to their region:
+  Localization packager downloads
+  Localization server jump form
+  Localization server statistics
+  Localization group information

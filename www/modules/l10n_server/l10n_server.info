@@ -1,0 +1,7 @@
+name = Localization server
+type = module
+description = Base backend module for localization server
+package = "Localization server"
+dependencies[] = locale
+dependencies[] = l10n_pconfig
+backdrop = 1.x

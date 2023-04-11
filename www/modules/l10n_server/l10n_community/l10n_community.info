@@ -1,0 +1,9 @@
+name = Localization community UI
+type = module
+description = Community interface for string translation
+dependencies[] = l10n_server
+dependencies[] = potx (>=3)
+package = "Localization server"
+backdrop = 1.x
+
+; files[] = tests/l10n_community.test

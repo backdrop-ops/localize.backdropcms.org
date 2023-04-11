@@ -1,0 +1,10 @@
+<?php
+
+/**
+ * Implements hook_install().
+ */
+function l10n_drupal_rest_install() {
+  // Copy the old connector last sync to the new
+  variable_set('l10n_drupal_rest_last_sync',
+    variable_get('l10n_server_connector_l10n_project_drupalorg_last_sync', 0));
+}

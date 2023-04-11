@@ -1,0 +1,68 @@
+<?php
+
+/**
+ * @file
+ *   Localization server for Backdrop.
+ *
+ *   Connects tarballs in Backdrop's expected format and filenames to
+ *   Localization server.
+ */
+
+// = Core hooks ================================================================
+
+/**
+ * Implements hook_help().
+ */
+function l10n_backdrop_help($path, $arg) {
+  if (($arg[0] == 'translate') && ($arg[1] == 'projects') && ($arg[3] == 'releases') && !empty($arg[4])) {
+    $project = l10n_server_get_projects(array('uri' => $arg[2]));
+    if ($project->connector_module == 'l10n_backdrop_files') {
+      return t('Source code parsing warnings listed here might indicate but not necessarily mean misuse of the APIs our source code parser looks at. <a href="@url">Detailed explanation and a cheat sheet of the localization API</a> can be found in the Drupal.org handbooks.', array('@url' => 'http://drupal.org/node/322729'));
+    }
+  }
+}
+
+
+/**
+ * Implements hook_cron().
+ */
+function l10n_backdrop_cron() {
+  if (config_get('l10n_server.settings', 'l10n_server_connector_l10n_backdrop_files_enabled') && config_get('l10n_server.settings', 'l10n_server_connector_l10n_backdrop_files_cron')) {
+    module_load_include('inc', 'l10n_backdrop', 'l10n_backdrop.files');
+    l10n_backdrop_files_scan(TRUE);
+  }
+}
+
+/**
+ * Implements hook_l10n_server_connector_info().
+ */
+function l10n_backdrop_l10n_server_connector_info() {
+  $connectors = array();
+  $connectors['l10n_backdrop'] = array(
+    'title' => t('Backdrop packages'),
+    'sources' => array('files', 'uploads'),
+    'file' => backdrop_get_path('module', 'l10n_backdrop') . '/l10n_backdrop.files.inc',
+    // Only provide scan functionality if enabled.
+    'scan' => config_get('l10n_server.settings', 'l10n_server_connector_l10n_backdrop_files_enabled') ? 'l10n_backdrop_files_scan' : NULL,
+    // Display warnings tab, because we are parsing source code here.
+    'warnings' => TRUE,
+  );
+
+  return $connectors;
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function l10n_backdrop_form_l10n_server_connectors_files_settings_form_alter(&$form, &$form_state) {
+  if ($form['#connector_name'] == 'l10n_backdrop') {
+    $form['buttons']['#weight'] = 200;
+    $form['l10n_server_connector_l10n_backdrop_files_backdrop_home'] = array(
+      '#title' => t('Assign backdrop.org home links to packages'),
+      '#type' => 'checkbox',
+      '#default_value' => config_get('l10n_server.settings', 'l10n_server_connector_l10n_backdrop_files_backdrop_home'),
+      '#description' => t('Assigns https://github.com/backdrop-contrib/<em>project</em> type home links to projects. These home links are used to guide users to the home pages of the projects. The setting only affects newly parsed packages.'),
+      '#weight' => 100,
+    );
+  }
+}

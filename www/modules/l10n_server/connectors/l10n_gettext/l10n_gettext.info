@@ -1,0 +1,6 @@
+name = "Localization server for Gettext files"
+type = module
+description = Manages translatable strings with Gettext standard input/output.
+dependencies[] = l10n_server
+package = "Localization server connectors"
+backdrop = 1.x

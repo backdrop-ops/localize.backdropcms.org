@@ -1,0 +1,8 @@
+name = "Localization groups"
+description = Organic groups mapping for localization server
+type = module
+dependencies[] = l10n_community
+dependencies[] = og_context
+dependencies[] = og_ui
+package = "Localization server"
+backdrop = 1.x

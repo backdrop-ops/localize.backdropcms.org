@@ -1,0 +1,5 @@
+[L10nServerTestCase]
+name = Localization server
+description = Ensure that the localization server functions properly.
+group = Localization server
+file = l10n_community.test
