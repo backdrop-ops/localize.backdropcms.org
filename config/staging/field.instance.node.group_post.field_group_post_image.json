@@ -1,0 +1,53 @@
+{
+    "_config_name": "field.instance.node.group_post.field_group_post_image",
+    "field_name": "field_group_post_image",
+    "entity_type": "node",
+    "bundle": "group_post",
+    "deleted": "0",
+    "label": "Image",
+    "widget": {
+        "weight": "2",
+        "type": "image_image",
+        "module": "image",
+        "active": 1,
+        "settings": {
+            "progress_indicator": "throbber",
+            "preview_image_style": "thumbnail"
+        }
+    },
+    "settings": {
+        "file_directory": "field/image/group-posts",
+        "file_extensions": "png gif jpg jpeg",
+        "max_filesize": "",
+        "alt_field": 1,
+        "title_field": 0,
+        "default_image": 0,
+        "user_register_form": false,
+        "max_dimensions": "",
+        "min_dimensions": ""
+    },
+    "display": {
+        "default": {
+            "label": "hidden",
+            "type": "image",
+            "weight": "0",
+            "settings": {
+                "image_style": "content_max_width",
+                "image_link": ""
+            },
+            "module": "image"
+        },
+        "teaser": {
+            "label": "hidden",
+            "type": "image",
+            "weight": "0",
+            "settings": {
+                "image_style": "large",
+                "image_link": ""
+            },
+            "module": "image"
+        }
+    },
+    "required": 0,
+    "description": ""
+}

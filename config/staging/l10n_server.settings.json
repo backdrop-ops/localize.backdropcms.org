@@ -1,0 +1,8 @@
+{
+    "_config_name": "l10n_server.settings",
+    "l10n_server_connector_l10n_gettext_uploads_enabled": 1,
+    "l10n_server_connector_l10n_gettext_uploads_links": [
+        "",
+        ""
+    ]
+}

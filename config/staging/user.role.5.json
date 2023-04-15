@@ -1,0 +1,28 @@
+{
+    "_config_name": "user.role.5",
+    "name": "5",
+    "label": "Groups manager",
+    "weight": "2",
+    "permissions": [
+        "access administration menu",
+        "access administration pages",
+        "access user profiles",
+        "administer group",
+        "administer localization groups",
+        "administer nodes",
+        "create l10n_group content",
+        "create localization group",
+        "delete any l10n_group content",
+        "delete any localization group",
+        "delete own l10n_group content",
+        "delete own localization group",
+        "edit any l10n_group content",
+        "edit any localization group",
+        "edit own l10n_group content",
+        "edit own localization group",
+        "import gettext files",
+        "start over packages",
+        "view files"
+    ],
+    "description": ""
+}

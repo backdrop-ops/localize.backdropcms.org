@@ -1,0 +1,25 @@
+{
+    "_config_name": "field.field.group_group",
+    "field_name": "group_group",
+    "type": "list_boolean",
+    "module": "list",
+    "active": 1,
+    "locked": "0",
+    "cardinality": "1",
+    "translatable": "0",
+    "deleted": "0",
+    "settings": {
+        "allowed_values": [
+            "Not a group",
+            "Group"
+        ],
+        "allowed_values_function": ""
+    },
+    "entity_types": [],
+    "storage": {
+        "type": "field_sql_storage",
+        "module": "field_sql_storage",
+        "active": 1,
+        "settings": []
+    }
+}

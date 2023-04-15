@@ -1,0 +1,351 @@
+{
+    "_config_name": "layout.layout.projects",
+    "path": "translate/projects/%",
+    "name": "projects",
+    "title": "Projects",
+    "description": null,
+    "renderer_name": "standard",
+    "module": null,
+    "weight": -2,
+    "storage": 1,
+    "layout_template": "moscone_flipped",
+    "disabled": false,
+    "settings": {
+        "title": "",
+        "title_display": "default",
+        "title_block": null
+    },
+    "positions": {
+        "header": [
+            "0fcf3159-7f68-473b-8204-4fa991c67829",
+            "5c29d5f0-44ce-4aa0-a700-fb0a7204b167",
+            "7d48e851-7597-477c-aa00-efa1298bc4fe"
+        ],
+        "top": [],
+        "content": [
+            "63325a12-42b6-4520-b505-05b0f336fb9a",
+            "25bf637f-0bf5-43ec-b200-eacf7381b673"
+        ],
+        "sidebar": [
+            "d4da0a74-4516-49e5-8600-f45eecc30793",
+            "700fca3c-ff53-4623-ba00-ea18f4a67320",
+            "832792d9-03bf-4fb6-8c00-0b37e64c1c5d",
+            "62b92748-8bc9-433b-b203-0348a8615991",
+            "90688865-b505-4803-8500-b0e186821314"
+        ],
+        "bottom": [],
+        "footer": [
+            "40f00988-1d2a-483d-8100-0dfe15e155bf"
+        ],
+        "title": []
+    },
+    "contexts": [],
+    "relationships": [],
+    "content": {
+        "0fcf3159-7f68-473b-8204-4fa991c67829": {
+            "plugin": "system:header",
+            "data": {
+                "status": 1,
+                "module": "system",
+                "delta": "header",
+                "settings": {
+                    "title_display": "default",
+                    "title": "",
+                    "style": "default",
+                    "block_settings": {
+                        "menu": "",
+                        "logo": 1,
+                        "site_name": 1,
+                        "site_slogan": 0
+                    },
+                    "contexts": [],
+                    "admin_label": "",
+                    "admin_description": ""
+                },
+                "uuid": "0fcf3159-7f68-473b-8204-4fa991c67829",
+                "style": {
+                    "plugin": "default",
+                    "data": {
+                        "settings": {
+                            "classes": ""
+                        }
+                    }
+                }
+            }
+        },
+        "5c29d5f0-44ce-4aa0-a700-fb0a7204b167": {
+            "plugin": "system:user-menu",
+            "data": {
+                "status": 1,
+                "module": "system",
+                "delta": "user-menu",
+                "settings": {
+                    "title_display": "default",
+                    "title": "",
+                    "style": "default",
+                    "block_settings": {
+                        "menu_name": "user-menu",
+                        "style": "tree",
+                        "level": "1",
+                        "depth": "0",
+                        "expand_all": 1,
+                        "clickdown": 0,
+                        "toggle": 0
+                    },
+                    "contexts": [],
+                    "admin_label": "",
+                    "admin_description": ""
+                },
+                "uuid": "5c29d5f0-44ce-4aa0-a700-fb0a7204b167",
+                "style": {
+                    "plugin": "default",
+                    "data": {
+                        "settings": {
+                            "classes": ""
+                        }
+                    }
+                }
+            }
+        },
+        "7d48e851-7597-477c-aa00-efa1298bc4fe": {
+            "plugin": "system:main-menu",
+            "data": {
+                "status": 1,
+                "module": "system",
+                "delta": "main-menu",
+                "settings": {
+                    "title_display": "default",
+                    "title": "",
+                    "style": "default",
+                    "block_settings": {
+                        "menu_name": "main-menu",
+                        "style": "dropdown",
+                        "level": "1",
+                        "depth": "0",
+                        "expand_all": 0,
+                        "clickdown": 0,
+                        "toggle": 1
+                    },
+                    "contexts": [],
+                    "admin_label": "",
+                    "admin_description": ""
+                },
+                "uuid": "7d48e851-7597-477c-aa00-efa1298bc4fe",
+                "style": {
+                    "plugin": "default",
+                    "data": {
+                        "settings": {
+                            "classes": ""
+                        }
+                    }
+                }
+            }
+        },
+        "63325a12-42b6-4520-b505-05b0f336fb9a": {
+            "plugin": "layout:custom_block",
+            "data": {
+                "status": 1,
+                "module": "layout",
+                "delta": "custom_block",
+                "settings": {
+                    "title_display": "default",
+                    "title": "",
+                    "style": "default",
+                    "block_settings": [],
+                    "contexts": [],
+                    "content": "This website maintains language files to translate the Backdrop CMS interface into languages other than English.\r\n\r\n<h2>Translating a Backdrop website into your language</h2>\r\n\r\n<ul>\r\n<li>Explore <a href=\"/translate/languages\">different languages</a>, or visit the <a href=\"/translate/downloads\">download page</a>.<br />\r\n(If your language isn't yet available for Backdrop, you can use Drupal 7 files from <a href=\"https://localize.drupal.org/download?project=drupal\">localize.drupal.org</a>.)</li>\r\n<li>Download a language file which suits your needs, e.g. <code>backdropcms-1.23.ru.po</code> for a Russian Backdrop site.</li>\r\n<li>Import the language file to your site, either during installation or at any time (<code>Administration > Configuration > Regional and language > User interface translation > Import</code>).</li>\r\n</ul>\r\n\r\n<h2>Contributing to translations</h2>\r\n\r\n<ol>\r\n<li>If you do not have a user account for this site, then head to <a href=\"https://localize.backdropcms.org/user/register\">the user registration page</a> and create one.</li>\r\n<li>Once your account has been created, the localization admin team will get notified. They'll enable your account, and they will then get in touch with you as soon as possible, to coordinate the contribution process in detail.</li>\r\n</ol>",
+                    "format": "full_html",
+                    "admin_label": "",
+                    "admin_description": ""
+                },
+                "uuid": "63325a12-42b6-4520-b505-05b0f336fb9a",
+                "style": {
+                    "plugin": "default",
+                    "data": {
+                        "settings": {
+                            "classes": ""
+                        }
+                    }
+                }
+            }
+        },
+        "25bf637f-0bf5-43ec-b200-eacf7381b673": {
+            "plugin": "system:main",
+            "data": {
+                "status": 1,
+                "module": "system",
+                "delta": "main",
+                "settings": {
+                    "title_display": "default",
+                    "title": "",
+                    "style": "default",
+                    "block_settings": [],
+                    "contexts": []
+                },
+                "uuid": "25bf637f-0bf5-43ec-b200-eacf7381b673",
+                "style": {
+                    "plugin": "default",
+                    "data": {
+                        "settings": {
+                            "classes": ""
+                        }
+                    }
+                }
+            }
+        },
+        "d4da0a74-4516-49e5-8600-f45eecc30793": {
+            "plugin": "l10n_community:stats",
+            "data": {
+                "status": 1,
+                "module": "l10n_community",
+                "delta": "stats",
+                "settings": {
+                    "title_display": "default",
+                    "title": "",
+                    "style": "default",
+                    "block_settings": [],
+                    "contexts": [],
+                    "admin_label": "",
+                    "admin_description": ""
+                },
+                "uuid": "d4da0a74-4516-49e5-8600-f45eecc30793",
+                "style": {
+                    "plugin": "default",
+                    "data": {
+                        "settings": {
+                            "classes": ""
+                        }
+                    }
+                }
+            }
+        },
+        "700fca3c-ff53-4623-ba00-ea18f4a67320": {
+            "plugin": "l10n_groups:info",
+            "data": {
+                "status": 1,
+                "module": "l10n_groups",
+                "delta": "info",
+                "settings": {
+                    "title_display": "default",
+                    "title": "",
+                    "style": "default",
+                    "block_settings": [],
+                    "contexts": [],
+                    "admin_label": "",
+                    "admin_description": ""
+                },
+                "uuid": "700fca3c-ff53-4623-ba00-ea18f4a67320",
+                "style": {
+                    "plugin": "default",
+                    "data": {
+                        "settings": {
+                            "classes": ""
+                        }
+                    }
+                }
+            }
+        },
+        "832792d9-03bf-4fb6-8c00-0b37e64c1c5d": {
+            "plugin": "l10n_community:contributors",
+            "data": {
+                "status": 1,
+                "module": "l10n_community",
+                "delta": "contributors",
+                "settings": {
+                    "title_display": "default",
+                    "title": "",
+                    "style": "default",
+                    "block_settings": [],
+                    "contexts": [],
+                    "admin_label": "",
+                    "admin_description": ""
+                },
+                "uuid": "832792d9-03bf-4fb6-8c00-0b37e64c1c5d",
+                "style": {
+                    "plugin": "default",
+                    "data": {
+                        "settings": {
+                            "classes": ""
+                        }
+                    }
+                }
+            }
+        },
+        "62b92748-8bc9-433b-b203-0348a8615991": {
+            "plugin": "l10n_community:jump",
+            "data": {
+                "status": 1,
+                "module": "l10n_community",
+                "delta": "jump",
+                "settings": {
+                    "title_display": "default",
+                    "title": "",
+                    "style": "default",
+                    "block_settings": [],
+                    "contexts": [],
+                    "admin_label": "",
+                    "admin_description": ""
+                },
+                "uuid": "62b92748-8bc9-433b-b203-0348a8615991",
+                "style": {
+                    "plugin": "default",
+                    "data": {
+                        "settings": {
+                            "classes": ""
+                        }
+                    }
+                }
+            }
+        },
+        "90688865-b505-4803-8500-b0e186821314": {
+            "plugin": "l10n_packager:download",
+            "data": {
+                "status": 1,
+                "module": "l10n_packager",
+                "delta": "download",
+                "settings": {
+                    "title_display": "default",
+                    "title": "",
+                    "style": "default",
+                    "block_settings": [],
+                    "contexts": [],
+                    "admin_label": "",
+                    "admin_description": ""
+                },
+                "uuid": "90688865-b505-4803-8500-b0e186821314",
+                "style": {
+                    "plugin": "default",
+                    "data": {
+                        "settings": {
+                            "classes": ""
+                        }
+                    }
+                }
+            }
+        },
+        "40f00988-1d2a-483d-8100-0dfe15e155bf": {
+            "plugin": "system:powered-by",
+            "data": {
+                "status": 1,
+                "module": "system",
+                "delta": "powered-by",
+                "settings": {
+                    "title_display": "default",
+                    "title": "",
+                    "style": "default",
+                    "block_settings": [],
+                    "contexts": []
+                },
+                "uuid": "40f00988-1d2a-483d-8100-0dfe15e155bf",
+                "style": {
+                    "plugin": "default",
+                    "data": {
+                        "settings": {
+                            "classes": ""
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

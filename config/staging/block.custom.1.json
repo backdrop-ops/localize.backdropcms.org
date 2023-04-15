@@ -1,0 +1,10 @@
+{
+    "_config_name": "block.custom.1",
+    "delta": "1",
+    "info": "Note about the status of the website",
+    "title": "Website Status",
+    "body": {
+        "value": "The basics work. See the <a href=\"https://github.com/backdrop-ops/localization/issues/5\">roadmap on GitHub</a>.",
+        "format": "filtered_html"
+    }
+}

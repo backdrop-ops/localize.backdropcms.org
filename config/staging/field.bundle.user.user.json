@@ -1,0 +1,28 @@
+{
+    "_config_name": "field.bundle.user.user",
+    "entity_type": "user",
+    "bundle": "user",
+    "view_modes": {
+        "full": {
+            "custom_settings": false
+        }
+    },
+    "extra_fields": {
+        "form": {
+            "account": {
+                "weight": "0"
+            },
+            "timezone": {
+                "weight": "2"
+            }
+        },
+        "display": {
+            "summary": {
+                "default": {
+                    "weight": "1",
+                    "visible": true
+                }
+            }
+        }
+    }
+}

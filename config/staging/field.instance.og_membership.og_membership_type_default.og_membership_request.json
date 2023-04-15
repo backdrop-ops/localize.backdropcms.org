@@ -1,0 +1,31 @@
+{
+    "_config_name": "field.instance.og_membership.og_membership_type_default.og_membership_request",
+    "field_name": "og_membership_request",
+    "entity_type": "og_membership",
+    "bundle": "og_membership_type_default",
+    "deleted": "0",
+    "label": "Request message",
+    "description": "This is the text a user may send to the group administrators.",
+    "required": false,
+    "settings": {
+        "text_processing": 0,
+        "user_register_form": false
+    },
+    "display": {
+        "default": {
+            "label": "above",
+            "type": "text_default",
+            "settings": [],
+            "module": "text",
+            "weight": 0
+        }
+    },
+    "widget": {
+        "type": "text_textarea",
+        "settings": {
+            "rows": 5
+        },
+        "weight": 0,
+        "module": "text"
+    }
+}

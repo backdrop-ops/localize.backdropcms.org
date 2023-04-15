@@ -1,0 +1,13 @@
+{
+    "_config_name": "contact.categories",
+    "contact_default_category": "1",
+    "categories": [
+        {
+            "cid": "1",
+            "category": "Website feedback",
+            "recipients": "no-reply@backdropcms.org",
+            "reply": "",
+            "weight": "0"
+        }
+    ]
+}

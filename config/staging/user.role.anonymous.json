@@ -1,0 +1,16 @@
+{
+    "_config_name": "user.role.anonymous",
+    "name": "anonymous",
+    "label": "Anonymous",
+    "weight": "0",
+    "permissions": [
+        "access comments",
+        "access content",
+        "access localization community",
+        "browse translations",
+        "export gettext templates and translations",
+        "use text format filtered_html",
+        "view files"
+    ],
+    "description": ""
+}
