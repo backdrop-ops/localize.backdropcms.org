@@ -144,7 +144,23 @@
         "access administration bar",
         "access devel information",
         "execute php code",
-        "switch users"
+        "switch users",
+        "administer view modes",
+        "access file overview",
+        "manage files",
+        "delete files",
+        "upload editor files",
+        "administer layouts",
+        "administer flexible templates",
+        "view any unpublished content",
+        "view hidden paths",
+        "create group_post content",
+        "edit own group_post content",
+        "edit any group_post content",
+        "delete own group_post content",
+        "delete any group_post content",
+        "administer path patterns",
+        "notify of path changes"
     ],
     "description": ""
 }
