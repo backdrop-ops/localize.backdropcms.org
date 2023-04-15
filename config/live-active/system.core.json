@@ -42,8 +42,13 @@
     "log_identity": "backdrop",
     "log_facility": 128,
     "log_format": "!base_url|!timestamp|!type|!ip|!request_uri|!referer|!uid|!link|!message",
-    "error_level": "all",
-    "active_menus_default": [],
+    "error_level": "some",
+    "active_menus_default": {
+        "0": "user-menu",
+        "1": "menu-footer-menu",
+        "2": "management",
+        "4": "main-menu"
+    },
     "menu_route_handler": "layout_route_handler",
     "user_login_method": "username_only",
     "user_email_match": 1,
