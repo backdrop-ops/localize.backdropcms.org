@@ -2,7 +2,7 @@
     "_config_name": "l10n_packager.settings",
     "l10n_packager_cron": 0,
     "l10n_packager_directory": "public://l10n_packager",
-    "l10n_packager_update_url": "https://beta.localize.backdropcms.org/files/l10n_packager",
+    "l10n_packager_update_url": "https://localize.backdropcms.org/files/l10n_packager",
     "l10n_packager_filepath": "%core/%project/%project-%release.%language.po",
     "l10n_packager_release_limit": "10",
     "l10n_packager_file_limit": "1",
