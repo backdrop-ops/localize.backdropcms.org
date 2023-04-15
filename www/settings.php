@@ -34,16 +34,17 @@ $database_prefix = '';
  * $config_directories['staging'] = '/home/myusername/config/staging';
  * @endcode
  */
-$config_directories['active'] = 'files/config_' . md5($database) . '/active';
-$config_directories['staging'] = 'files/config_' . md5($database) . '/staging';
+$config_directories['active'] = '../config/dev-active';
+$config_directories['staging'] = '../config/staging';
 
 /**
  * Skip the configuration staging directory cleanup
  *
- * When the configuration files are in version control, it may be preferable to
- * not empty the staging directory after each sync.
+ * For some development workflows (such as when the configuration files are in
+ * version control) it may be necessary to not delete the staging config files
+ * after each configuration sync.
  */
-// $config['system.core']['config_sync_clear_staging'] = 0;
+$config['system.core']['config_sync_clear_staging'] = 0;
 
 /**
  * Access control for update.php script.
