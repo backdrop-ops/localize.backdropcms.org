@@ -1,0 +1,16 @@
+{
+    "_config_name": "image.style.content_max_width",
+    "name": "content_max_width",
+    "label": "Content max width",
+    "effects": [
+        {
+            "weight": "1",
+            "name": "image_scale",
+            "data": {
+                "width": "938",
+                "height": "",
+                "upscale": 0
+            }
+        }
+    ]
+}

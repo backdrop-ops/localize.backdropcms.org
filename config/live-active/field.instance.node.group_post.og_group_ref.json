@@ -1,0 +1,57 @@
+{
+    "_config_name": "field.instance.node.group_post.og_group_ref",
+    "field_name": "og_group_ref",
+    "entity_type": "node",
+    "bundle": "group_post",
+    "deleted": "0",
+    "label": "Groups audience",
+    "widget": {
+        "type": "og_complex",
+        "module": "og",
+        "settings": [],
+        "weight": "1"
+    },
+    "settings": {
+        "behaviors": {
+            "og_widget": {
+                "status": true,
+                "default": {
+                    "widget_type": "options_select"
+                },
+                "admin": {
+                    "widget_type": "entityreference_autocomplete"
+                }
+            }
+        },
+        "user_register_form": false
+    },
+    "view modes": {
+        "full": {
+            "label": "Full",
+            "type": "og_list_default",
+            "custom settings": false
+        },
+        "teaser": {
+            "label": "Teaser",
+            "type": "og_list_default",
+            "custom settings": false
+        }
+    },
+    "display": {
+        "default": {
+            "label": "inline",
+            "type": "og_list_default",
+            "weight": "2",
+            "settings": [],
+            "module": "og_ui"
+        },
+        "teaser": {
+            "label": "above",
+            "type": "hidden",
+            "weight": "2",
+            "settings": []
+        }
+    },
+    "required": false,
+    "description": ""
+}

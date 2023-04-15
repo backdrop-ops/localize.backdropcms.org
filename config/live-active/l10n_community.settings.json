@@ -1,0 +1,10 @@
+{
+    "_config_name": "l10n_community.settings",
+    "l10n_community_project_per_page": "30",
+    "l10n_community_stats_enabled": 1,
+    "l10n_community_stats_explore_projects_enabled": 1,
+    "l10n_community_package_count": 1,
+    "l10n_cron_stats": 1681593004,
+    "l10n_community_import_user": "Multiple contributors",
+    "l10n_community_highlighted_project": "Backdrop CMS"
+}

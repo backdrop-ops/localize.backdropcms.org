@@ -1,0 +1,165 @@
+{
+    "_config_name": "views.view.og_nodes",
+    "name": "og_nodes",
+    "module": "og",
+    "description": "Show all content (nodes) of a group.",
+    "tag": "og",
+    "disabled": false,
+    "base_table": "node",
+    "human_name": "OG content",
+    "core": "1",
+    "display": {
+        "default": {
+            "display_title": "Defaults",
+            "display_plugin": "default",
+            "display_options": {
+                "query": {
+                    "type": "views_query",
+                    "options": {
+                        "query_comment": false
+                    }
+                },
+                "access": {
+                    "type": "none"
+                },
+                "cache": {
+                    "type": "none"
+                },
+                "exposed_form": {
+                    "type": "basic"
+                },
+                "pager": {
+                    "type": "full"
+                },
+                "style_plugin": "default",
+                "row_plugin": "node",
+                "row_options": {
+                    "links": 1,
+                    "comments": 0
+                },
+                "empty": {
+                    "area": {
+                        "id": "area",
+                        "table": "views",
+                        "field": "area",
+                        "empty": false,
+                        "content": "There is no content in this group."
+                    }
+                },
+                "relationships": {
+                    "og_membership_rel": {
+                        "id": "og_membership_rel",
+                        "table": "node",
+                        "field": "og_membership_rel",
+                        "required": 0
+                    }
+                },
+                "sorts": {
+                    "created": {
+                        "id": "created",
+                        "table": "node",
+                        "field": "created",
+                        "order": "DESC"
+                    }
+                },
+                "arguments": {
+                    "gid": {
+                        "id": "gid",
+                        "table": "og_membership",
+                        "field": "gid",
+                        "relationship": "og_membership_rel",
+                        "group_type": "group",
+                        "ui_name": "",
+                        "default_action": "not found",
+                        "exception": {
+                            "value": "all",
+                            "title_enable": 0,
+                            "title": "All"
+                        },
+                        "title_enable": 0,
+                        "title": "",
+                        "breadcrumb_enable": 0,
+                        "breadcrumb": "",
+                        "default_argument_type": "fixed",
+                        "default_argument_options": {
+                            "argument": ""
+                        },
+                        "default_argument_skip_url": 0,
+                        "summary_options": {
+                            "base_path": "",
+                            "count": "1",
+                            "items_per_page": "25",
+                            "override": 0
+                        },
+                        "summary": {
+                            "sort_order": "asc",
+                            "number_of_records": "0",
+                            "format": "default_summary"
+                        },
+                        "specify_validation": 1,
+                        "validate": {
+                            "type": "og",
+                            "fail": "not found"
+                        },
+                        "validate_options": {
+                            "group_type": "node"
+                        },
+                        "break_phrase": 0,
+                        "not": 0
+                    }
+                },
+                "filters": {
+                    "status": {
+                        "id": "status",
+                        "table": "node",
+                        "field": "status",
+                        "value": "1"
+                    },
+                    "group_type": {
+                        "id": "group_type",
+                        "table": "og_membership",
+                        "field": "group_type",
+                        "relationship": "none",
+                        "group_type": "group",
+                        "ui_name": "",
+                        "operator": "in",
+                        "value": {
+                            "node": "node"
+                        },
+                        "group": "1",
+                        "exposed": false,
+                        "expose": {
+                            "operator_id": false,
+                            "label": "",
+                            "description": "",
+                            "use_operator": false,
+                            "operator": "",
+                            "identifier": "",
+                            "required": false,
+                            "remember": false,
+                            "multiple": false,
+                            "remember_roles": {
+                                "authenticated": "authenticated"
+                            },
+                            "reduce": false
+                        },
+                        "is_grouped": false,
+                        "group_info": {
+                            "label": "",
+                            "description": "",
+                            "identifier": "",
+                            "optional": true,
+                            "widget": "select",
+                            "multiple": false,
+                            "remember": 0,
+                            "default_group": "All",
+                            "default_group_multiple": [],
+                            "group_items": []
+                        }
+                    }
+                },
+                "title": ""
+            }
+        }
+    }
+}

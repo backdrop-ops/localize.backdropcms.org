@@ -1,0 +1,86 @@
+{
+    "_config_name": "layout.layout.admin_default",
+    "path": null,
+    "name": "admin_default",
+    "title": "Default Administrative Layout",
+    "description": null,
+    "renderer_name": "standard",
+    "module": "layout",
+    "weight": 1,
+    "storage": 2,
+    "layout_template": "boxton",
+    "disabled": false,
+    "settings": {
+        "title": "",
+        "title_display": "default",
+        "title_block": null
+    },
+    "positions": {
+        "header": [
+            "131450ed-3fec-48d4-9920-328cc99ed523"
+        ],
+        "top": [],
+        "content": [
+            "default"
+        ],
+        "bottom": [],
+        "footer": [],
+        "title": []
+    },
+    "contexts": [],
+    "relationships": [],
+    "content": {
+        "131450ed-3fec-48d4-9920-328cc99ed523": {
+            "plugin": "system:breadcrumb",
+            "data": {
+                "status": 1,
+                "module": "system",
+                "delta": "breadcrumb",
+                "settings": {
+                    "title_display": "default",
+                    "title": "",
+                    "style": "default",
+                    "block_settings": {
+                        "current": 0
+                    },
+                    "contexts": [],
+                    "admin_label": "",
+                    "admin_description": ""
+                },
+                "uuid": "131450ed-3fec-48d4-9920-328cc99ed523",
+                "style": {
+                    "plugin": "default",
+                    "data": {
+                        "settings": {
+                            "classes": ""
+                        }
+                    }
+                }
+            }
+        },
+        "default": {
+            "plugin": "system:main",
+            "data": {
+                "status": 1,
+                "module": "system",
+                "delta": "main",
+                "settings": {
+                    "title_display": "default",
+                    "title": "",
+                    "style": "default",
+                    "block_settings": [],
+                    "contexts": []
+                },
+                "uuid": null,
+                "style": {
+                    "plugin": "default",
+                    "data": {
+                        "settings": {
+                            "classes": ""
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

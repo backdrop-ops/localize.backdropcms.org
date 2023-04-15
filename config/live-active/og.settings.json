@@ -1,0 +1,16 @@
+{
+    "_config_name": "og.settings",
+    "og_7000_add_field": "FALSE",
+    "og_7200_ogur_roles": "FALSE",
+    "og_node_access_strict": "TRUE",
+    "og_use_queue": "FALSE",
+    "og_orphans_delete": "FALSE",
+    "og_group_manager_full_access": "TRUE",
+    "og_maintain_overridden_roles": "TRUE",
+    "og_features_ignore_og_fields": "FALSE",
+    "og_is_group__file__document": false,
+    "og_is_group__file__image": false,
+    "og_is_group__node__group_post": false,
+    "og_is_group_default_access__node__l10n_group": true,
+    "og_is_group__user__user": false
+}

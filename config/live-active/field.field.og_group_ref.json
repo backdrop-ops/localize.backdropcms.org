@@ -1,0 +1,34 @@
+{
+    "_config_name": "field.field.og_group_ref",
+    "field_name": "og_group_ref",
+    "type": "entityreference",
+    "module": "entityreference",
+    "active": 1,
+    "locked": "0",
+    "cardinality": "-1",
+    "translatable": "0",
+    "deleted": "0",
+    "settings": {
+        "handler": "og",
+        "handler_submit": "Change handler",
+        "handler_settings": {
+            "behaviors": {
+                "og_behavior": {
+                    "status": true
+                }
+            },
+            "target_bundles": [
+                "l10n_group"
+            ],
+            "membership_type": "og_membership_type_default"
+        },
+        "target_type": "node"
+    },
+    "entity_types": [],
+    "storage": {
+        "type": "field_sql_storage",
+        "module": "field_sql_storage",
+        "active": 1,
+        "settings": []
+    }
+}

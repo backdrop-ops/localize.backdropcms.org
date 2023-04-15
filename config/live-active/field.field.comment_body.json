@@ -1,0 +1,21 @@
+{
+    "_config_name": "field.field.comment_body",
+    "field_name": "comment_body",
+    "type": "text_long",
+    "module": "text",
+    "active": 1,
+    "locked": "0",
+    "cardinality": "1",
+    "translatable": "0",
+    "deleted": "0",
+    "entity_types": [
+        "comment"
+    ],
+    "settings": [],
+    "storage": {
+        "type": "field_sql_storage",
+        "module": "field_sql_storage",
+        "active": 1,
+        "settings": []
+    }
+}

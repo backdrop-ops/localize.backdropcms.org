@@ -1,0 +1,51 @@
+{
+    "_config_name": "field.instance.user.user.og_user_node",
+    "field_name": "og_user_node",
+    "entity_type": "user",
+    "bundle": "user",
+    "deleted": "0",
+    "label": "Group membership",
+    "widget": {
+        "type": "og_complex",
+        "module": "og",
+        "settings": [],
+        "weight": "3"
+    },
+    "settings": {
+        "behaviors": {
+            "og_widget": {
+                "status": true,
+                "default": {
+                    "widget_type": "options_select"
+                },
+                "admin": {
+                    "widget_type": "entityreference_autocomplete"
+                }
+            }
+        },
+        "user_register_form": false
+    },
+    "view modes": {
+        "full": {
+            "label": "Full",
+            "type": "og_list_default",
+            "custom settings": false
+        },
+        "teaser": {
+            "label": "Teaser",
+            "type": "og_list_default",
+            "custom settings": false
+        }
+    },
+    "display": {
+        "default": {
+            "label": "above",
+            "type": "og_list_default",
+            "weight": "0",
+            "settings": [],
+            "module": "og_ui"
+        }
+    },
+    "required": false,
+    "description": ""
+}

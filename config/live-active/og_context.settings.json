@@ -1,0 +1,16 @@
+{
+    "_config_name": "og_context.settings",
+    "og_context_negotiation_group_context": {
+        "url": [],
+        "node": [],
+        "translate_path": []
+    },
+    "og_context_providers_weight_group_context": {
+        "url": "-10",
+        "node": "-9",
+        "comment": "-7",
+        "user-edit": "-6",
+        "translate_path": "-8",
+        "user-view": "-5"
+    }
+}

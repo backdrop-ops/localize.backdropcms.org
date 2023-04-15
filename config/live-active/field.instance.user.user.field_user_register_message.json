@@ -1,0 +1,32 @@
+{
+    "_config_name": "field.instance.user.user.field_user_register_message",
+    "field_name": "field_user_register_message",
+    "entity_type": "user",
+    "bundle": "user",
+    "deleted": "0",
+    "label": "Message",
+    "widget": {
+        "weight": "1",
+        "type": "text_textfield",
+        "module": "text",
+        "active": 1,
+        "settings": {
+            "size": "60"
+        }
+    },
+    "settings": {
+        "text_processing": "0",
+        "user_register_form": 1
+    },
+    "display": {
+        "default": {
+            "label": "above",
+            "type": "hidden",
+            "weight": "2",
+            "settings": []
+        }
+    },
+    "required": 1,
+    "description": "Please let us know why you're creating an account on <em>localize.backdropcms.org</em>. Examples:\r\n<ul>\r\n<li><em>I'd like to submit translation suggestions for Spanish.</em></li>\r\n<li><em>I'd like to moderate the Russian translation group.</em></li>\r\n</ul>\r\nTo discuss details, we'll get in touch with you via email.",
+    "default_value": null
+}

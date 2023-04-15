@@ -1,0 +1,195 @@
+{
+    "_config_name": "views.view.og_members",
+    "name": "og_members",
+    "module": "og",
+    "description": "Newest group members.",
+    "tag": "og",
+    "disabled": false,
+    "base_table": "users",
+    "human_name": "OG members",
+    "core": "1",
+    "display": {
+        "default": {
+            "display_title": "Defaults",
+            "display_plugin": "default",
+            "display_options": {
+                "query": {
+                    "type": "views_query",
+                    "options": {
+                        "query_comment": false
+                    }
+                },
+                "access": {
+                    "type": "none"
+                },
+                "cache": {
+                    "type": "none"
+                },
+                "exposed_form": {
+                    "type": "basic"
+                },
+                "pager": {
+                    "type": "some",
+                    "options": {
+                        "items_per_page": "5",
+                        "offset": "0"
+                    }
+                },
+                "style_plugin": "default",
+                "row_plugin": "fields",
+                "relationships": {
+                    "og_membership_rel": {
+                        "id": "og_membership_rel",
+                        "table": "users",
+                        "field": "og_membership_rel",
+                        "required": 0
+                    }
+                },
+                "fields": {
+                    "name": {
+                        "id": "name",
+                        "table": "users",
+                        "field": "name",
+                        "label": "",
+                        "alter": {
+                            "alter_text": 0,
+                            "make_link": 0,
+                            "word_boundary": 1,
+                            "ellipsis": 1,
+                            "strip_tags": 0,
+                            "trim": 0,
+                            "html": 0
+                        },
+                        "hide_empty": 0,
+                        "empty_zero": 0,
+                        "link_to_user": 1,
+                        "overwrite_anonymous": 0
+                    }
+                },
+                "sorts": {
+                    "created": {
+                        "id": "created",
+                        "table": "og_membership",
+                        "field": "created",
+                        "relationship": "og_membership_rel",
+                        "group_type": "group",
+                        "ui_name": "",
+                        "order": "DESC",
+                        "exposed": false,
+                        "expose": {
+                            "label": ""
+                        },
+                        "granularity": "second"
+                    }
+                },
+                "arguments": {
+                    "gid": {
+                        "id": "gid",
+                        "table": "og_membership",
+                        "field": "gid",
+                        "relationship": "og_membership_rel",
+                        "group_type": "group",
+                        "ui_name": "",
+                        "default_action": "not found",
+                        "exception": {
+                            "value": "all",
+                            "title_enable": 0,
+                            "title": "All"
+                        },
+                        "title_enable": 1,
+                        "title": "%1 members",
+                        "breadcrumb_enable": 0,
+                        "breadcrumb": "",
+                        "default_argument_type": "fixed",
+                        "default_argument_options": {
+                            "argument": ""
+                        },
+                        "default_argument_skip_url": 0,
+                        "summary_options": {
+                            "base_path": "",
+                            "count": "1",
+                            "items_per_page": "25",
+                            "override": 0
+                        },
+                        "summary": {
+                            "sort_order": "asc",
+                            "number_of_records": "0",
+                            "format": "default_summary"
+                        },
+                        "specify_validation": 1,
+                        "validate": {
+                            "type": "og",
+                            "fail": "not found"
+                        },
+                        "validate_options": {
+                            "group_type": "node"
+                        },
+                        "break_phrase": 0,
+                        "not": 0
+                    }
+                },
+                "filters": {
+                    "status": {
+                        "id": "status",
+                        "table": "users",
+                        "field": "status",
+                        "value": "1"
+                    },
+                    "state": {
+                        "id": "state",
+                        "table": "og_membership",
+                        "field": "state",
+                        "relationship": "og_membership_rel",
+                        "group_type": "group",
+                        "ui_name": "",
+                        "operator": "in",
+                        "value": {
+                            "1": "1"
+                        },
+                        "group": "1",
+                        "exposed": false,
+                        "expose": {
+                            "operator_id": false,
+                            "label": "",
+                            "description": "",
+                            "use_operator": false,
+                            "operator": "",
+                            "identifier": "",
+                            "required": false,
+                            "remember": false,
+                            "multiple": false,
+                            "remember_roles": {
+                                "authenticated": "authenticated"
+                            },
+                            "reduce": false
+                        },
+                        "is_grouped": false,
+                        "group_info": {
+                            "label": "",
+                            "description": "",
+                            "identifier": "",
+                            "optional": true,
+                            "widget": "select",
+                            "multiple": false,
+                            "remember": 0,
+                            "default_group": "All",
+                            "default_group_multiple": [],
+                            "group_items": []
+                        }
+                    }
+                },
+                "title": ""
+            }
+        },
+        "block_1": {
+            "display_title": "Block",
+            "display_plugin": "block",
+            "display_options": {
+                "query": {
+                    "type": "views_query",
+                    "options": []
+                }
+            }
+        }
+    }
+}
