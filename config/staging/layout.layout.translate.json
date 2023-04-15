@@ -85,7 +85,7 @@
                         "style": "tree",
                         "level": "1",
                         "depth": "1",
-                        "expand_all": 1,
+                        "expand_all": 0,
                         "clickdown": 0,
                         "toggle": 0
                     },
