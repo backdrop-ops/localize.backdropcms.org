@@ -135,6 +135,7 @@ function l10n_community_filter_form($form, &$form_state, $langcode, $filters) {
 
   $form['status'] = array(
     '#title' => t('Status'),
+    '#type' => 'container',
     '#tree' => TRUE,
     '#prefix' => '<div class="' . ($form_state['values']['status'] == L10N_STATUS_ALL ? 'is-default' : 'is-not-default') . '">',
     '#suffix' => '</div>',

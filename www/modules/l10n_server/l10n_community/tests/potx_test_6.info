@@ -11,7 +11,7 @@ core = "7.x"
 project = "potx"
 datestamp = "1599561778"
 
-; Added by Backdrop CMS packaging script on 2023-04-10
+; Added by Backdrop CMS packaging script on 2023-04-14
 project = l10n_server
-version = 1.x-1.0.1-alpha
-timestamp = 1681158304
+version = 1.x-1.0.2-alpha
+timestamp = 1681518764
