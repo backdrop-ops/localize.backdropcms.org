@@ -28,7 +28,7 @@
     "cron_safe_threshold": 10800,
     "cron_max_threshold": 10800,
     "cron_threshold_error": 1209600,
-    "site_name": "Backdrop Translations",
+    "site_name": "Backdrop CMS Translations",
     "site_mail": "no-reply@backdropcms.org",
     "site_slogan": "",
     "site_403": "",
@@ -42,7 +42,7 @@
     "log_identity": "backdrop",
     "log_facility": 128,
     "log_format": "!base_url|!timestamp|!type|!ip|!request_uri|!referer|!uid|!link|!message",
-    "error_level": "some",
+    "error_level": "hide",
     "active_menus_default": {
         "0": "user-menu",
         "1": "menu-footer-menu",
