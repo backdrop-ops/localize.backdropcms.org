@@ -4,7 +4,7 @@ description = Ensure that the localization server functions properly.
 group = Localization server
 file = l10n_community.test
 
-; Added by Backdrop CMS packaging script on 2023-04-14
+; Added by Backdrop CMS packaging script on 2023-04-16
 project = l10n_server
-version = 1.x-1.0.2-alpha
-timestamp = 1681518764
+version = 1.x-1.0.3-alpha
+timestamp = 1681700906
