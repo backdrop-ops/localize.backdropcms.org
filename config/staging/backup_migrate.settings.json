@@ -14,7 +14,7 @@
     "maintenance_mode_message": null,
     "backup_migrate_cleanup_time": 21600,
     "backup_migrate_cleanup_temp_files": true,
-    "backup_migrate_profile_id": "34a7",
+    "backup_migrate_profile_id": "default",
     "backup_migrate_smart_keep_hourly": 24,
     "backup_migrate_smart_keep_daily": 7,
     "backup_migrate_smart_keep_weekly": 12,
