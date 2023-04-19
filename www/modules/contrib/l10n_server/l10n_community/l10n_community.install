@@ -33,3 +33,13 @@ function l10n_community_update_1000() {
   config_install_default_config('l10n_community', 'layout.layout.projects');
   config_install_default_config('l10n_community', 'layout.layout.translate');
 }
+
+/**
+ * Move config value for l10n_cron_stats to state table.
+ */
+function l10n_community_update_1001() {
+  $config = config('l10n_community.settings');
+  state_set('l10n_cron_stats', $config->get('l10n_cron_stats'));
+  $config->clear('l10n_cron_stats');
+  $config->save();
+}

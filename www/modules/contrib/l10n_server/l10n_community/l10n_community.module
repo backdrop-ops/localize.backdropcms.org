@@ -859,13 +859,13 @@ function l10n_community_get_stats($langcode = NULL) {
  * Clear project and language stats every hour.
  */
 function l10n_community_cron() {
-  $lastrun = config_get('l10n_community.settings', 'l10n_cron_stats');
+  $lastrun = state_get('l10n_cron_stats', 1);
   $lastrun = empty($lastrun) ? 1 : $lastrun;
   if (($_SERVER['REQUEST_TIME'] - $lastrun) > 3600) {
     watchdog('l10n_community', 'Rebuilding community statistics (this may take a long time)');
     l10n_community_cache_clear_all();
     l10n_community_rebuild_stats();
-    config_set('l10n_community.settings', 'l10n_cron_stats', $_SERVER['REQUEST_TIME']);
+    state_set('l10n_cron_stats', $_SERVER['REQUEST_TIME']);
   }
 }
 

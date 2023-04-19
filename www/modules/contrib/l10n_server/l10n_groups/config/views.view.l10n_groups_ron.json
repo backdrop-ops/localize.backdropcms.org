@@ -42,8 +42,14 @@
                         "id": "area",
                         "table": "views",
                         "field": "area",
-                        "content": "No content has been posted in this group yet.",
-                        "format": "2"
+                        "relationship": "none",
+                        "group_type": "group",
+                        "ui_name": "",
+                        "label": "",
+                        "empty": true,
+                        "content": "<p>No content has been posted in this group yet.</p>\r\n",
+                        "format": "filtered_html",
+                        "tokenize": 0
                     }
                 },
                 "relationships": {
