@@ -1,0 +1,12 @@
+/**
+ * @file
+ * Styles for l10n_server module.
+ */
+
+/**
+ * Icon for main level nav to match core.
+ */
+#admin-bar #admin-bar-menu > li > .dropdown > li > a.admin-l10n-server {
+  background: transparent url(../misc/globe--white--64.png) 5% center no-repeat;
+  background-size: 16px;
+}

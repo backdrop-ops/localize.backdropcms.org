@@ -77,3 +77,145 @@ function l10n_groups_schema() {
 function l10n_groups_update_last_removed() {
   return 7100;
 }
+
+/** 
+ * Install and enable the view l10n_groups_ron.
+ */
+function l10n_groups_update_1001() {
+  $config = config('views.view.l10n_groups_ron');
+  $config->setData(array(
+    'name' => 'l10n_groups_ron',
+    'description' => 'Translation group - River of news',
+    'tag' => 'og',
+    'disabled' => false,
+    'base_table' => 'node',
+    'human_name' => 'Translation group board',
+    'core' => 0,
+    'display' => array(
+      'default' => array(
+        'display_title' => 'Defaults',
+        'display_plugin' => 'default',
+        'display_options' => array(
+          'query' => array(
+            'type' => 'views_query',
+            'options' => array(
+              'query_comment' => false,
+            ),
+          ),
+          'title' => 'Board',
+          'use_more_always' => false,
+          'access' => array(
+            'type' => 'perm',
+          ),
+          'cache' => array(
+            'type' => 'none',
+          ),
+          'exposed_form' => array(
+            'type' => 'basic',
+          ),
+          'pager' => array(
+            'type' => 'full',
+            'options' => array(
+              'items_per_page' => 20,
+            ),
+          ),
+          'style_plugin' => 'default',
+          'row_plugin' => 'node',
+          'empty' => array(
+            'area' => array(
+              'id' => 'area',
+              'table' => 'views',
+              'field' => 'area',
+              'content' => 'No content has been posted in this group yet.',
+              'format' => '2',
+            ),
+          ),
+          'relationships' => array(
+            'og_membership_rel' => array(
+              'id' => 'og_membership_rel',
+              'table' => 'node',
+              'field' => 'og_membership_rel',
+              'required' => true,
+            ),
+          ),
+          'sorts' => array(
+            'sticky' => array(
+              'id' => 'sticky',
+              'table' => 'node',
+              'field' => 'sticky',
+              'order' => 'DESC',
+            ),
+            'created' => array(
+              'id' => 'created',
+              'table' => 'node',
+              'field' => 'created',
+              'order' => 'DESC',
+            ),
+          ),
+          'arguments' => array(
+            'null' => array(
+              'id' => 'null',
+              'table' => 'views',
+              'field' => 'null',
+              'default_action' => 'not found',
+              'default_argument_type' => 'fixed',
+              'summary' => array(
+                'number_of_records' => '0',
+                'format' => 'default_summary',
+              ),
+              'summary_options' => array(
+                'items_per_page' => '25',
+              ),
+            ),
+            'gid' => array(
+              'id' => 'gid',
+              'table' => 'og_membership',
+              'field' => 'gid',
+              'relationship' => 'og_membership_rel',
+              'default_action' => 'default',
+              'default_argument_type' => 'og_context',
+              'summary' => array(
+                'number_of_records' => '0',
+                'format' => 'default_summary',
+              ),
+              'summary_options' => array(
+                'items_per_page' => '25',
+              ),
+            ),
+          ),
+          'filters' => array(
+            'status' => array(
+              'id' => 'status',
+              'table' => 'node',
+              'field' => 'status',
+              'value' => 1,
+              'group' => 0,
+              'expose' => array(
+                'operator' => false,
+              ),
+            ),
+          ),
+        ),
+      ),
+      'page_1' => array(
+        'display_title' => 'Page',
+        'display_plugin' => 'page',
+        'display_options' => array(
+          'query' => array(
+            'type' => 'views_query',
+            'options' => array(
+            ),
+          ),
+          'path' => 'translate/languages/%/board',
+          'menu' => array(
+            'type' => 'tab',
+            'title' => 'Board',
+            'weight' => '-15',
+            'context' => 0,
+          ),
+        ),
+      ),
+    ),
+  ));
+  $config->save();
+}
