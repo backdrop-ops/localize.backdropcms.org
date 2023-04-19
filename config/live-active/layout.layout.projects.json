@@ -23,14 +23,15 @@
         ],
         "top": [],
         "content": [
-            "63325a12-42b6-4520-b505-05b0f336fb9a",
+            "ccb431df-9a1f-408b-b906-06b3febcd67a",
             "25bf637f-0bf5-43ec-b200-eacf7381b673"
         ],
         "sidebar": [
+            "63325a12-42b6-4520-b505-05b0f336fb9a",
+            "62b92748-8bc9-433b-b203-0348a8615991",
             "d4da0a74-4516-49e5-8600-f45eecc30793",
             "700fca3c-ff53-4623-ba00-ea18f4a67320",
             "832792d9-03bf-4fb6-8c00-0b37e64c1c5d",
-            "62b92748-8bc9-433b-b203-0348a8615991",
             "90688865-b505-4803-8500-b0e186821314"
         ],
         "bottom": [],
@@ -141,7 +142,7 @@
                 }
             }
         },
-        "63325a12-42b6-4520-b505-05b0f336fb9a": {
+        "ccb431df-9a1f-408b-b906-06b3febcd67a": {
             "plugin": "layout:custom_block",
             "data": {
                 "status": 1,
@@ -153,12 +154,12 @@
                     "style": "default",
                     "block_settings": [],
                     "contexts": [],
-                    "content": "This website maintains language files to translate the Backdrop CMS interface into languages other than English.\r\n\r\n<h2>Translating a Backdrop website into your language</h2>\r\n\r\n<ul>\r\n<li>Explore <a href=\"/translate/languages\">different languages</a>, or visit the <a href=\"/translate/downloads\">download page</a>.<br />\r\n(If your language isn't yet available for Backdrop, you can use Drupal 7 files from <a href=\"https://localize.drupal.org/download?project=drupal\">localize.drupal.org</a>.)</li>\r\n<li>Download a language file which suits your needs, e.g. <code>backdropcms-1.23.ru.po</code> for a Russian Backdrop site.</li>\r\n<li>Import the language file to your site, either during installation or at any time (<code>Administration > Configuration > Regional and language > User interface translation > Import</code>).</li>\r\n</ul>\r\n\r\n<h2>Contributing to translations</h2>\r\n\r\n<ol>\r\n<li>If you do not have a user account for this site, then head to <a href=\"https://localize.backdropcms.org/user/register\">the user registration page</a> and create one.</li>\r\n<li>Once your account has been created, the localization admin team will get notified. They'll enable your account, and they will then get in touch with you as soon as possible, to coordinate the contribution process in detail.</li>\r\n</ol>",
-                    "format": "full_html",
-                    "admin_label": "",
-                    "admin_description": ""
+                    "content": "Welcome to Backdrop translations! This website provides language files to translate the Backdrop interface into languages other than English.",
+                    "format": "filtered_html",
+                    "admin_label": "Custom block: Welcome",
+                    "admin_description": "Welcome to Backdrop translations"
                 },
-                "uuid": "63325a12-42b6-4520-b505-05b0f336fb9a",
+                "uuid": "ccb431df-9a1f-408b-b906-06b3febcd67a",
                 "style": {
                     "plugin": "default",
                     "data": {
@@ -166,7 +167,18 @@
                             "classes": ""
                         }
                     }
-                }
+                },
+                "conditions": [
+                    {
+                        "plugin": "front",
+                        "data": {
+                            "settings": {
+                                "negate": false,
+                                "load_condition_nojs": "Load condition"
+                            }
+                        }
+                    }
+                ]
             }
         },
         "25bf637f-0bf5-43ec-b200-eacf7381b673": {
@@ -183,6 +195,60 @@
                     "contexts": []
                 },
                 "uuid": "25bf637f-0bf5-43ec-b200-eacf7381b673",
+                "style": {
+                    "plugin": "default",
+                    "data": {
+                        "settings": {
+                            "classes": ""
+                        }
+                    }
+                }
+            }
+        },
+        "63325a12-42b6-4520-b505-05b0f336fb9a": {
+            "plugin": "layout:custom_block",
+            "data": {
+                "status": 1,
+                "module": "layout",
+                "delta": "custom_block",
+                "settings": {
+                    "title_display": "default",
+                    "title": "",
+                    "style": "default",
+                    "block_settings": [],
+                    "contexts": [],
+                    "content": "<h2>How to translate Backdrop into your language</h2>\r\n\r\n<ul>\r\n<li>Visit the <a href=\"/translate/downloads?project=backdropcms\">download page</a>, and download a language file which suits your needs, e.g. <code>backdropcms-1.24.es.po</code> for a Spanish Backdrop site.</li>\r\n<li>Import the language file to your site, either during installation or at any time (<em>Administration > Configuration > Regional and language > User interface translation > Import</em>).</li>\r\n</ul>\r\n\r\n<h2>How to contribute to translations</h2>\r\n\r\n<ol>\r\n<li>If you do not have a user account for this site, then head to <a href=\"https://localize.backdropcms.org/user/register\">the user registration page</a> and create one.</li>\r\n<li>Once your account has been created, the Translation team will get notified. They'll enable your account and will get in touch with you as soon as possible, to coordinate the contribution process in detail.</li>\r\n</ol>",
+                    "format": "full_html",
+                    "admin_label": "Custom block: How to",
+                    "admin_description": "How to translate / How to contribute"
+                },
+                "uuid": "63325a12-42b6-4520-b505-05b0f336fb9a",
+                "style": {
+                    "plugin": "default",
+                    "data": {
+                        "settings": {
+                            "classes": ""
+                        }
+                    }
+                }
+            }
+        },
+        "62b92748-8bc9-433b-b203-0348a8615991": {
+            "plugin": "l10n_community:jump",
+            "data": {
+                "status": 1,
+                "module": "l10n_community",
+                "delta": "jump",
+                "settings": {
+                    "title_display": "default",
+                    "title": "",
+                    "style": "default",
+                    "block_settings": [],
+                    "contexts": [],
+                    "admin_label": "",
+                    "admin_description": ""
+                },
+                "uuid": "62b92748-8bc9-433b-b203-0348a8615991",
                 "style": {
                     "plugin": "default",
                     "data": {
@@ -261,32 +327,6 @@
                     "admin_description": ""
                 },
                 "uuid": "832792d9-03bf-4fb6-8c00-0b37e64c1c5d",
-                "style": {
-                    "plugin": "default",
-                    "data": {
-                        "settings": {
-                            "classes": ""
-                        }
-                    }
-                }
-            }
-        },
-        "62b92748-8bc9-433b-b203-0348a8615991": {
-            "plugin": "l10n_community:jump",
-            "data": {
-                "status": 1,
-                "module": "l10n_community",
-                "delta": "jump",
-                "settings": {
-                    "title_display": "default",
-                    "title": "",
-                    "style": "default",
-                    "block_settings": [],
-                    "contexts": [],
-                    "admin_label": "",
-                    "admin_description": ""
-                },
-                "uuid": "62b92748-8bc9-433b-b203-0348a8615991",
                 "style": {
                     "plugin": "default",
                     "data": {
