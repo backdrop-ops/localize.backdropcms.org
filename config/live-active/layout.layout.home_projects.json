@@ -1,46 +1,47 @@
 {
-    "_config_name": "layout.layout.projects",
+    "_config_name": "layout.layout.home_projects",
     "path": "translate/projects/%",
-    "name": "projects",
-    "title": "Projects",
+    "name": "home_projects",
+    "title": "Home (Projects)",
     "description": null,
     "renderer_name": "standard",
     "module": null,
-    "weight": -2,
+    "weight": -3,
     "storage": 1,
     "layout_template": "moscone_flipped",
     "disabled": false,
     "settings": {
-        "title": "",
-        "title_display": "default",
-        "title_block": null
+        "title": "Backdrop CMS translations",
+        "title_display": "custom",
+        "title_block": "5f35bbfe-8a70-40d7-8100-c38a1f5ccaae"
     },
     "positions": {
         "header": [
-            "0fcf3159-7f68-473b-8204-4fa991c67829",
-            "5c29d5f0-44ce-4aa0-a700-fb0a7204b167",
-            "7d48e851-7597-477c-aa00-efa1298bc4fe"
+            "df9898d2-f616-477f-af1f-310cdc6736e7",
+            "5f35bbfe-8a70-40d7-8100-c38a1f5ccaae",
+            "06fa8585-a557-4702-8200-ac2c1705be98"
         ],
         "top": [],
         "content": [
-            "ccb431df-9a1f-408b-b906-06b3febcd67a",
-            "63325a12-42b6-4520-b505-05b0f336fb9a",
-            "25bf637f-0bf5-43ec-b200-eacf7381b673",
-            "81a40971-d1bd-4bc5-a234-5264e291bb1f"
+            "9444d969-042b-47e1-8539-579b3d5105da",
+            "fb29c01b-efe5-400c-a915-2122bbdd3373",
+            "33e20bec-fc55-4709-8200-ba66a91e6f6a",
+            "c6c696a2-3ae0-413c-ba3f-63402d2e75eb",
+            "bdfbedaa-dc25-43d1-bb00-0afd723986f2"
         ],
         "sidebar": [
-            "1684616b-50fe-4bab-9c3b-59dc6fc715ba"
+            "d60869c0-2f5f-4af9-8a07-7d57517b6abb"
         ],
         "bottom": [],
         "footer": [
-            "1e11c561-b29e-4cf3-9501-1ed6b398d470"
+            "44eb752c-4ad3-4c4b-b200-ba9576f05c82"
         ],
         "title": []
     },
     "contexts": [],
     "relationships": [],
     "content": {
-        "0fcf3159-7f68-473b-8204-4fa991c67829": {
+        "df9898d2-f616-477f-af1f-310cdc6736e7": {
             "plugin": "system:header",
             "data": {
                 "status": 1,
@@ -60,7 +61,7 @@
                     "admin_label": "",
                     "admin_description": ""
                 },
-                "uuid": "0fcf3159-7f68-473b-8204-4fa991c67829",
+                "uuid": "df9898d2-f616-477f-af1f-310cdc6736e7",
                 "style": {
                     "plugin": "default",
                     "data": {
@@ -71,7 +72,7 @@
                 }
             }
         },
-        "5c29d5f0-44ce-4aa0-a700-fb0a7204b167": {
+        "5f35bbfe-8a70-40d7-8100-c38a1f5ccaae": {
             "plugin": "system:user-menu",
             "data": {
                 "status": 1,
@@ -94,7 +95,7 @@
                     "admin_label": "",
                     "admin_description": ""
                 },
-                "uuid": "5c29d5f0-44ce-4aa0-a700-fb0a7204b167",
+                "uuid": "5f35bbfe-8a70-40d7-8100-c38a1f5ccaae",
                 "style": {
                     "plugin": "default",
                     "data": {
@@ -105,7 +106,7 @@
                 }
             }
         },
-        "7d48e851-7597-477c-aa00-efa1298bc4fe": {
+        "06fa8585-a557-4702-8200-ac2c1705be98": {
             "plugin": "system:main-menu",
             "data": {
                 "status": 1,
@@ -128,7 +129,7 @@
                     "admin_label": "",
                     "admin_description": ""
                 },
-                "uuid": "7d48e851-7597-477c-aa00-efa1298bc4fe",
+                "uuid": "06fa8585-a557-4702-8200-ac2c1705be98",
                 "style": {
                     "plugin": "default",
                     "data": {
@@ -139,7 +140,36 @@
                 }
             }
         },
-        "ccb431df-9a1f-408b-b906-06b3febcd67a": {
+        "9444d969-042b-47e1-8539-579b3d5105da": {
+            "plugin": "system:page_components:tabs",
+            "data": {
+                "status": 0,
+                "module": "system",
+                "delta": "page_components",
+                "settings": {
+                    "title_display": "none",
+                    "title": "",
+                    "style": "default",
+                    "block_settings": [],
+                    "contexts": [],
+                    "title_tag": "h1",
+                    "title_classes": "page-title",
+                    "tab_type": "both",
+                    "admin_label": "",
+                    "admin_description": ""
+                },
+                "uuid": "9444d969-042b-47e1-8539-579b3d5105da",
+                "style": {
+                    "plugin": "default",
+                    "data": {
+                        "settings": {
+                            "classes": ""
+                        }
+                    }
+                }
+            }
+        },
+        "fb29c01b-efe5-400c-a915-2122bbdd3373": {
             "plugin": "layout:custom_block",
             "data": {
                 "status": 1,
@@ -156,7 +186,7 @@
                     "admin_label": "Custom block: Welcome",
                     "admin_description": "Welcome to Backdrop translations"
                 },
-                "uuid": "ccb431df-9a1f-408b-b906-06b3febcd67a",
+                "uuid": "fb29c01b-efe5-400c-a915-2122bbdd3373",
                 "style": {
                     "plugin": "default",
                     "data": {
@@ -178,7 +208,7 @@
                 ]
             }
         },
-        "63325a12-42b6-4520-b505-05b0f336fb9a": {
+        "33e20bec-fc55-4709-8200-ba66a91e6f6a": {
             "plugin": "layout:custom_block",
             "data": {
                 "status": 1,
@@ -195,7 +225,7 @@
                     "admin_label": "Custom block: How to translate",
                     "admin_description": "How to translate"
                 },
-                "uuid": "63325a12-42b6-4520-b505-05b0f336fb9a",
+                "uuid": "33e20bec-fc55-4709-8200-ba66a91e6f6a",
                 "style": {
                     "plugin": "default",
                     "data": {
@@ -206,7 +236,7 @@
                 }
             }
         },
-        "25bf637f-0bf5-43ec-b200-eacf7381b673": {
+        "c6c696a2-3ae0-413c-ba3f-63402d2e75eb": {
             "plugin": "system:main",
             "data": {
                 "status": 1,
@@ -219,7 +249,7 @@
                     "block_settings": [],
                     "contexts": []
                 },
-                "uuid": "25bf637f-0bf5-43ec-b200-eacf7381b673",
+                "uuid": "c6c696a2-3ae0-413c-ba3f-63402d2e75eb",
                 "style": {
                     "plugin": "default",
                     "data": {
@@ -230,7 +260,7 @@
                 }
             }
         },
-        "81a40971-d1bd-4bc5-a234-5264e291bb1f": {
+        "bdfbedaa-dc25-43d1-bb00-0afd723986f2": {
             "plugin": "block:how_to_contribute_to_translations",
             "data": {
                 "status": 1,
@@ -249,7 +279,7 @@
                     "admin_description": "",
                     "title": ""
                 },
-                "uuid": "81a40971-d1bd-4bc5-a234-5264e291bb1f",
+                "uuid": "bdfbedaa-dc25-43d1-bb00-0afd723986f2",
                 "style": {
                     "plugin": "default",
                     "data": {
@@ -260,7 +290,7 @@
                 }
             }
         },
-        "1684616b-50fe-4bab-9c3b-59dc6fc715ba": {
+        "d60869c0-2f5f-4af9-8a07-7d57517b6abb": {
             "plugin": "copy_blocks:region_copy",
             "data": {
                 "status": 1,
@@ -276,7 +306,7 @@
                     "admin_description": "",
                     "source_region": "default:sidebar"
                 },
-                "uuid": "1684616b-50fe-4bab-9c3b-59dc6fc715ba",
+                "uuid": "d60869c0-2f5f-4af9-8a07-7d57517b6abb",
                 "style": {
                     "plugin": "default",
                     "data": {
@@ -287,7 +317,7 @@
                 }
             }
         },
-        "1e11c561-b29e-4cf3-9501-1ed6b398d470": {
+        "44eb752c-4ad3-4c4b-b200-ba9576f05c82": {
             "plugin": "copy_blocks:region_copy",
             "data": {
                 "status": 1,
@@ -303,7 +333,7 @@
                     "admin_description": "",
                     "source_region": "default:footer"
                 },
-                "uuid": "1e11c561-b29e-4cf3-9501-1ed6b398d470",
+                "uuid": "44eb752c-4ad3-4c4b-b200-ba9576f05c82",
                 "style": {
                     "plugin": "default",
                     "data": {
@@ -314,5 +344,17 @@
                 }
             }
         }
-    }
+    },
+    "conditions": [
+        {
+            "plugin": "path",
+            "data": {
+                "settings": {
+                    "visibility_setting": "1",
+                    "paths": "translate/projects/backdropcms",
+                    "load_condition_nojs": "Load condition"
+                }
+            }
+        }
+    ]
 }

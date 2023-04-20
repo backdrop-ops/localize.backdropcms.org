@@ -23,19 +23,17 @@
         ],
         "top": [],
         "content": [
+            "ccb431df-9a1f-408b-b906-06b3febcd67a",
             "63325a12-42b6-4520-b505-05b0f336fb9a",
-            "25bf637f-0bf5-43ec-b200-eacf7381b673"
+            "25bf637f-0bf5-43ec-b200-eacf7381b673",
+            "81a40971-d1bd-4bc5-a234-5264e291bb1f"
         ],
         "sidebar": [
-            "d4da0a74-4516-49e5-8600-f45eecc30793",
-            "700fca3c-ff53-4623-ba00-ea18f4a67320",
-            "832792d9-03bf-4fb6-8c00-0b37e64c1c5d",
-            "62b92748-8bc9-433b-b203-0348a8615991",
-            "90688865-b505-4803-8500-b0e186821314"
+            "1684616b-50fe-4bab-9c3b-59dc6fc715ba"
         ],
         "bottom": [],
         "footer": [
-            "40f00988-1d2a-483d-8100-0dfe15e155bf"
+            "1e11c561-b29e-4cf3-9501-1ed6b398d470"
         ],
         "title": []
     },
@@ -141,6 +139,45 @@
                 }
             }
         },
+        "ccb431df-9a1f-408b-b906-06b3febcd67a": {
+            "plugin": "layout:custom_block",
+            "data": {
+                "status": 1,
+                "module": "layout",
+                "delta": "custom_block",
+                "settings": {
+                    "title_display": "default",
+                    "title": "",
+                    "style": "default",
+                    "block_settings": [],
+                    "contexts": [],
+                    "content": "Welcome to Backdrop translations! This website provides language files to translate the Backdrop interface into languages other than English.",
+                    "format": "filtered_html",
+                    "admin_label": "Custom block: Welcome",
+                    "admin_description": "Welcome to Backdrop translations"
+                },
+                "uuid": "ccb431df-9a1f-408b-b906-06b3febcd67a",
+                "style": {
+                    "plugin": "default",
+                    "data": {
+                        "settings": {
+                            "classes": ""
+                        }
+                    }
+                },
+                "conditions": [
+                    {
+                        "plugin": "front",
+                        "data": {
+                            "settings": {
+                                "negate": false,
+                                "load_condition_nojs": "Load condition"
+                            }
+                        }
+                    }
+                ]
+            }
+        },
         "63325a12-42b6-4520-b505-05b0f336fb9a": {
             "plugin": "layout:custom_block",
             "data": {
@@ -153,10 +190,10 @@
                     "style": "default",
                     "block_settings": [],
                     "contexts": [],
-                    "content": "This website maintains language files to translate the Backdrop CMS interface into languages other than English.\r\n\r\n<h2>Translating a Backdrop website into your language</h2>\r\n\r\n<ul>\r\n<li>Explore <a href=\"/translate/languages\">different languages</a>, or visit the <a href=\"/translate/downloads\">download page</a>.<br />\r\n(If your language isn't yet available for Backdrop, you can use Drupal 7 files from <a href=\"https://localize.drupal.org/download?project=drupal\">localize.drupal.org</a>.)</li>\r\n<li>Download a language file which suits your needs, e.g. <code>backdropcms-1.23.ru.po</code> for a Russian Backdrop site.</li>\r\n<li>Import the language file to your site, either during installation or at any time (<code>Administration > Configuration > Regional and language > User interface translation > Import</code>).</li>\r\n</ul>\r\n\r\n<h2>Contributing to translations</h2>\r\n\r\n<ol>\r\n<li>If you do not have a user account for this site, then head to <a href=\"https://localize.backdropcms.org/user/register\">the user registration page</a> and create one.</li>\r\n<li>Once your account has been created, the localization admin team will get notified. They'll enable your account, and they will then get in touch with you as soon as possible, to coordinate the contribution process in detail.</li>\r\n</ol>",
+                    "content": "<h2>How to translate Backdrop into your language</h2>\r\n\r\n<ul>\r\n<li>Visit the <a href=\"/translate/downloads?project=backdropcms\">download page</a>, and download a language file which suits your needs, e.g. <code>backdropcms-1.24.es.po</code> for a Spanish Backdrop site.</li>\r\n<li>Import the language file to your site, either during installation or at any time (<em>Administration > Configuration > Regional and language > User interface translation > Import</em>).</li>\r\n</ul>",
                     "format": "full_html",
-                    "admin_label": "",
-                    "admin_description": ""
+                    "admin_label": "Custom block: How to translate",
+                    "admin_description": "How to translate"
                 },
                 "uuid": "63325a12-42b6-4520-b505-05b0f336fb9a",
                 "style": {
@@ -193,22 +230,26 @@
                 }
             }
         },
-        "d4da0a74-4516-49e5-8600-f45eecc30793": {
-            "plugin": "l10n_community:stats",
+        "81a40971-d1bd-4bc5-a234-5264e291bb1f": {
+            "plugin": "block:how_to_contribute_to_translations",
             "data": {
                 "status": 1,
-                "module": "l10n_community",
-                "delta": "stats",
+                "module": "block",
+                "delta": "how_to_contribute_to_translations",
                 "settings": {
                     "title_display": "default",
-                    "title": "",
                     "style": "default",
-                    "block_settings": [],
+                    "block_settings": {
+                        "delta": "how_to_contribute_to_translations",
+                        "description": "",
+                        "reusable": true
+                    },
                     "contexts": [],
-                    "admin_label": "",
-                    "admin_description": ""
+                    "admin_label": "How to contribute to translations",
+                    "admin_description": "",
+                    "title": ""
                 },
-                "uuid": "d4da0a74-4516-49e5-8600-f45eecc30793",
+                "uuid": "81a40971-d1bd-4bc5-a234-5264e291bb1f",
                 "style": {
                     "plugin": "default",
                     "data": {
@@ -219,12 +260,12 @@
                 }
             }
         },
-        "700fca3c-ff53-4623-ba00-ea18f4a67320": {
-            "plugin": "l10n_groups:info",
+        "1684616b-50fe-4bab-9c3b-59dc6fc715ba": {
+            "plugin": "copy_blocks:region_copy",
             "data": {
                 "status": 1,
-                "module": "l10n_groups",
-                "delta": "info",
+                "module": "copy_blocks",
+                "delta": "region_copy",
                 "settings": {
                     "title_display": "default",
                     "title": "",
@@ -232,9 +273,10 @@
                     "block_settings": [],
                     "contexts": [],
                     "admin_label": "",
-                    "admin_description": ""
+                    "admin_description": "",
+                    "source_region": "default:sidebar"
                 },
-                "uuid": "700fca3c-ff53-4623-ba00-ea18f4a67320",
+                "uuid": "1684616b-50fe-4bab-9c3b-59dc6fc715ba",
                 "style": {
                     "plugin": "default",
                     "data": {
@@ -245,12 +287,12 @@
                 }
             }
         },
-        "832792d9-03bf-4fb6-8c00-0b37e64c1c5d": {
-            "plugin": "l10n_community:contributors",
+        "1e11c561-b29e-4cf3-9501-1ed6b398d470": {
+            "plugin": "copy_blocks:region_copy",
             "data": {
                 "status": 1,
-                "module": "l10n_community",
-                "delta": "contributors",
+                "module": "copy_blocks",
+                "delta": "region_copy",
                 "settings": {
                     "title_display": "default",
                     "title": "",
@@ -258,85 +300,10 @@
                     "block_settings": [],
                     "contexts": [],
                     "admin_label": "",
-                    "admin_description": ""
+                    "admin_description": "",
+                    "source_region": "default:footer"
                 },
-                "uuid": "832792d9-03bf-4fb6-8c00-0b37e64c1c5d",
-                "style": {
-                    "plugin": "default",
-                    "data": {
-                        "settings": {
-                            "classes": ""
-                        }
-                    }
-                }
-            }
-        },
-        "62b92748-8bc9-433b-b203-0348a8615991": {
-            "plugin": "l10n_community:jump",
-            "data": {
-                "status": 1,
-                "module": "l10n_community",
-                "delta": "jump",
-                "settings": {
-                    "title_display": "default",
-                    "title": "",
-                    "style": "default",
-                    "block_settings": [],
-                    "contexts": [],
-                    "admin_label": "",
-                    "admin_description": ""
-                },
-                "uuid": "62b92748-8bc9-433b-b203-0348a8615991",
-                "style": {
-                    "plugin": "default",
-                    "data": {
-                        "settings": {
-                            "classes": ""
-                        }
-                    }
-                }
-            }
-        },
-        "90688865-b505-4803-8500-b0e186821314": {
-            "plugin": "l10n_packager:download",
-            "data": {
-                "status": 1,
-                "module": "l10n_packager",
-                "delta": "download",
-                "settings": {
-                    "title_display": "default",
-                    "title": "",
-                    "style": "default",
-                    "block_settings": [],
-                    "contexts": [],
-                    "admin_label": "",
-                    "admin_description": ""
-                },
-                "uuid": "90688865-b505-4803-8500-b0e186821314",
-                "style": {
-                    "plugin": "default",
-                    "data": {
-                        "settings": {
-                            "classes": ""
-                        }
-                    }
-                }
-            }
-        },
-        "40f00988-1d2a-483d-8100-0dfe15e155bf": {
-            "plugin": "system:powered-by",
-            "data": {
-                "status": 1,
-                "module": "system",
-                "delta": "powered-by",
-                "settings": {
-                    "title_display": "default",
-                    "title": "",
-                    "style": "default",
-                    "block_settings": [],
-                    "contexts": []
-                },
-                "uuid": "40f00988-1d2a-483d-8100-0dfe15e155bf",
+                "uuid": "1e11c561-b29e-4cf3-9501-1ed6b398d470",
                 "style": {
                     "plugin": "default",
                     "data": {

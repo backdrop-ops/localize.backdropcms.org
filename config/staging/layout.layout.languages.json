@@ -26,14 +26,11 @@
             "8f31cff3-b8a1-4225-8d03-3b00f14817b0"
         ],
         "sidebar": [
-            "c25929af-c573-49d8-a122-341b9fe3c0db",
-            "39aff266-78cc-4b0f-a700-d7298443e2a8",
-            "456f8efd-bf39-4781-9458-884a217367c2",
-            "38cbc1d3-1eda-45f8-a52a-42a32e36a5dd"
+            "d390c721-7416-455c-9657-870430edaa02"
         ],
         "bottom": [],
         "footer": [
-            "e1703e04-55fa-4cec-a300-c68ecd2542eb"
+            "875d4c87-3c7f-4178-b508-8fc4e43b4726"
         ],
         "title": []
     },
@@ -163,12 +160,12 @@
                 }
             }
         },
-        "c25929af-c573-49d8-a122-341b9fe3c0db": {
-            "plugin": "l10n_community:stats",
+        "d390c721-7416-455c-9657-870430edaa02": {
+            "plugin": "copy_blocks:region_copy",
             "data": {
                 "status": 1,
-                "module": "l10n_community",
-                "delta": "stats",
+                "module": "copy_blocks",
+                "delta": "region_copy",
                 "settings": {
                     "title_display": "default",
                     "title": "",
@@ -176,9 +173,10 @@
                     "block_settings": [],
                     "contexts": [],
                     "admin_label": "",
-                    "admin_description": ""
+                    "admin_description": "",
+                    "source_region": "default:sidebar"
                 },
-                "uuid": "c25929af-c573-49d8-a122-341b9fe3c0db",
+                "uuid": "d390c721-7416-455c-9657-870430edaa02",
                 "style": {
                     "plugin": "default",
                     "data": {
@@ -189,12 +187,12 @@
                 }
             }
         },
-        "39aff266-78cc-4b0f-a700-d7298443e2a8": {
-            "plugin": "l10n_groups:info",
+        "875d4c87-3c7f-4178-b508-8fc4e43b4726": {
+            "plugin": "copy_blocks:region_copy",
             "data": {
                 "status": 1,
-                "module": "l10n_groups",
-                "delta": "info",
+                "module": "copy_blocks",
+                "delta": "region_copy",
                 "settings": {
                     "title_display": "default",
                     "title": "",
@@ -202,85 +200,10 @@
                     "block_settings": [],
                     "contexts": [],
                     "admin_label": "",
-                    "admin_description": ""
+                    "admin_description": "",
+                    "source_region": "default:footer"
                 },
-                "uuid": "39aff266-78cc-4b0f-a700-d7298443e2a8",
-                "style": {
-                    "plugin": "default",
-                    "data": {
-                        "settings": {
-                            "classes": ""
-                        }
-                    }
-                }
-            }
-        },
-        "456f8efd-bf39-4781-9458-884a217367c2": {
-            "plugin": "l10n_community:contributors",
-            "data": {
-                "status": 1,
-                "module": "l10n_community",
-                "delta": "contributors",
-                "settings": {
-                    "title_display": "default",
-                    "title": "",
-                    "style": "default",
-                    "block_settings": [],
-                    "contexts": [],
-                    "admin_label": "",
-                    "admin_description": ""
-                },
-                "uuid": "456f8efd-bf39-4781-9458-884a217367c2",
-                "style": {
-                    "plugin": "default",
-                    "data": {
-                        "settings": {
-                            "classes": ""
-                        }
-                    }
-                }
-            }
-        },
-        "38cbc1d3-1eda-45f8-a52a-42a32e36a5dd": {
-            "plugin": "l10n_packager:download",
-            "data": {
-                "status": 1,
-                "module": "l10n_packager",
-                "delta": "download",
-                "settings": {
-                    "title_display": "default",
-                    "title": "",
-                    "style": "default",
-                    "block_settings": [],
-                    "contexts": [],
-                    "admin_label": "",
-                    "admin_description": ""
-                },
-                "uuid": "38cbc1d3-1eda-45f8-a52a-42a32e36a5dd",
-                "style": {
-                    "plugin": "default",
-                    "data": {
-                        "settings": {
-                            "classes": ""
-                        }
-                    }
-                }
-            }
-        },
-        "e1703e04-55fa-4cec-a300-c68ecd2542eb": {
-            "plugin": "system:powered-by",
-            "data": {
-                "status": 1,
-                "module": "system",
-                "delta": "powered-by",
-                "settings": {
-                    "title_display": "default",
-                    "title": "",
-                    "style": "default",
-                    "block_settings": [],
-                    "contexts": []
-                },
-                "uuid": "e1703e04-55fa-4cec-a300-c68ecd2542eb",
+                "uuid": "875d4c87-3c7f-4178-b508-8fc4e43b4726",
                 "style": {
                     "plugin": "default",
                     "data": {

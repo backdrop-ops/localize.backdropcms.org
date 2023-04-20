@@ -26,13 +26,11 @@
             "23a719a9-1f21-4311-bc5f-959c4ddfa4e9"
         ],
         "sidebar": [
-            "83e20c64-afc8-4526-9000-a42eb62d969d",
-            "b6be329e-8acb-4fd0-9100-ad9ba11e172d",
-            "c5ce8f81-2e1f-4305-8522-34ba697133d1"
+            "0d3ecc9a-d31d-4b4b-ac4d-778f9c4d35c1"
         ],
         "bottom": [],
         "footer": [
-            "fceed387-d1f2-455e-9800-00d7a0d63838"
+            "570a5001-1be8-45cd-9115-21c9b4488aad"
         ],
         "title": []
     },
@@ -162,12 +160,12 @@
                 }
             }
         },
-        "83e20c64-afc8-4526-9000-a42eb62d969d": {
-            "plugin": "l10n_community:stats",
+        "0d3ecc9a-d31d-4b4b-ac4d-778f9c4d35c1": {
+            "plugin": "copy_blocks:region_copy",
             "data": {
                 "status": 1,
-                "module": "l10n_community",
-                "delta": "stats",
+                "module": "copy_blocks",
+                "delta": "region_copy",
                 "settings": {
                     "title_display": "default",
                     "title": "",
@@ -175,9 +173,10 @@
                     "block_settings": [],
                     "contexts": [],
                     "admin_label": "",
-                    "admin_description": ""
+                    "admin_description": "",
+                    "source_region": "default:sidebar"
                 },
-                "uuid": "83e20c64-afc8-4526-9000-a42eb62d969d",
+                "uuid": "0d3ecc9a-d31d-4b4b-ac4d-778f9c4d35c1",
                 "style": {
                     "plugin": "default",
                     "data": {
@@ -188,12 +187,12 @@
                 }
             }
         },
-        "b6be329e-8acb-4fd0-9100-ad9ba11e172d": {
-            "plugin": "l10n_groups:info",
+        "570a5001-1be8-45cd-9115-21c9b4488aad": {
+            "plugin": "copy_blocks:region_copy",
             "data": {
                 "status": 1,
-                "module": "l10n_groups",
-                "delta": "info",
+                "module": "copy_blocks",
+                "delta": "region_copy",
                 "settings": {
                     "title_display": "default",
                     "title": "",
@@ -201,59 +200,10 @@
                     "block_settings": [],
                     "contexts": [],
                     "admin_label": "",
-                    "admin_description": ""
+                    "admin_description": "",
+                    "source_region": "default:footer"
                 },
-                "uuid": "b6be329e-8acb-4fd0-9100-ad9ba11e172d",
-                "style": {
-                    "plugin": "default",
-                    "data": {
-                        "settings": {
-                            "classes": ""
-                        }
-                    }
-                }
-            }
-        },
-        "c5ce8f81-2e1f-4305-8522-34ba697133d1": {
-            "plugin": "l10n_community:jump",
-            "data": {
-                "status": 1,
-                "module": "l10n_community",
-                "delta": "jump",
-                "settings": {
-                    "title_display": "default",
-                    "title": "",
-                    "style": "default",
-                    "block_settings": [],
-                    "contexts": [],
-                    "admin_label": "",
-                    "admin_description": ""
-                },
-                "uuid": "c5ce8f81-2e1f-4305-8522-34ba697133d1",
-                "style": {
-                    "plugin": "default",
-                    "data": {
-                        "settings": {
-                            "classes": ""
-                        }
-                    }
-                }
-            }
-        },
-        "fceed387-d1f2-455e-9800-00d7a0d63838": {
-            "plugin": "system:powered-by",
-            "data": {
-                "status": 1,
-                "module": "system",
-                "delta": "powered-by",
-                "settings": {
-                    "title_display": "default",
-                    "title": "",
-                    "style": "default",
-                    "block_settings": [],
-                    "contexts": []
-                },
-                "uuid": "fceed387-d1f2-455e-9800-00d7a0d63838",
+                "uuid": "570a5001-1be8-45cd-9115-21c9b4488aad",
                 "style": {
                     "plugin": "default",
                     "data": {

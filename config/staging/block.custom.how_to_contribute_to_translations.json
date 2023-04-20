@@ -1,0 +1,12 @@
+{
+    "_config_name": "block.custom.how_to_contribute_to_translations",
+    "delta": "how_to_contribute_to_translations",
+    "info": "How to contribute to translations",
+    "title": "How to contribute to translations",
+    "description": "",
+    "body": {
+        "value": "<ol>\r\n<li>If you do not have a user account for this site, then head to <a href=\"/user/register\">the user registration page</a> and create one.</li>\r\n<li>Once your account has been created, the Translation team will get notified. They'll enable your account and will get in touch with you as soon as possible, to coordinate the contribution process in detail.</li>\r\n</ol>",
+        "format": "filtered_html"
+    },
+    "default_langcode": "und"
+}

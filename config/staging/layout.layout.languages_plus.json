@@ -27,7 +27,7 @@
         ],
         "bottom": [],
         "footer": [
-            "d3d21732-9719-4461-b101-1f6353a26c16"
+            "da4c97c4-4568-42cc-a300-ffd0c580c416"
         ],
         "title": []
     },
@@ -153,20 +153,23 @@
                 }
             }
         },
-        "d3d21732-9719-4461-b101-1f6353a26c16": {
-            "plugin": "system:powered-by",
+        "da4c97c4-4568-42cc-a300-ffd0c580c416": {
+            "plugin": "copy_blocks:region_copy",
             "data": {
                 "status": 1,
-                "module": "system",
-                "delta": "powered-by",
+                "module": "copy_blocks",
+                "delta": "region_copy",
                 "settings": {
                     "title_display": "default",
                     "title": "",
                     "style": "default",
                     "block_settings": [],
-                    "contexts": []
+                    "contexts": [],
+                    "admin_label": "",
+                    "admin_description": "",
+                    "source_region": "default:footer"
                 },
-                "uuid": "d3d21732-9719-4461-b101-1f6353a26c16",
+                "uuid": "da4c97c4-4568-42cc-a300-ffd0c580c416",
                 "style": {
                     "plugin": "default",
                     "data": {
