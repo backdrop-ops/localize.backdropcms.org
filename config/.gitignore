@@ -1,0 +1,8 @@
+# Ignore beta site config
+beta-active
+
+# Ignore local active
+dev-active
+local-active
+
+
