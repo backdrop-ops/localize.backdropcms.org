@@ -114,5 +114,6 @@
     "site_logo_theme": 0,
     "site_logo_upload": "",
     "site_logo_path": "",
-    "site_favicon_upload": ""
+    "site_favicon_upload": "",
+    "file_not_normalized_schemes": []
 }
