@@ -1,4 +1,8 @@
 <?php
+/**
+ * @file
+ * Contains the OgMembershipViewsController class.
+ */
 
 /**
  * "OG membership" entity Views definitions.

@@ -25,9 +25,7 @@ or moderated.
 
 ## Configuration and Usage
 
- - [Installation and Configuration Guide](https://github.com/backdrop-contrib/og/wiki/1.-Installation-and-Configuration-Guide)
- - [Organic Groups Terms, Definitions](https://github.com/backdrop-contrib/og/wiki/2.-Organic-Groups-Terms,-Definitions)
- - [For Developers and Site Builders](https://github.com/backdrop-contrib/og/wiki/3.-For-Developers-and-Site-Builders)
+Please visit the [Organic Groups Wiki](https://github.com/backdrop-contrib/og/wiki) for information.
 
 ## Example OG module
 

@@ -29,7 +29,7 @@ group = Organic groups UI
 file = og_ui.test
 
 
-; Added by Backdrop CMS packaging script on 2022-05-28
+; Added by Backdrop CMS packaging script on 2023-04-28
 project = og
-version = 1.x-2.10.0-beta
-timestamp = 1653748905
+version = 1.x-2.10.1
+timestamp = 1682693724

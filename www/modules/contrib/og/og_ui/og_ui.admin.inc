@@ -1174,6 +1174,9 @@ function og_ui_admin_fields_ajax_callback($form, &$form_state) {
  * Validate handler; Check if field can be attached to bundle.
  */
 function og_ui_field_settings_validate($form, &$form_state) {
+  if (empty($form_state['values']['bundle'])) {
+    return;
+  }
   list($entity_type, $bundle) = explode(':', $form_state['values']['bundle']);
   $field_name = $form_state['values']['field_name'];
 
