@@ -227,7 +227,7 @@ function l10n_groups_block_view($delta) {
           }
           // Anonymous Group Links
           if (!$user->uid) {
-            $options = array('query' => array('destination' => backdrop_get_destination()));
+            $options = array('query' => backdrop_get_destination());
             if (config_get('system.core', 'user_register') == USER_REGISTER_ADMINISTRATORS_ONLY) {
               $links['must_login'] = t('You must <a href="!login">login</a> in order to post into this group.', array('!login' => url("user/login", $options)));
             }
