@@ -14,5 +14,6 @@
     "og_is_group_default_access__node__l10n_group": true,
     "og_is_group__user__user": false,
     "og_is_group__file__undefined": false,
-    "og_is_group__node__article": false
+    "og_is_group__node__article": false,
+    "og_is_group__og_membership__og_membership_type_default": false
 }
