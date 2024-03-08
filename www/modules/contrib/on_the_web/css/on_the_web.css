@@ -1,0 +1,14 @@
+a.on-the-web {
+  display: inline-block;
+  text-indent: -9999px;
+}
+
+/* Set the size */
+a.otw-sm {
+  width: 32px;
+  height: 32px;
+}
+a.otw-lg {
+  width: 64px;
+  height: 64px;
+}
