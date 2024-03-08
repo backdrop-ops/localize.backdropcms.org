@@ -5,4 +5,8 @@ beta-active
 dev-active
 local-active
 
+# Ignore staging devel 
+staging/devel.settings.json
+staging/menu.menu.devel.json
+
 
