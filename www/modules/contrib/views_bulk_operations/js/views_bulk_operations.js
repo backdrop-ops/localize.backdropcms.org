@@ -26,11 +26,11 @@
       var colspan = $('table th', form).length;
       $('.views-table-row-select-all', form).html('<td colspan="' + colspan + '">' + selectAllMarkup.html() + '</td>');
 
-      $('.vbo-table-select-all-pages', form).click(function() {
+      $('.vbo-table-select-all-pages', form).on('click', function() {
         Backdrop.vbo.tableSelectAllPages(form);
         return false;
       });
-      $('.vbo-table-select-this-page', form).click(function() {
+      $('.vbo-table-select-this-page', form).on('click', function() {
         Backdrop.vbo.tableSelectThisPage(form);
         return false;
       });
@@ -38,7 +38,7 @@
 
     $('.vbo-table-select-all', form).show();
     // This is the "select all" checkbox in (each) table header.
-    $('input.vbo-table-select-all', form).click(function() {
+    $('input.vbo-table-select-all', form).on('click', function() {
       var table = $(this).closest('table:not(.sticky-header)')[0];
       $('.vbo-select:not(:disabled)', table).prop('checked', this.checked);
       Backdrop.vbo.toggleButtonsState(form);
@@ -56,7 +56,7 @@
 
     // Set up the ability to click anywhere on the row to select it.
     if (Backdrop.settings.vbo.row_clickable) {
-      $('.views-table tbody tr', form).click(function(event) {
+      $('.views-table tbody tr', form).on('click', function(event) {
         var tagName = event.target.tagName.toLowerCase();
         if (tagName != 'input' && tagName != 'a' && tagName != 'label') {
           $('.vbo-select:not(:disabled)', this).each(function() {
@@ -87,7 +87,7 @@
     // Show the "select all" fieldset.
     $('.vbo-select-all-markup', form).show();
 
-    $('.vbo-select-this-page', form).click(function() {
+    $('.vbo-select-this-page', form).on('click', function() {
       $('.vbo-select', form).prop('checked', this.checked);
       Backdrop.vbo.toggleButtonsState(form);
       $('.vbo-select-all-pages', form).prop('checked', false);
@@ -95,7 +95,7 @@
       // Toggle the "select all" checkbox in grouped tables (if any).
       $('.vbo-table-select-all', form).prop('checked', this.checked);
     });
-    $('.vbo-select-all-pages', form).click(function() {
+    $('.vbo-select-all-pages', form).on('click', function() {
       $('.vbo-select', form).prop('checked', this.checked);
       Backdrop.vbo.toggleButtonsState(form);
       $('.vbo-select-this-page', form).prop('checked', false);
@@ -109,12 +109,12 @@
 
     // Toggle submit buttons' "disabled" states with the state of the operation
     // selectbox.
-    $('select[name="operation"]', form).change(function () {
+    $('select[name="operation"]', form).on('change', function () {
       Backdrop.vbo.toggleButtonsState(form);
     });
 
     // Handle a "change" event originating either from a row click or an actual checkbox click.
-    $('.vbo-select', form).change(function() {
+    $('.vbo-select', form).on('change', function() {
       // If a checkbox was deselected, uncheck any "select all" checkboxes.
       if (!this.checked) {
         $('.vbo-select-this-page', form).prop('checked', false);

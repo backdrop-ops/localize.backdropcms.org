@@ -181,7 +181,7 @@ function views_bulk_operations_modify_vboaction_form($context, &$form_state) {
       $form['properties'][$key] = array(
         '#type' => $determined_type,
         '#title' => $property['label'],
-        '#description' => $property['description'],
+        '#description' => !empty($property['description']) ? $property['description'] : '',
         '#states' => array(
           'visible' => array(
             '#edit-properties-show-value-' . str_replace('_', '-', $key) => array('checked' => TRUE),
