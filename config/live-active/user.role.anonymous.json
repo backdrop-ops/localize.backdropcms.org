@@ -4,7 +4,6 @@
     "label": "Anonymous",
     "weight": "0",
     "permissions": [
-        "access comments",
         "access content",
         "access localization community",
         "browse translations",

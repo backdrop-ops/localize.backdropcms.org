@@ -4,7 +4,6 @@
     "label": "Authenticated",
     "weight": "1",
     "permissions": [
-        "access comments",
         "access content",
         "access localization community",
         "access user contact forms",
@@ -13,8 +12,6 @@
         "bypass honeypot protection",
         "export gettext templates and translations",
         "import gettext files",
-        "post comments",
-        "skip comment approval",
         "use text format filtered_html",
         "view files",
         "upload editor images"

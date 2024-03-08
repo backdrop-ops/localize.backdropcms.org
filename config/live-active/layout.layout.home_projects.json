@@ -29,8 +29,8 @@
         ],
         "sidebar": [
             "33e20bec-fc55-4709-8200-ba66a91e6f6a",
-            "bdfbedaa-dc25-43d1-bb00-0afd723986f2",
-            "d60869c0-2f5f-4af9-8a07-7d57517b6abb"
+            "d60869c0-2f5f-4af9-8a07-7d57517b6abb",
+            "bdfbedaa-dc25-43d1-bb00-0afd723986f2"
         ],
         "bottom": [],
         "footer": [
@@ -260,6 +260,33 @@
                 }
             }
         },
+        "d60869c0-2f5f-4af9-8a07-7d57517b6abb": {
+            "plugin": "copy_blocks:region_copy",
+            "data": {
+                "status": 1,
+                "module": "copy_blocks",
+                "delta": "region_copy",
+                "settings": {
+                    "title_display": "default",
+                    "title": "",
+                    "style": "default",
+                    "block_settings": [],
+                    "contexts": [],
+                    "admin_label": "",
+                    "admin_description": "",
+                    "source_region": "default:sidebar"
+                },
+                "uuid": "d60869c0-2f5f-4af9-8a07-7d57517b6abb",
+                "style": {
+                    "plugin": "default",
+                    "data": {
+                        "settings": {
+                            "classes": ""
+                        }
+                    }
+                }
+            }
+        },
         "bdfbedaa-dc25-43d1-bb00-0afd723986f2": {
             "plugin": "block:how_to_contribute_to_translations",
             "data": {
@@ -280,33 +307,6 @@
                     "title": ""
                 },
                 "uuid": "bdfbedaa-dc25-43d1-bb00-0afd723986f2",
-                "style": {
-                    "plugin": "default",
-                    "data": {
-                        "settings": {
-                            "classes": ""
-                        }
-                    }
-                }
-            }
-        },
-        "d60869c0-2f5f-4af9-8a07-7d57517b6abb": {
-            "plugin": "copy_blocks:region_copy",
-            "data": {
-                "status": 1,
-                "module": "copy_blocks",
-                "delta": "region_copy",
-                "settings": {
-                    "title_display": "default",
-                    "title": "",
-                    "style": "default",
-                    "block_settings": [],
-                    "contexts": [],
-                    "admin_label": "",
-                    "admin_description": "",
-                    "source_region": "default:sidebar"
-                },
-                "uuid": "d60869c0-2f5f-4af9-8a07-7d57517b6abb",
                 "style": {
                     "plugin": "default",
                     "data": {
