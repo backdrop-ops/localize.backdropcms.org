@@ -5,7 +5,7 @@ group = Rules
 file = rules_i18n.test
 dependencies[] = i18n_string
 
-; Added by Backdrop CMS packaging script on 2023-02-23
+; Added by Backdrop CMS packaging script on 2023-06-20
 project = rules
-version = 1.x-2.3.3
-timestamp = 1677198508
+version = 1.x-2.3.4
+timestamp = 1687301742
