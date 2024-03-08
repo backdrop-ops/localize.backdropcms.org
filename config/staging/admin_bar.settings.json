@@ -8,6 +8,7 @@
         "admin_bar.search",
         "admin_bar.page",
         "admin_bar.users",
-        "admin_bar.account"
+        "admin_bar.account",
+        "admin_bar.locale"
     ]
 }

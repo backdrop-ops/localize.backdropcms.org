@@ -25,11 +25,11 @@
         "content": [
             "9444d969-042b-47e1-8539-579b3d5105da",
             "fb29c01b-efe5-400c-a915-2122bbdd3373",
-            "33e20bec-fc55-4709-8200-ba66a91e6f6a",
-            "c6c696a2-3ae0-413c-ba3f-63402d2e75eb",
-            "bdfbedaa-dc25-43d1-bb00-0afd723986f2"
+            "c6c696a2-3ae0-413c-ba3f-63402d2e75eb"
         ],
         "sidebar": [
+            "33e20bec-fc55-4709-8200-ba66a91e6f6a",
+            "bdfbedaa-dc25-43d1-bb00-0afd723986f2",
             "d60869c0-2f5f-4af9-8a07-7d57517b6abb"
         ],
         "bottom": [],
@@ -208,6 +208,30 @@
                 ]
             }
         },
+        "c6c696a2-3ae0-413c-ba3f-63402d2e75eb": {
+            "plugin": "system:main",
+            "data": {
+                "status": 1,
+                "module": "system",
+                "delta": "main",
+                "settings": {
+                    "title_display": "default",
+                    "title": "",
+                    "style": "default",
+                    "block_settings": [],
+                    "contexts": []
+                },
+                "uuid": "c6c696a2-3ae0-413c-ba3f-63402d2e75eb",
+                "style": {
+                    "plugin": "default",
+                    "data": {
+                        "settings": {
+                            "classes": ""
+                        }
+                    }
+                }
+            }
+        },
         "33e20bec-fc55-4709-8200-ba66a91e6f6a": {
             "plugin": "layout:custom_block",
             "data": {
@@ -226,30 +250,6 @@
                     "admin_description": "How to translate"
                 },
                 "uuid": "33e20bec-fc55-4709-8200-ba66a91e6f6a",
-                "style": {
-                    "plugin": "default",
-                    "data": {
-                        "settings": {
-                            "classes": ""
-                        }
-                    }
-                }
-            }
-        },
-        "c6c696a2-3ae0-413c-ba3f-63402d2e75eb": {
-            "plugin": "system:main",
-            "data": {
-                "status": 1,
-                "module": "system",
-                "delta": "main",
-                "settings": {
-                    "title_display": "default",
-                    "title": "",
-                    "style": "default",
-                    "block_settings": [],
-                    "contexts": []
-                },
-                "uuid": "c6c696a2-3ae0-413c-ba3f-63402d2e75eb",
                 "style": {
                     "plugin": "default",
                     "data": {

@@ -20,7 +20,7 @@
     "backup_migrate_smart_keep_weekly": 12,
     "backup_migrate_schedule_buffer": 0.01,
     "backup_migrate_default_schedule": 3600,
-    "backup_migrate_source_id": "db",
+    "backup_migrate_source_id": "config_files_active",
     "backup_migrate_destination_id": "download",
     "backup_migrate_copy_destination_id": "",
     "backup_migrate_backup_max_time": 1200,
