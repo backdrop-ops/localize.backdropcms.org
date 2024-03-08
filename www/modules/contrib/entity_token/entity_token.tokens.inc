@@ -94,18 +94,20 @@ function entity_token_token_info_alter(&$info) {
     'entity-token' => TRUE,
   );
 
-  // Tokens for type term.
-  $info['tokens']['term']['parents_all'] = array(
-    'name' => 'All parent terms',
-    'description' => t('Ancestors of the term, i.e. parent of all above hierarchy levels.'),
-    'type' => 'list<term>',
-    'entity-token' => TRUE,
-  );
-  $info['tokens']['term']['weight'] = array(
-    'name' => 'Weight',
-    'description' => t('The weight of the term, which is used for ordering terms during display.'),
-    'entity-token' => TRUE,
-  );
+  if (module_exists('taxonomy')) {
+    // Tokens for type term.
+    $info['tokens']['term']['parents_all'] = array(
+      'name' => 'All parent terms',
+      'description' => t('Ancestors of the term, i.e. parent of all above hierarchy levels.'),
+      'type' => 'list<term>',
+      'entity-token' => TRUE,
+    );
+    $info['tokens']['term']['weight'] = array(
+      'name' => 'Weight',
+      'description' => t('The weight of the term, which is used for ordering terms during display.'),
+      'entity-token' => TRUE,
+    );
+  }
 
   // Add types and tokens for all properties of entities that don't have one.
   $entity_info = entity_get_info();
