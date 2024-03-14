@@ -210,7 +210,17 @@ function l10n_community_pick_go($form, &$form_state) {
     '#description' => t('Alternatively you can <a href="@explore">explore projects</a>.', array('@explore' => url('translate/projects'))),
     '#default_value' => $form_state['values']['project'],
   );
-  if (($count = count($projects)) <= 30) {
+
+  $count = count($projects);
+  if ($count == 1) {
+    // Only one project, store as form value.
+    $only_project = reset($projects);
+    $form['project'] = array(
+      '#type' => 'value',
+      '#value' => $only_project->title,
+    );
+  }
+  elseif ($count <= 30) {
     // Radio box widget for as much as 5 projects, select widget for 5-30 projects.
     $form['project']['#type'] = ($count <= 5 ? 'radios' : 'select');
     $form['project']['#options'] = array('' => t('All'));

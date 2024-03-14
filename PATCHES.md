@@ -12,3 +12,7 @@ Patches to Backdrop Contrib:
 - l10n_server
   NO ISSUE @TODO
   Format the groups on the "Localization server jump form" to be an item list.
+
+- l10n_server
+  NO ISSUE @TODO
+  If there is only one project, hide selection on "Localization server jump form".
