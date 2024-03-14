@@ -23,6 +23,7 @@
         ],
         "top": [],
         "content": [
+            "d187345c-d348-4762-b600-b437f19e0836",
             "default"
         ],
         "sidebar": [
@@ -141,6 +142,46 @@
                         }
                     }
                 }
+            }
+        },
+        "d187345c-d348-4762-b600-b437f19e0836": {
+            "plugin": "layout:custom_block",
+            "data": {
+                "status": 1,
+                "module": "layout",
+                "delta": "custom_block",
+                "settings": {
+                    "title_display": "default",
+                    "title": "Steps to translate your site",
+                    "style": "default",
+                    "block_settings": [],
+                    "contexts": [],
+                    "content": "<ol>\r\n<li>Select a translation for your language, and download the associated file. <br>For example: Use <code>backdropcms-1.27.es.po</code> for a Spanish Backdrop site.</li>\r\n<li>Import this language file to your site. You can do this either during installation, or after your site is up and running.  <br>Visit: Administration > Configuration > Regional and language > User interface translation > Import.</li>\r\n<li>Enjoy Backdrop in your language.</li>\r\n</ol>",
+                    "format": "filtered_html",
+                    "admin_label": "",
+                    "admin_description": ""
+                },
+                "uuid": "d187345c-d348-4762-b600-b437f19e0836",
+                "style": {
+                    "plugin": "default",
+                    "data": {
+                        "settings": {
+                            "classes": ""
+                        }
+                    }
+                },
+                "conditions": [
+                    {
+                        "plugin": "path",
+                        "data": {
+                            "settings": {
+                                "visibility_setting": "1",
+                                "paths": "translate/downloads",
+                                "load_condition_nojs": "Load condition"
+                            }
+                        }
+                    }
+                ]
             }
         },
         "default": {

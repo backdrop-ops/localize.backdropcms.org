@@ -240,11 +240,11 @@
                 "delta": "custom_block",
                 "settings": {
                     "title_display": "default",
-                    "title": "",
+                    "title": "How to use Backdrop in your own language",
                     "style": "default",
                     "block_settings": [],
                     "contexts": [],
-                    "content": "<h2>How to translate Backdrop into your language</h2>\r\n\r\n<ul>\r\n<li>Visit the <a href=\"/translate/downloads?project=backdropcms\">download page</a>, and download a language file which suits your needs, e.g. <code>backdropcms-1.24.es.po</code> for a Spanish Backdrop site.</li>\r\n<li>Import the language file to your site, either during installation or at any time (<em>Administration > Configuration > Regional and language > User interface translation > Import</em>).</li>\r\n</ul>",
+                    "content": "<ol>\r\n<li><srong>Download a language file</strong> from our <a href=\"/translate/downloads?project=backdropcms\">download page</a>.</li>\r\n<li>Import the language file to your own site.</li>\r\n<li>Enjoy Backdrop in your language.</li>\r\n</ol>",
                     "format": "full_html",
                     "admin_label": "Custom block: How to translate",
                     "admin_description": "How to translate"

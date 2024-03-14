@@ -22,7 +22,8 @@
         "edit own localization group",
         "import gettext files",
         "start over packages",
-        "view files"
+        "view files",
+        "use text format filtered_html"
     ],
     "description": ""
 }
