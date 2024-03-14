@@ -35,6 +35,8 @@
         "bottom": [],
         "footer": [
             "85c35064-f0b1-4d9d-ba00-b172a31b49e5",
+            "bfa752c4-ceb6-48f3-9722-3436c56ec8da",
+            "2a23d2c4-5565-4e7e-8f14-20b806a88f26",
             "f38c3b7f-7b90-4266-8163-99aeb271dabd"
         ],
         "title": []
@@ -321,6 +323,71 @@
                 }
             }
         },
+        "bfa752c4-ceb6-48f3-9722-3436c56ec8da": {
+            "plugin": "on_the_web:social_links",
+            "data": {
+                "status": 1,
+                "module": "on_the_web",
+                "delta": "social_links",
+                "settings": {
+                    "title_display": "custom",
+                    "title": "Stay connected",
+                    "style": "default",
+                    "block_settings": {
+                        "services": {
+                            "display": "auto",
+                            "enabled": {
+                                "mastodon": "mastodon",
+                                "github": "github",
+                                "facebook": "facebook",
+                                "linkedin": "linkedin",
+                                "rss": "rss",
+                                "twitter": "twitter",
+                                "youtube": "youtube"
+                            }
+                        }
+                    },
+                    "contexts": [],
+                    "admin_label": "",
+                    "admin_description": ""
+                },
+                "uuid": "bfa752c4-ceb6-48f3-9722-3436c56ec8da",
+                "style": {
+                    "plugin": "default",
+                    "data": {
+                        "settings": {
+                            "classes": "col-md-6"
+                        }
+                    }
+                }
+            }
+        },
+        "2a23d2c4-5565-4e7e-8f14-20b806a88f26": {
+            "plugin": "borg_signup:newsletter",
+            "data": {
+                "status": 1,
+                "module": "borg_signup",
+                "delta": "newsletter",
+                "settings": {
+                    "title_display": "default",
+                    "title": "",
+                    "style": "default",
+                    "block_settings": [],
+                    "contexts": [],
+                    "admin_label": "",
+                    "admin_description": ""
+                },
+                "uuid": "2a23d2c4-5565-4e7e-8f14-20b806a88f26",
+                "style": {
+                    "plugin": "default",
+                    "data": {
+                        "settings": {
+                            "classes": "col-md-6"
+                        }
+                    }
+                }
+            }
+        },
         "f38c3b7f-7b90-4266-8163-99aeb271dabd": {
             "plugin": "menu:menu-footer-menu",
             "data": {
@@ -328,11 +395,24 @@
                 "module": "menu",
                 "delta": "menu-footer-menu",
                 "settings": {
-                    "title_display": "default",
+                    "title_display": "none",
                     "title": "",
                     "style": "default",
-                    "block_settings": [],
-                    "contexts": []
+                    "block_settings": {
+                        "menu_name": "menu-footer-menu",
+                        "style": "tree",
+                        "level": "1",
+                        "depth": "0",
+                        "expand_all": 0,
+                        "clickdown": 0,
+                        "toggle": 0,
+                        "toggle_text": "Menu",
+                        "collapse": "default",
+                        "accordion": 0
+                    },
+                    "contexts": [],
+                    "admin_label": "",
+                    "admin_description": ""
                 },
                 "uuid": "f38c3b7f-7b90-4266-8163-99aeb271dabd",
                 "style": {
