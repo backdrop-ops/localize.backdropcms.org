@@ -465,7 +465,7 @@ function l10n_groups_pick_go() {
       return array(
         '#type' => 'item',
         '#title' => format_plural(count($l10n_groups), t('Your group'), t('Your groups')),
-        '#markup' => join(', ', $l10n_groups),
+        '#markup' => theme('item_list', array('items' => $l10n_groups)),
         '#l10n_groups' => array_keys($l10n_groups),
       );
     }

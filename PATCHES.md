@@ -9,4 +9,6 @@ Plural formulas are wiped out in Drupal 7 upgrade.
 Patches to Backdrop Contrib:
 ============================
 
-- TBD
+- l10n_server
+  NO ISSUE @TODO
+  Format the groups on the "Localization server jump form" to be an item list.
