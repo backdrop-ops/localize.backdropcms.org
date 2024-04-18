@@ -181,7 +181,7 @@
                     "style": "default",
                     "block_settings": [],
                     "contexts": [],
-                    "content": "Welcome! This website provides language files that are used to translate the Backdrop administrative interface into languages other than English.",
+                    "content": "Welcome to Backdrop translations! This website provides language files to translate the Backdrop interface into languages other than English.",
                     "format": "filtered_html",
                     "admin_label": "Custom block: Welcome",
                     "admin_description": "Welcome to Backdrop translations"
