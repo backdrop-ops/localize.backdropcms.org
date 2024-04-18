@@ -261,7 +261,7 @@ function l10n_backdrop_parse_package($package_file, $release) {
       $files = _potx_explore_dir($temp_path, '*', $version);
       l10n_backdrop_added_string_counter(NULL, TRUE);
       foreach ($files as $name) {
-        _potx_process_file($name, substr($name, strlen($temp_path) + 1), 'l10n_backdrop_callback_save_string', 'l10n_backdrop_callback_save_version', $version);
+        _potx_process_file($name, strlen($temp_path) + 1, 'l10n_backdrop_callback_save_string', 'l10n_backdrop_callback_save_version', $version);
       }
 
       // TODO: potx_finish_processing was removed from Backdrop. Is this needed?

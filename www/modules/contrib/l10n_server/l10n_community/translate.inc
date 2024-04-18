@@ -41,6 +41,7 @@ function l10n_community_filter_form($form, &$form_state, $langcode, $filters) {
       'status' => isset($filters['status']) ? $filters['status'] : L10N_STATUS_ALL,
       'author' => isset($filters['author']) ? $filters['author']->name : '',
       'search' => isset($filters['search']) ? $filters['search'] : '',
+      'exact_term' => isset($filters['exact_term']) ? $filters['exact_term'] : '',
       'limit' => isset($filters['limit']) ? $filters['limit'] : 10,
       'sid' => isset($filters['sid']) ? $filters['sid'] : 0,
     );
@@ -180,6 +181,19 @@ function l10n_community_filter_form($form, &$form_state, $langcode, $filters) {
     '#size' => 20,
     '#attributes' => array('class' => array($class_is_default_search)),
     '#display_none' => empty($form_state['values']['search']),
+    '#theme_wrappers' => array(
+      'form_element',
+      'l10n_community_filter_form_element',
+    ),
+  );
+
+  $class_is_default_exact_term = empty($form_state['values']['exact_term']) ? 'is-default' : 'is-not-default';
+  $form['exact_term'] = array(
+    '#title' => t('Exact term'),
+    '#type' => 'checkbox',
+    '#default_value' => empty($form_state['values']['exact_term']) ? '' : $form_state['values']['exact_term'],
+    '#attributes' => array('class' => array($class_is_default_exact_term)),
+    '#display_none' => empty($form_state['values']['exact_term']),
     '#theme_wrappers' => array(
       'form_element',
       'l10n_community_filter_form_element',
@@ -1058,9 +1072,17 @@ function l10n_community_get_strings($langcode, $filters, $pager, $sids = array()
   if (!empty($filters['search'])) {
     // Search in the source or target strings.
     $search = $filters['search'];
-    $query->condition(db_or()
-      ->condition('s.value', '%' . db_like($search) . '%', 'LIKE')
-      ->condition('t.translation', '%' . db_like($search) . '%', 'LIKE'));
+    if (!empty($filters['exact_term']) && intval($filters['exact_term']) !== 0) {
+      // In case the exact term checkbox was enabled, search for the exact string
+      $query->condition(db_or()
+        ->condition('s.value', $search)
+        ->condition('t.translation', $search));
+    }
+    else {
+      $query->condition(db_or()
+        ->condition('s.value', '%' . db_like($search) . '%', 'LIKE')
+        ->condition('t.translation', '%' . db_like($search) . '%', 'LIKE'));
+    }
   }
 
   // Restriction based on string status by translation / suggestions.

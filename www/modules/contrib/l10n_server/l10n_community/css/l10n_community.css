@@ -38,7 +38,7 @@ table.l10n-community-overview {
 .l10n-server-filter .filter-widget {
   float: left; /* LTR */
   padding: 0 1em 0 0; /* LTR */
-  height: 6em;
+  height: 8em;
 }
 .l10n-server-filter .filter-widget label {
   font-weight: bold;

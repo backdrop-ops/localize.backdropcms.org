@@ -938,6 +938,7 @@ function l10n_community_build_filter_values($params) {
     'context' => isset($params['context']) ? (string)$params['context'] : 'all',
     'limit' => (isset($params['limit']) && in_array($params['limit'], array(5, 10, 20, 30, 50))) ? (int)$params['limit'] : 10,
     'sid' => (!empty($params['sid']) && is_numeric($params['sid'])) ? $params['sid'] : 0,
+    'exact_term' => (!empty($params['exact_term']) && is_numeric($params['exact_term'])) ? $params['exact_term'] : "",
   );
 
   // The project can be a dropdown or text field depending on number of
