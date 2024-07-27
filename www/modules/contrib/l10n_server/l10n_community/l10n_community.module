@@ -265,6 +265,15 @@ function l10n_community_menu() {
     'type' => MENU_CALLBACK,
   );
 
+  // End point to provide info about available languages.
+  $items['translate/available-languages'] = array(
+    'title' => 'Available languages',
+    'page callback' => 'l10n_community_get_languages',
+    'access arguments' => array('access content'),
+    'delivery callback' => 'backdrop_json_deliver',
+    'type' =>  MENU_CALLBACK,
+  );
+
   return $items;
 }
 
@@ -785,7 +794,7 @@ function theme_l10n_community_page($variables) {
   foreach (array('top', 'left', 'right', 'bottom') as $container) {
     if (isset($page['#' . $container])) {
       $output .= '<div class="' . $container . ' clear-block">';
-      uasort($page['#' . $container], 'element_sort');
+      backdrop_sort($page['#' . $container], array('#weight'));
       foreach ($page['#' . $container] as $item) {
         $admin_block = theme('admin_block', array('block' => $item['#block']));
         if (isset($item['#classes'])) {

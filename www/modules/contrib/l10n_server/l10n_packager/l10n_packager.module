@@ -255,7 +255,7 @@ function l10n_packager_create_path($path) {
   }
   if (!file_exists($htaccess_path)) {
     $htaccess_lines = "\n\n<FilesMatch \"\.(po)$\">\n\tForceType \"text/plain; charset=utf-8\"\n\tAllow from ALL\n</FilesMatch>\n";
-    file_create_htaccess($basepath, FALSE);
+    file_save_htaccess($basepath, FALSE);
     backdrop_chmod($htaccess_path, 0744);
     file_put_contents($htaccess_path, $htaccess_lines, FILE_APPEND);
     backdrop_chmod($htaccess_path, 0444);

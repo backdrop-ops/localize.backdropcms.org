@@ -65,6 +65,7 @@ function l10n_server_menu() {
     'access arguments' => array('administer localization server'),
     'position' => 'right',
     'weight' => -5,
+    'icon' => 'globe-simple',
   );
   $items['admin/l10n_server/connectors'] = array(
     'title' => 'Connectors',
