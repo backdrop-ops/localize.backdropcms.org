@@ -275,7 +275,7 @@ function _views_bulk_operations_rules_get_field($view_target, $args) {
   $view_name = $views_settings[0];
   $display_name = $views_settings[1];
   // Create an array of arguments.
-  $view_arguments = explode("\n", $args);
+  $view_arguments = !empty($args) ? explode("\n", $args) : array();
   $view_arguments = array_map('trim', $view_arguments);
   $view_arguments = array_filter($view_arguments, 'strlen');
   // Append the filtered list of arguments to $views_target, so that the correct

@@ -89,8 +89,14 @@ class RulesDateInputEvaluator extends RulesDataInputEvaluator {
    * Convert a time string to a GMT (UTC) unix timestamp.
    */
   public static function gmstrtotime($date) {
-    // Pass the current timestamp in UTC to ensure the retrieved time is UTC.
-    return strtotime($date, time());
+    // Fixed date strings are evaluated in GMT (UTC) so save and restore the
+    // current default time zone. Pass the current timestamp in UTC to ensure
+    // the retrieved time is UTC.
+    $timezone = date_default_timezone_get();
+    date_default_timezone_set('UTC');
+    $time = strtotime($date, time());
+    date_default_timezone_set($timezone);
+    return $time;
   }
 
   /**

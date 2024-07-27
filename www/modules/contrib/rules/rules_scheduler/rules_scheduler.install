@@ -107,3 +107,219 @@ function rules_scheduler_update_1200() {
     ));
   }
 }
+
+/**
+ * Install Rules Schedule view if missing.
+ */
+function rules_scheduler_update_1201() {
+  $view = views_get_view('rules_scheduler');
+  if (!$view) {
+    $config = config('views.view.rules_scheduler');
+    $data = array(
+      'base_table' => 'rules_scheduler',
+      'base_field' => 'nid',
+      'name' => 'rules_scheduler',
+      'description' => 'Scheduled Rules components',
+      'tag' => 'admin, rules_scheduler',
+      'human_name' => 'Rules Schedule',
+      'core' => '0',
+      'api_version' => NULL,
+      'disabled' => NULL,
+      'type' => 'Normal',
+      'module' => NULL,
+      'storage' => 1,
+      'built' => FALSE,
+      'executed' => FALSE,
+      'editing' => FALSE,
+      'args' => array(),
+      'build_info' => array(),
+      'use_ajax' => FALSE,
+      'result' => array(),
+      'current_page' => NULL,
+      'items_per_page' => NULL,
+      'offset' => NULL,
+      'total_rows' => NULL,
+      'attachment_before' => '',
+      'attachment_after' => '',
+      'exposed_raw_input' => array(),
+      'old_view' => array(),
+      'parent_views' => array(),
+      'is_attachment' => NULL,
+      'current_display' => NULL,
+      'query' => NULL,
+      'display_handler' => NULL,
+      'display' => array(
+       'default' => array(
+          'display_plugin' => 'default',
+          'id' => 'default',
+          'title' => NULL,
+          'display_options' => array(
+           'query' => array(
+             'type' => 'views_query',
+             'options' => array(),
+            ),
+           'use_more_always' => FALSE,
+           'access' => array(
+             'type' => 'perm',
+             'perm' => 'administer rules',
+            ),
+           'cache' => array(
+             'type' => 'none',
+            ),
+           'exposed_form' => array(
+             'type' => 'basic',
+            ),
+           'pager' => array(
+             'type' => 'full',
+             'options' => array(
+               'items_per_page' => '30',
+               'offset' => '0',
+               'id' => '0',
+              ),
+            ),
+           'style_plugin' => 'table',
+           'style_options' => array(
+             'columns' => array(
+               'tid' => 'tid',
+               'config' => 'config',
+               'date' => 'date',
+               'identifier' => 'identifier',
+               'nothing' => 'nothing',
+              ),
+             'default' => 'date',
+             'info' => array(
+               'tid' => array(
+                 'sortable' => 0,
+                 'default_sort_order' => 'asc',
+                 'align' => '',
+                 'separator' => '',
+                ),
+               'config' => array(
+                 'sortable' => 1,
+                 'default_sort_order' => 'asc',
+                 'align' => '',
+                 'separator' => '',
+                ),
+               'date' => array(
+                 'sortable' => 1,
+                 'default_sort_order' => 'asc',
+                 'align' => '',
+                 'separator' => '',
+                ),
+               'identifier' => array(
+                 'sortable' => 1,
+                 'default_sort_order' => 'asc',
+                 'align' => '',
+                 'separator' => '',
+                ),
+               'nothing' => array(
+                 'align' => '',
+                 'separator' => '',
+                ),
+              ),
+            ),
+           'empty' => array(
+             'area' => array(
+               'id' => 'area',
+               'table' => 'views',
+               'field' => 'area',
+               'content' => 'No tasks have been scheduled.',
+               'format' => 'plain_text',
+              ),
+            ),
+           'fields' => array(
+             'tid' => array(
+               'id' => 'tid',
+               'table' => 'rules_scheduler',
+               'field' => 'tid',
+              ),
+             'config' => array(
+               'id' => 'config',
+               'table' => 'rules_scheduler',
+               'field' => 'config',
+               'alter' => array(
+                 'make_link' => TRUE,
+                 'path' => 'admin/config/workflow/rules/components/manage/[config]',
+                ),
+              ),
+             'date' => array(
+               'id' => 'date',
+               'table' => 'rules_scheduler',
+               'field' => 'date',
+              ),
+             'identifier' => array(
+               'id' => 'identifier',
+               'table' => 'rules_scheduler',
+               'field' => 'identifier',
+              ),
+             'nothing' => array(
+               'id' => 'nothing',
+               'table' => 'views',
+               'field' => 'nothing',
+               'label' => 'Operations',
+               'alter' => array(
+                 'text' => 'delete',
+                 'make_link' => TRUE,
+                 'path' => 'admin/config/workflow/rules/schedule/[tid]/delete',
+                 'alt' => 'Delete this scheduled task',
+                ),
+              ),
+            ),
+           'sorts' => array(
+             'date' => array(
+               'id' => 'date',
+               'table' => 'rules_scheduler',
+               'field' => 'date',
+              ),
+            ),
+           'arguments' => array(
+             'config' => array(
+               'id' => 'config',
+               'table' => 'rules_scheduler',
+               'field' => 'config',
+               'default_argument_type' => 'fixed',
+               'summary' => array(
+                 'format' => 'default_summary',
+                ),
+               'limit' => '0',
+              ),
+            ),
+           'filters' => array(
+             'config' => array(
+               'id' => 'config',
+               'table' => 'rules_scheduler',
+               'field' => 'config',
+               'exposed' => TRUE,
+               'expose' => array(
+                 'operator_id' => 'config_op',
+                 'label' => 'Component filter',
+                 'operator' => 'config_op',
+                 'identifier' => 'config',
+                 'remember' => TRUE,
+                ),
+              ),
+            ),
+          ),
+          'position' => 0,
+          'display_title' => 'Defaults',
+        ),
+      ),
+      'style_plugin' => NULL,
+      'style_options' => NULL,
+      'row_index' => NULL,
+      'override_url' => NULL,
+      'override_path' => NULL,
+      'base_database' => NULL,
+      'field' => NULL,
+      'argument' => NULL,
+      'sort' => NULL,
+      'filter' => NULL,
+      'relationship' => NULL,
+      'header' => NULL,
+      'footer' => NULL,
+      'empty' => NULL,
+    );
+    $config->setData($data);
+    $config->save();
+  }
+}

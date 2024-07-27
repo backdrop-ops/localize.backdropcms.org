@@ -1,0 +1,162 @@
+{
+    "_config_name": "views.view.rules_scheduler",
+    "name": "rules_scheduler",
+    "description": "Scheduled Rules components",
+    "tag": "admin, rules_scheduler",
+    "base_table": "rules_scheduler",
+    "core": "0",
+    "human_name": "Rules Schedule",
+    "display": {
+        "default": {
+            "display_title": "Defaults",
+            "display_plugin": "default",
+            "display_options": {
+                "query": {
+                    "type": "views_query",
+                    "options": []
+                },
+                "use_more_always": false,
+                "access": {
+                    "type": "perm",
+                    "perm": "administer rules"
+                },
+                "cache": {
+                    "type": "none"
+                },
+                "exposed_form": {
+                    "type": "basic"
+                },
+                "pager": {
+                    "type": "full",
+                    "options": {
+                        "items_per_page": "30",
+                        "offset": "0",
+                        "id": "0"
+                    }
+                },
+                "style_plugin": "table",
+                "style_options": {
+                    "columns": {
+                        "tid": "tid",
+                        "config": "config",
+                        "date": "date",
+                        "identifier": "identifier",
+                        "nothing": "nothing"
+                    },
+                    "default": "date",
+                    "info": {
+                        "tid": {
+                            "sortable": 0,
+                            "default_sort_order": "asc",
+                            "align": "",
+                            "separator": ""
+                        },
+                        "config": {
+                            "sortable": 1,
+                            "default_sort_order": "asc",
+                            "align": "",
+                            "separator": ""
+                        },
+                        "date": {
+                            "sortable": 1,
+                            "default_sort_order": "asc",
+                            "align": "",
+                            "separator": ""
+                        },
+                        "identifier": {
+                            "sortable": 1,
+                            "default_sort_order": "asc",
+                            "align": "",
+                            "separator": ""
+                        },
+                        "nothing": {
+                            "align": "",
+                            "separator": ""
+                        }
+                    }
+                },
+                "empty": {
+                    "area": {
+                        "id": "area",
+                        "table": "views",
+                        "field": "area",
+                        "content": "No tasks have been scheduled.",
+                        "format": "plain_text"
+                    }
+                },
+                "fields": {
+                    "tid": {
+                        "id": "tid",
+                        "table": "rules_scheduler",
+                        "field": "tid"
+                    },
+                    "config": {
+                        "id": "config",
+                        "table": "rules_scheduler",
+                        "field": "config",
+                        "alter": {
+                            "make_link": true,
+                            "path": "admin/config/workflow/rules/components/manage/[config]"
+                        }
+                    },
+                    "date": {
+                        "id": "date",
+                        "table": "rules_scheduler",
+                        "field": "date"
+                    },
+                    "identifier": {
+                        "id": "identifier",
+                        "table": "rules_scheduler",
+                        "field": "identifier"
+                    },
+                    "nothing": {
+                        "id": "nothing",
+                        "table": "views",
+                        "field": "nothing",
+                        "label": "Operations",
+                        "alter": {
+                            "text": "delete",
+                            "make_link": true,
+                            "path": "admin/config/workflow/rules/schedule/[tid]/delete",
+                            "alt": "Delete this scheduled task"
+                        }
+                    }
+                },
+                "sorts": {
+                    "date": {
+                        "id": "date",
+                        "table": "rules_scheduler",
+                        "field": "date"
+                    }
+                },
+                "arguments": {
+                    "config": {
+                        "id": "config",
+                        "table": "rules_scheduler",
+                        "field": "config",
+                        "default_argument_type": "fixed",
+                        "summary": {
+                            "format": "default_summary"
+                        },
+                        "limit": "0"
+                    }
+                },
+                "filters": {
+                    "config": {
+                        "id": "config",
+                        "table": "rules_scheduler",
+                        "field": "config",
+                        "exposed": true,
+                        "expose": {
+                            "operator_id": "config_op",
+                            "label": "Component filter",
+                            "operator": "config_op",
+                            "identifier": "config",
+                            "remember": true
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

@@ -16,7 +16,9 @@
 function rules_action_vocabulary_fetch($id) {
   $vocabulary = taxonomy_vocabulary_load($id);
   if (!$vocabulary) {
-    throw new RulesEvaluationException('Unable to load vocabulary with machine name "@id"', array('@id' => $id));
+    throw new RulesEvaluationException('Unable to load vocabulary with machine name "@id"', array(
+      '@id' => $id,
+    ));
   }
   return array('vocabulary_fetched' => $vocabulary);
 }
@@ -33,7 +35,9 @@ function rules_action_vocabulary_create($machine_name, $name, $description = '')
     return array('vocabulary_created' => $vocabulary);
   }
   catch (EntityMetadataWrapperException $e) {
-    throw new RulesEvaluationException('Unable to create vocabulary": ' . $e->getMessage());
+    throw new RulesEvaluationException('Unable to create vocabulary: @message', array(
+      '@message' => $e->getMessage(),
+    ));
   }
 }
 

@@ -88,15 +88,28 @@ function rules_action_breadcrumb_set(array $titles, array $paths) {
 /**
  * Action Implementation: Send mail.
  */
-function rules_action_mail($to, $subject, $message, $from, $langcode, $settings, RulesState $state, RulesPlugin $element) {
-  $to = str_replace(array("\r", "\n"), '', $to);
-  $from = !empty($from) ? str_replace(array("\r", "\n"), '', $from) : NULL;
+function rules_action_mail($to, $cc, $bcc, $reply_to, $subject, $message, $from, $langcode, $settings, RulesState $state, RulesPlugin $element) {
+  _rules_strip_line_breaks($to, FALSE);
+
+  _rules_strip_line_breaks($cc);
+  _rules_strip_line_breaks($bcc);
+  _rules_strip_line_breaks($reply_to);
+  _rules_strip_line_breaks($from);
+
   $params = array(
     'subject' => $subject,
     'message' => $message,
     'langcode' => $langcode,
   );
-
+  if (!empty($cc)) {
+    $params['cc'] = $cc;
+  }
+  if (!empty($bcc)) {
+    $params['bcc'] = $bcc;
+  }
+  if (!empty($reply_to)) {
+    $params['reply-to'] = $reply_to;
+  }
   if (!empty($from)) {
     $params['from'] = $from;
   }
@@ -116,8 +129,12 @@ function rules_action_mail($to, $subject, $message, $from, $langcode, $settings,
 /**
  * Action: Send mail to all users of a specific role group(s).
  */
-function rules_action_mail_to_users_of_role($roles, $subject, $message, $from, $settings, RulesState $state, RulesPlugin $element) {
-  $from = !empty($from) ? str_replace(array("\r", "\n"), '', $from) : NULL;
+function rules_action_mail_to_users_of_role($roles, $cc, $bcc, $reply_to, $subject, $message, $from, $settings, RulesState $state, RulesPlugin $element) {
+
+  _rules_strip_line_breaks($cc);
+  _rules_strip_line_breaks($bcc);
+  _rules_strip_line_breaks($reply_to);
+  _rules_strip_line_breaks($from);
 
   // All authenticated users, which is everybody.
   if (in_array(BACKDROP_AUTHENTICATED_ROLE, $roles)) {
@@ -138,10 +155,19 @@ function rules_action_mail_to_users_of_role($roles, $subject, $message, $from, $
     'subject' => $subject,
     'message' => $message,
   );
-
+  if (!empty($cc)) {
+    $params['cc'] = $cc;
+  }
+  if (!empty($bcc)) {
+    $params['bcc'] = $bcc;
+  }
+  if (!empty($reply_to)) {
+    $params['reply-to'] = $reply_to;
+  }
   if (!empty($from)) {
     $params['from'] = $from;
   }
+
   // Set a unique key for this mail.
   $name = isset($element->root()->name) ? $element->root()->name : 'unnamed';
   $key = 'rules_action_mail_to_users_of_role_' . $name . '_' . $element->elementId();
@@ -167,6 +193,13 @@ function rules_action_mail_to_users_of_role($roles, $subject, $message, $from, $
 }
 
 /**
+ * Strip line breaks from a string.
+ */
+function _rules_strip_line_breaks(&$string, $null_if_empty = TRUE) {
+  $string = !empty($string) ? str_replace(array("\r", "\n"), '', $string) : ($null_if_empty ? NULL : '');
+}
+
+/**
  * Implements hook_mail().
  *
  * Sets the message subject and body as configured.
@@ -177,6 +210,16 @@ function rules_mail($key, &$message, $params) {
   $message['body'][] = $params['message'];
   if (!empty($params['from'])) {
     $message['from'] = $params['from'];
+  }
+  if (!empty($params['cc'])) {
+    $message['headers']['Cc'] = $params['cc'];
+  }
+  if (!empty($params['bcc'])) {
+    $message['headers']['Bcc'] = $params['bcc'];
+  }
+  if (!empty($params['reply-to'])) {
+    $message['reply-to'] = $params['reply-to'];
+    $message['headers']['Reply-to'] = $params['reply-to'];
   }
 }
 

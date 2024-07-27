@@ -46,7 +46,10 @@ class RulesAction extends RulesAbstractPlugin implements RulesActionInterface {
               $args[$name]->set($data);
             }
             catch (EntityMetadataWrapperException $e) {
-              throw new RulesEvaluationException('Unable to update the argument for parameter %name: %error', array('%name' => $name, '%error' => $e->getMessage()), $this);
+              throw new RulesEvaluationException('Unable to update the argument for parameter %name: %error', array(
+                '%name' => $name,
+                '%error' => $e->getMessage(),
+              ), $this);
             }
           }
           elseif (array_key_exists($name, $args)) {

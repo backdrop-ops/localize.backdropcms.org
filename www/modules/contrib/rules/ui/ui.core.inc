@@ -452,6 +452,9 @@ class RulesPluginUI extends FacesExtender implements RulesPluginUIInterface {
     $form['settings']['name'] = array(
       '#type' => 'machine_name',
       '#default_value' => isset($machine_name) ? $machine_name : '',
+      // This field should stay LTR even for RTL languages.
+      '#field_prefix' => '<span dir="ltr">rules_',
+      '#field_suffix' => '</span>&lrm;',
       // The string 'rules_' is pre-pended to machine names, so the
       // maxlength must be less than the field length of 64 characters.
       '#maxlength' => 58,
@@ -1071,7 +1074,13 @@ class RulesContainerPluginUI extends RulesPluginUI {
         $child = $this->element->elementMap()->lookup($id);
         $child->weight = $data['weight'];
         $parent = $this->element->elementMap()->lookup($data['parent_id']);
-        $child->setParent($parent ? $parent : $this->element);
+        if ($parent->pluginInfo()['class'] != 'RulesCondition') {
+          $child->setParent($parent ? $parent : $this->element);
+        }
+        else {
+          // Parents should never be RulesCondition.
+          backdrop_set_message(t('The <em>OR</em> and <em>AND</em> elements wrap all of the conditions indented below themselves. <em>OR</em> and <em>AND</em> cannot be indented below a condition.', 'warning'));
+        }
       }
       $this->element->sortChildren(TRUE);
     }

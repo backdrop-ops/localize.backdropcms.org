@@ -247,7 +247,7 @@ function views_bulk_operations_modify_vboaction_form($context, &$form_state) {
     // Now that all the widgets have been added, sort them by #weight.
     // This ensures that they will stay in the correct order when they get
     // assigned new weights.
-    uasort($form[$form_key], 'element_sort');
+    backdrop_sort($form[$form_key], array('#weight'));
 
     $display_values = $context['settings']['display_values'];
     $instances = field_info_instances($entity_type, $bundle_name);

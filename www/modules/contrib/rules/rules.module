@@ -531,6 +531,17 @@ function rules_clear_cache() {
 }
 
 /**
+ * Implements hook_admin_bar_cache_info().
+ */
+function rules_admin_bar_cache_info() {
+  $caches['rules'] = array(
+    'title' => t('Rules'),
+    'callback' => 'rules_clear_cache',
+  );
+  return $caches;
+}
+
+/**
  * Imports the given export and returns the imported configuration.
  *
  * @param string $export

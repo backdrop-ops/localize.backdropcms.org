@@ -213,6 +213,17 @@ function rules_scheduler_rules_config_delete($rules_config) {
 }
 
 /**
+ * Implements hook_config_info().
+ */
+function rules_scheduler_config_info() {
+  $prefixes['views.view.rules_scheduler'] = array(
+    'label' => t('Rules Schedule view'),
+    'group' => t('Views'),
+  );
+  return $prefixes;
+}
+
+/**
  * Implements hook_views_api().
  */
 function rules_scheduler_views_api() {

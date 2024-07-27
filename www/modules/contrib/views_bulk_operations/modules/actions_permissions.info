@@ -6,7 +6,7 @@ backdrop = 1.x
 
 dependencies[] = views_bulk_operations
 
-; Added by Backdrop CMS packaging script on 2023-10-02
+; Added by Backdrop CMS packaging script on 2024-06-27
 project = views_bulk_operations
-version = 1.x-3.0.4
-timestamp = 1696304827
+version = 1.x-3.0.6
+timestamp = 1719522984

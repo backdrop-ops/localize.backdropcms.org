@@ -5,7 +5,7 @@
  */
 function actions_permissions_permission() {
   $permissions = array();
-  $actions = views_bulk_operations_actions_get_info();
+  $actions = function_exists('views_bulk_operations_actions_get_info') ? views_bulk_operations_actions_get_info() : actions_permissions_actions_get_info();
   foreach ($actions as $key => $action) {
     $permission = actions_permissions_get_perm($action['label'], $key);
 
@@ -21,4 +21,30 @@ function actions_permissions_permission() {
  */
 function actions_permissions_get_perm($label, $key) {
   return "execute $key";
+}
+
+/**
+ * Retrieves all defined core and VBO actions.
+ * 
+ * This function duplicates some of views_bulk_operations_actions_get_info(), 
+ * which is not available if VBO has been disabled.
+ */
+function actions_permissions_actions_get_info() {
+  // Retrieve core actions.
+  $actions = actions_get_info();
+
+  // Retrieve VBO actions.
+  foreach (module_implements('vboaction_info') as $module) {
+    $module_actions = module_invoke($module, 'vboaction_info');
+    foreach ($module_actions as $module_action_name => $action_info) {
+      $action_info += array(
+        'callback' => $module_action_name,
+        'module' => $module,
+      );
+      $actions[$module_action_name] = $action_info;
+    }
+  }
+  backdrop_alter('vboaction_info', $actions);
+  backdrop_sort($actions);
+  return $actions;
 }
