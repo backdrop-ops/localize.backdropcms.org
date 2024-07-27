@@ -27,7 +27,8 @@
         "sw": "sw",
         "sv": "sv",
         "tr": "tr",
-        "uz": "uz"
+        "uz": "uz",
+        "bg": "bg"
     },
     "language_negotiation_url_domains": {
         "ar": "",
@@ -56,7 +57,8 @@
         "sw": "",
         "sv": "",
         "tr": "",
-        "uz": ""
+        "uz": "",
+        "bg": ""
     },
     "_config_static": true,
     "language_negotiation_session_parameter": "language",

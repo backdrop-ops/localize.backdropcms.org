@@ -156,7 +156,7 @@
                     "style": "default",
                     "block_settings": [],
                     "contexts": [],
-                    "content": "<ol>\r\n<li>Select a translation for your language, and download the associated file. <br>For example: Use <code>backdropcms-1.27.es.po</code> for a Spanish Backdrop site.</li>\r\n<li>Import this language file to your site. You can do this either during installation, or after your site is up and running.  <br>Visit: Administration > Configuration > Regional and language > User interface translation > Import.</li>\r\n<li>Enjoy Backdrop in your language.</li>\r\n</ol>",
+                    "content": "<ol>\r\n<li>Select a translation for your language, and download the associated file. <br>For example: Use <code>backdropcms-1.28.es.po</code> for a Spanish Backdrop site.</li>\r\n<li>Import this language file to your site. You can do this either during installation, or after your site is up and running.  <br>Visit: Administration > Configuration > Regional and language > User interface translation > Import.</li>\r\n<li>Enjoy Backdrop in your language.</li>\r\n</ol>",
                     "format": "filtered_html",
                     "admin_label": "",
                     "admin_description": ""

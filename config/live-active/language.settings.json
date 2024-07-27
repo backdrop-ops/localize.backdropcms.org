@@ -20,6 +20,14 @@
             "weight": "0",
             "native": "العربية"
         },
+        "bg": {
+            "langcode": "bg",
+            "name": "Bulgarian",
+            "direction": 0,
+            "native": "Български",
+            "enabled": true,
+            "weight": 0
+        },
         "ca": {
             "langcode": "ca",
             "name": "Catalan",
