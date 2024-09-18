@@ -1,7 +1,7 @@
 {
     "_config_name": "update.settings",
     "update_disabled_extensions": 0,
-    "update_interval_days": 1,
+    "update_interval_days": "1",
     "update_url": "",
     "update_max_attempts": 2,
     "update_timeout": 5,

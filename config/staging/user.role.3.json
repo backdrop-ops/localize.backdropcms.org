@@ -147,7 +147,13 @@
         "edit any group_post content",
         "delete own group_post content",
         "delete any group_post content",
-        "notify of path changes"
+        "notify of path changes",
+        "access backup and migrate",
+        "perform backup",
+        "access backup files",
+        "delete backup files",
+        "restore from backup",
+        "administer backup and migrate"
     ],
     "description": ""
 }
