@@ -5,7 +5,7 @@
     "title": "How to contribute to translations",
     "description": "",
     "body": {
-        "value": "<ol>\r\n<li>If you do not have an account for this site, then head to <a href=\"/user/register\">the registration page</a> to create one.</li>\r\n<li>When your account has been created, the Translation team will be notified.</li>\r\n<li>The Translation team will enable your account.</li>\r\n<li>The Translation team will also get in touch as soon as possible to disucss the contribution process in detail.</li>\r\n</ol>",
+        "value": "<ol>\r\n<li>If you do not have an account for this site, then head to <a href=\"/user/register\">the registration page</a> to create one.</li>\r\n<li>When your account has been created, the Translation team will be notified.</li>\r\n<li>The Translation team will enable your account.</li>\r\n<li>The Translation team will also get in touch as soon as possible to discuss the contribution process in detail.</li>\r\n</ol>",
         "format": "filtered_html"
     },
     "default_langcode": "und"

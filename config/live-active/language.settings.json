@@ -156,6 +156,14 @@
             "weight": "0",
             "native": "Кыргызча"
         },
+        "lv": {
+            "langcode": "lv",
+            "name": "Latvian",
+            "direction": 0,
+            "native": "Latviešu",
+            "enabled": true,
+            "weight": 0
+        },
         "mg": {
             "langcode": "mg",
             "name": "Malagasy",
@@ -188,6 +196,14 @@
             "weight": "0",
             "native": "Português, Brasil"
         },
+        "pt-pt": {
+            "langcode": "pt-pt",
+            "name": "Portuguese, Portugal",
+            "direction": 0,
+            "native": "Português, Portugal",
+            "enabled": true,
+            "weight": 0
+        },
         "ru": {
             "langcode": "ru",
             "name": "Russian",
@@ -219,6 +235,14 @@
             "enabled": "1",
             "weight": "0",
             "native": "Türkçe"
+        },
+        "uk": {
+            "langcode": "uk",
+            "name": "Ukrainian",
+            "direction": 0,
+            "native": "Українська",
+            "enabled": true,
+            "weight": 0
         },
         "uz": {
             "langcode": "uz",

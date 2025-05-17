@@ -28,7 +28,10 @@
         "sv": "sv",
         "tr": "tr",
         "uz": "uz",
-        "bg": "bg"
+        "bg": "bg",
+        "lv": "lv",
+        "pt-pt": "pt-pt",
+        "uk": "uk"
     },
     "language_negotiation_url_domains": {
         "ar": "",
@@ -58,7 +61,10 @@
         "sv": "",
         "tr": "",
         "uz": "",
-        "bg": ""
+        "bg": "",
+        "lv": "",
+        "pt-pt": "",
+        "uk": ""
     },
     "_config_static": true,
     "language_negotiation_session_parameter": "language",
