@@ -10,6 +10,7 @@ private-files
 *.tgz
 *.tar
 *.tar.gz
+*.zip
 
 # Ignore modules for development.
 www/modules/contrib/devel
