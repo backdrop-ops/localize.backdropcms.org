@@ -31,7 +31,9 @@
         "bg": "bg",
         "lv": "lv",
         "pt-pt": "pt-pt",
-        "uk": "uk"
+        "uk": "uk",
+        "sk": "sk",
+        "id": "id"
     },
     "language_negotiation_url_domains": {
         "ar": "",
@@ -64,7 +66,9 @@
         "bg": "",
         "lv": "",
         "pt-pt": "",
-        "uk": ""
+        "uk": "",
+        "sk": "",
+        "id": ""
     },
     "_config_static": true,
     "language_negotiation_session_parameter": "language",
