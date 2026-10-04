@@ -17,9 +17,7 @@
     },
     "positions": {
         "header": [
-            "df9898d2-f616-477f-af1f-310cdc6736e7",
-            "5f35bbfe-8a70-40d7-8100-c38a1f5ccaae",
-            "06fa8585-a557-4702-8200-ac2c1705be98"
+            "4568ee9f-b2bd-4ed3-8909-9fbb052a32cd"
         ],
         "top": [],
         "content": [
@@ -41,95 +39,23 @@
     "contexts": [],
     "relationships": [],
     "content": {
-        "df9898d2-f616-477f-af1f-310cdc6736e7": {
-            "plugin": "system:header",
+        "4568ee9f-b2bd-4ed3-8909-9fbb052a32cd": {
+            "plugin": "copy_blocks:region_copy",
             "data": {
                 "status": 1,
-                "module": "system",
-                "delta": "header",
+                "module": "copy_blocks",
+                "delta": "region_copy",
                 "settings": {
                     "title_display": "default",
                     "title": "",
                     "style": "default",
-                    "block_settings": {
-                        "menu": "",
-                        "logo": 1,
-                        "site_name": 1,
-                        "site_slogan": 0
-                    },
+                    "block_settings": [],
                     "contexts": [],
                     "admin_label": "",
-                    "admin_description": ""
+                    "admin_description": "",
+                    "source_region": "default:header"
                 },
-                "uuid": "df9898d2-f616-477f-af1f-310cdc6736e7",
-                "style": {
-                    "plugin": "default",
-                    "data": {
-                        "settings": {
-                            "classes": ""
-                        }
-                    }
-                }
-            }
-        },
-        "5f35bbfe-8a70-40d7-8100-c38a1f5ccaae": {
-            "plugin": "system:user-menu",
-            "data": {
-                "status": 1,
-                "module": "system",
-                "delta": "user-menu",
-                "settings": {
-                    "title_display": "default",
-                    "title": "",
-                    "style": "default",
-                    "block_settings": {
-                        "menu_name": "user-menu",
-                        "style": "tree",
-                        "level": "1",
-                        "depth": "0",
-                        "expand_all": 0,
-                        "clickdown": 0,
-                        "toggle": 0
-                    },
-                    "contexts": [],
-                    "admin_label": "",
-                    "admin_description": ""
-                },
-                "uuid": "5f35bbfe-8a70-40d7-8100-c38a1f5ccaae",
-                "style": {
-                    "plugin": "default",
-                    "data": {
-                        "settings": {
-                            "classes": ""
-                        }
-                    }
-                }
-            }
-        },
-        "06fa8585-a557-4702-8200-ac2c1705be98": {
-            "plugin": "system:main-menu",
-            "data": {
-                "status": 1,
-                "module": "system",
-                "delta": "main-menu",
-                "settings": {
-                    "title_display": "default",
-                    "title": "",
-                    "style": "default",
-                    "block_settings": {
-                        "menu_name": "main-menu",
-                        "style": "dropdown",
-                        "level": "1",
-                        "depth": "0",
-                        "expand_all": 0,
-                        "clickdown": 0,
-                        "toggle": 1
-                    },
-                    "contexts": [],
-                    "admin_label": "",
-                    "admin_description": ""
-                },
-                "uuid": "06fa8585-a557-4702-8200-ac2c1705be98",
+                "uuid": "4568ee9f-b2bd-4ed3-8909-9fbb052a32cd",
                 "style": {
                     "plugin": "default",
                     "data": {
@@ -181,7 +107,7 @@
                     "style": "default",
                     "block_settings": [],
                     "contexts": [],
-                    "content": "Welcome to Backdrop translations! This website provides language files to translate the Backdrop interface into languages other than English.",
+                    "content": "Welcome! This website provides language files that are used to translate the Backdrop administrative interface into languages other than English.",
                     "format": "filtered_html",
                     "admin_label": "Custom block: Welcome",
                     "admin_description": "Welcome to Backdrop translations"

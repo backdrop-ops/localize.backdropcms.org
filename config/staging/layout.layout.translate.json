@@ -17,9 +17,7 @@
     },
     "positions": {
         "header": [
-            "648e1cdf-435d-4fc1-9a42-66fa9d53be3d",
-            "ce010592-4393-4549-a701-1ae691053621",
-            "216beb15-16b1-431c-ab2b-43701f594dae"
+            "9346556c-ae1e-4b37-bf01-01209714a816"
         ],
         "top": [],
         "content": [
@@ -37,95 +35,23 @@
     "contexts": [],
     "relationships": [],
     "content": {
-        "648e1cdf-435d-4fc1-9a42-66fa9d53be3d": {
-            "plugin": "system:header",
+        "9346556c-ae1e-4b37-bf01-01209714a816": {
+            "plugin": "copy_blocks:region_copy",
             "data": {
                 "status": 1,
-                "module": "system",
-                "delta": "header",
+                "module": "copy_blocks",
+                "delta": "region_copy",
                 "settings": {
                     "title_display": "default",
                     "title": "",
                     "style": "default",
-                    "block_settings": {
-                        "menu": "",
-                        "logo": 1,
-                        "site_name": 1,
-                        "site_slogan": 0
-                    },
+                    "block_settings": [],
                     "contexts": [],
                     "admin_label": "",
-                    "admin_description": ""
+                    "admin_description": "",
+                    "source_region": "default:header"
                 },
-                "uuid": "648e1cdf-435d-4fc1-9a42-66fa9d53be3d",
-                "style": {
-                    "plugin": "default",
-                    "data": {
-                        "settings": {
-                            "classes": ""
-                        }
-                    }
-                }
-            }
-        },
-        "ce010592-4393-4549-a701-1ae691053621": {
-            "plugin": "system:user-menu",
-            "data": {
-                "status": 1,
-                "module": "system",
-                "delta": "user-menu",
-                "settings": {
-                    "title_display": "default",
-                    "title": "",
-                    "style": "default",
-                    "block_settings": {
-                        "menu_name": "user-menu",
-                        "style": "tree",
-                        "level": "1",
-                        "depth": "1",
-                        "expand_all": 0,
-                        "clickdown": 0,
-                        "toggle": 0
-                    },
-                    "contexts": [],
-                    "admin_label": "",
-                    "admin_description": ""
-                },
-                "uuid": "ce010592-4393-4549-a701-1ae691053621",
-                "style": {
-                    "plugin": "default",
-                    "data": {
-                        "settings": {
-                            "classes": ""
-                        }
-                    }
-                }
-            }
-        },
-        "216beb15-16b1-431c-ab2b-43701f594dae": {
-            "plugin": "system:main-menu",
-            "data": {
-                "status": 1,
-                "module": "system",
-                "delta": "main-menu",
-                "settings": {
-                    "title_display": "default",
-                    "title": "",
-                    "style": "default",
-                    "block_settings": {
-                        "menu_name": "main-menu",
-                        "style": "dropdown",
-                        "level": "1",
-                        "depth": "0",
-                        "expand_all": 0,
-                        "clickdown": 0,
-                        "toggle": 1
-                    },
-                    "contexts": [],
-                    "admin_label": "",
-                    "admin_description": ""
-                },
-                "uuid": "216beb15-16b1-431c-ab2b-43701f594dae",
+                "uuid": "9346556c-ae1e-4b37-bf01-01209714a816",
                 "style": {
                     "plugin": "default",
                     "data": {
