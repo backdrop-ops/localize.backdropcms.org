@@ -88,7 +88,7 @@ description = Test JavaScript settings attached by Filter module to forms.
 group = Filter
 file = filter_js_settings.test
 
-; Added by Backdrop CMS packaging script on 2025-05-15
+; Added by Backdrop CMS packaging script on 2026-09-23
 project = backdrop
-version = 1.31.0
-timestamp = 1747353459
+version = 1.35.1
+timestamp = 1790216883
