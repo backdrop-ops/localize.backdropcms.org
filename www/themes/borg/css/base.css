@@ -1,0 +1,332 @@
+/*******************************************************************************
+ * base.css
+ *
+ * Contains base styles for HTML elements only.
+ ******************************************************************************/
+
+:root {
+
+  /* Colors by name. */
+  --color__purple: #4D00FF;        /* brand color - new design */
+  --color__purple-dark: #3909a9;   /* brand color (dark) - new design */
+  --color__purple-light: #B79CF6;  /* svgs, mobile toggle - new design */
+  --color__purple-vlight: #EAE1FF; /* section & menu item borders  - new design */
+    --color--gray-purple-light: #EAE1FF; /* @todo delete me - duplicate, see above */
+
+  --color__gray-white: #FAFAFA; /* dropdown menu background + vtabs - new design */
+  --color__gray-light: #F9F8FB; /* section background - new design */
+
+  --color__gray-dark: #7D7D7D; /* menu text and border color - new design */
+  --color__gray-black: #34333F;
+
+  /* legacy colors */
+  --color__gray: #F2F2F2;
+  --color__gray-darker: #F7F7F7; /* replace with --color__gray-light - blockquote, menu backgrounds */
+  --color__gray-dark: #444b53; /* sidebar menu borders, and ... */
+  --color__gray-purple-mid: #C3BCD5; /* tabs - legacy gray background */
+  --color__gray-faint: #E8E6E5; /* replace with #ECECEC? - legacy gray border & showcase UI bg */
+
+  /* Colors by use. */
+  --color__link: var(--color__purple-dark);
+  --color__link-hover: var(--color__purple);
+
+  --color__accent--primary: var(--color__purple);
+  --color__accent--primary--dark: var(--color__purple-dark);
+  --color__accent--primary--light: var(--color__purple-light);
+  --color__accent--secondary: #01FDA6; /* green? */
+
+  --color__border--section--gray: var(--color__purple-vlight); /* see below */
+    --color__border--gray-light: var(--color__purple-vlight); /* @todo delete me - duplicate */
+  --color__border--gray-mid: var(--color__gray-purple-mid);
+  --color__border--gray-legacy: var(--color__gray-faint);
+
+  --color__background--section--gray: var(--color__gray-light); /* use with --color__border--section--gray borders */
+  --color__background--gray: var(--color__gray);
+  --color__background--gray-mid: var(--color__gray-faint); /* rename me? */
+
+  /* Fonts */
+  --font-family--sans: "IBM Plex Sans", "Open Sans", Helvetica, sans-serif;
+  --font-family--mono: "IBM Plex Mono", Consolas, 'Courier New', Courier, monospace;
+  --font-family--sans-legacy: 'Source Sans Pro', "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  --font-family--mono-legacy: Menlo, Consolas, "Andale Mono", "Lucida Console", "Nimbus Mono L", "DejaVu Sans Mono", monospace, "Courier New";
+
+  /* Spacing */
+  --section__padding-sm: 16px;
+  --section__padding: 32px;
+}
+@media (min-width: 48em) {
+  :root {
+    --section__padding-sm: 32px;
+    --section__padding: 64px;
+  }
+}
+
+html,
+body {
+  font-family: var(--font-family--sans-legacy);
+  font-size: 16px;
+  line-height: 1.25;
+  margin: 0;
+  padding: 0;
+  min-width: 360px;
+}
+
+@media (max-width: 47.9375em) {  /* 767px @ 16px font size  -- MD */
+  /* Larger font for smaller screens */
+  body {
+    font-size: 1.125em; /* relative size: 18px; */
+  }
+}
+@media (min-width: 62em) { /* 992px @ 16px font size -- LG */
+  /* Larger font for larger screens */
+  body {
+    font-size: 1.125em; /* relative size: 18px; */
+  }
+}
+
+p {
+  font-size: 1.125em; /* relative size: 18px; */
+  line-height: 1.45; /* 26.1px @ 18px font size */
+  margin: 1em 0;
+}
+@media (min-width: 34em) { /* 544px @ 16px font size -- SM */
+  p {
+    line-height: 1.25; /* 20.25px @ 18px font size */
+  }
+}
+@media (min-width: 48em) {  /* 768px @ 16px font size  -- MD */
+  p {
+    line-height: 1.45; /* 26.1px @ 18px font size */
+  }
+}
+@media (min-width: 62em) { /* 992px @ 16px font size -- LG */
+  p {
+    font-size: 1.25rem; /* 20px */
+    line-height: 1.5; /* 30px @ 20px font size */
+  }
+}
+
+a {
+  color: var(--color__link);
+  text-decoration: none;
+}
+a:hover {
+  color: var(--color__link-hover);
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+h1 {
+  font-weight: 300; /* Light */
+  font-size: 3.75rem; /* 60px */
+  letter-spacing: 0.01em;
+}
+
+h2, h3, h4, h5, h6 {
+  /* Semibold: Note Source Sans Pro has no 500 value. */
+  /* https://www.google.com/fonts/specimen/Source+Sans+Pro */
+  font-weight: 600; /* Semi-bold */
+  margin: 1.5em 0 1em;
+}
+
+h2 {
+  margin: 1em 0;
+  font-size: 2.125rem; /* 34px */
+  letter-spacing: 0.01em;
+}
+@media (min-width: 34em) { /* 544px @ 16px font size -- SM */
+  h2 {
+    font-size: 2.375rem; /* 38px */
+  }
+}
+@media (min-width: 48em) {  /* 768px @ 16px font size  -- MD */
+  h2 {
+    font-size: 2.5rem; /* 40px */
+  }
+}
+
+h3 {
+  font-size: 1.5rem; /* 24px */
+  letter-spacing: 0.01em;
+}
+
+h4 {
+  font-size: 1.25rem; /* 20px */
+}
+
+ul {
+  margin: .75em 0;
+  padding-left: 2em;
+}
+
+li {
+  margin: .5em 0;
+  line-height: 1.25em;
+}
+
+ol {
+  margin: 0 0 1.5em 1.5em;
+  padding: 0;
+}
+ol > li {
+  padding: 0 0 0 .4em;
+}
+
+table {
+  width: 100%;
+  margin: 1rem 0;
+}
+table th {
+  font-size: 1.25em;
+  font-weight: 400; /* Normal */
+  border-bottom: 2px solid var(--color__border--section--gray);
+}
+tr.odd {
+  background-color: var(--color__background--section--gray);
+}
+tr.even {
+  background-color: transparent;
+}
+th.active {
+  border-bottom: 1.5px solid var(--color__accent--primary);
+}
+td.active {
+  background-color: inherit;
+  border-left: 1px solid var(--color__accent--primary);
+  border-right: 1px solid var(--color__accent--primary);
+}
+tr:last-child td.active {
+  border-bottom: 1px solid var(--color__accent--primary);
+}
+.tableresponsive-toggle-columns {
+  text-align: right; /* LTR */
+  position: relative;
+  top: 1rem; /* match top margin for table */
+}
+[dir="rtl"] .tableresponsive-toggle-columns {
+  text-align: left; /* LTR */
+}
+
+table th,
+table td {
+  padding: 1em .5rem; /* use rems for r+l to match different fonts */
+}
+@media (min-width: 34em) { /* 544px @ 16px font size -- SM */
+  table th,
+  table td {
+    padding: 1em 1rem; /* use rems for r+l to match different fonts */
+  }
+  table th {
+    padding: .33em 1rem; /* use rems for r+l to match different fonts */
+  }
+}
+
+blockquote {
+  padding: 25px 50px;
+  margin: 0;
+  background: transparent url(../images/quote-left.png) top left no-repeat;
+  min-height: 50px;
+}
+blockquote p {
+  margin: .5em 0;
+}
+
+figure {
+  margin: 0 25px;
+}
+figcaption {
+  margin-top: 5px;
+  color: var(--color__gray-dark);
+  font-size: .85em; /* relative size */
+}
+
+small {
+  font-size: .95em; /* relative size */
+}
+pre {
+  overflow: hidden;
+  overflow-x: scroll;
+  background-color: #EEEEEE;
+  padding: 15px;
+  margin: 10px 0;
+}
+code {
+  font-family: var(--font-family--mono-legacy);
+  font-size: 0.857em;
+  background-color: #EEEEEE;
+  padding: 0.2em 0.5em;
+  border-radius: 3px;
+}
+pre code {
+  background-color: transparent;
+  padding: 0;
+}
+
+dt,
+dd {
+  padding: 0 0 5px 0;
+}
+
+/*******************************************************************************
+ * Forms.
+ ******************************************************************************/
+label {
+  margin: 0 0 0.5em;
+  font-size: 1.125em; /* relative size */
+}
+input,
+textarea {
+  font-size: 1.125rem; /* 18px */
+  color: var(--color__gray-dark);
+  background-color: #fff;
+  max-width: 100%;
+  padding: 8px 10px 4px 10px;
+  border: 1px solid var(--color__border--gray-mid);
+  border-radius: 2px;
+  box-shadow: inset 0 -1px 1px rgba(0,0,0,.075);
+  box-sizing: border-box;
+}
+input {
+  line-height: 42px; /* 42+1+1 border to match button with 40+2+2 border */
+  height: 42px; /* 42+1+1 border to match button with 40+2+2 border */
+}
+textarea {
+  height: auto;
+  padding: 10px;
+}
+select {
+  height: 42px; /* match input */
+  font-size: 1.125rem; /* 18px */
+  color: var(--color__gray-dark);
+  background-color: white;
+  padding: 8px 10px 4px 10px; /* match input */
+  border: 1px solid var(--color__border--gray-mid); /* match input */
+  border-radius: 2px;
+  box-shadow: inset 0 -1px 1px rgba(0,0,0,.075); /* match input */
+  box-sizing: border-box;
+}
+input[type="checkbox"] {
+  box-shadow: none;
+  height: 22px;
+  line-height: 22px;
+  margin-right: .5em;
+}
+input[type="submit"] {
+  height: 42px; /* match input */
+  font-size: 1.125rem; /* 18px */
+  color: var(--color__link);
+  background-color: white;
+  margin: 10px 20px 10px 0;
+  padding: 1px 20px 0;
+  white-space: nowrap;
+  border: 2px solid var(--color__link);
+  border-radius: 2px;
+  box-shadow: inset 0 -1px 1px rgba(0,0,0,.075); /* match input */
+}
+input[type="submit"]:hover {
+  background-color: var(--color__accent--primary);
+  color: white;
+}

@@ -1,0 +1,246 @@
+/*******************************************************************************
+ * layout.css
+ *
+ * Contains styles relating to layouts. All element classes used as base
+ * identifiers in this file should start with .l-
+ ******************************************************************************/
+
+
+/*******************************************************************************
+ * Header.
+ ******************************************************************************/
+.l-header {
+  background: #000;
+  color: #fff;
+  padding: 12px 0;
+  border-top: 6px solid var(--color__accent--primary);
+  border-bottom: 1px solid var(--color__gray-black);
+  box-shadow: 0px 0px 64px 0px rgba(0, 0, 0, 0.80);
+}
+.l-header-inner {
+  position: relative;
+}
+.l-header a {
+  color: #fff;
+}
+.l-header .branding {
+  padding-right: 0;
+}
+
+@media (min-width: 34em) { /* 544px @ 16px font size -- SM */
+  .l-header {
+    _padding: 16px 0;
+  }
+}
+@media (min-width: 48em) {  /* 768px @ 16px font size  -- MD */
+  .l-header {
+    padding: 8px 0;
+  }
+  .l-header .block-system-main-menu {
+    padding-right: 0;
+    padding-left: 0;
+  }
+}
+@media (min-width: 62em) { /* 992px @ 16px font size -- LG */
+  .l-header {
+    padding: 16px 0;
+  }
+  .l-header .branding {
+    padding-left: 12px;
+  }
+}
+@media (min-width: 75em) { /* 1200px @ 16px font size -- XL */
+  .l-header .branding {
+    padding-left: .9375rem;
+    padding-right: .9375rem;
+  }
+}
+
+
+/*******************************************************************************
+ * Top region - only add space on larger screens.
+ ******************************************************************************/
+@media (min-width: 34em) { /* 544px @ 16px font size -- SM */
+  .l-top-inner {
+    padding-right: 2rem;
+    padding-left: 2rem;
+  }
+}
+
+/*******************************************************************************
+ * Page title.
+ ******************************************************************************/
+.page-title {
+  font-size: 45px;
+  letter-spacing: -.04em;
+}
+@media (min-width: 34em) { /* 544px */
+  .page-title {
+    font-size: 64px;
+  }
+}
+@media (min-width: 62em) { /* 992px */
+  .l-page-title {
+    padding-top: 30px;
+  }
+}
+
+/*******************************************************************************
+ * Messages.
+ ******************************************************************************/
+.l-messages {
+  text-align: left;
+}
+
+/*******************************************************************************
+ * Wrapper in middle
+ ******************************************************************************/
+.l-wrapper {
+  padding-bottom: 50px;
+}
+@media (min-width: 34em) { /* 544px @ 16px font size -- SM */
+  .l-wrapper {
+    padding-bottom: 100px;
+  }
+}
+
+/*******************************************************************************
+ * Main content.
+ ******************************************************************************/
+main {
+  position: relative;
+}
+
+@media (min-width: 75em) { /* 1200px @ 16px font size -- XL */
+  .l-content p,
+  .l-content ul li {
+    max-width: 750px;
+  }
+}
+
+/*******************************************************************************
+ * Middle areas (sutro)
+ ******************************************************************************/
+@media (min-width: 48em) {  /* 768px @ 16px font size  -- MD */
+  .l-middle-bottom {
+    margin-top: 30px;
+    border-top: 3px solid #E8E6E5;
+    padding: 15px 0;
+  }
+}
+@media (min-width: 62em) { /* 992px @ 16px font size -- LG */
+  .l-middle-bottom {
+    padding: 30px 0;
+    margin-top: 60px;
+  }
+}
+@media (min-width: 75em) { /* 1200px @ 16px font size -- XL */
+  .l-middle-bottom {
+    padding: 45px 0;
+    margin-top: 90px;
+  }
+}
+
+/*******************************************************************************
+ * Sidebar
+ ******************************************************************************/
+.l-sidebar {
+  margin-top: 30px;
+  border-top: 2px solid #E8E6E5;
+  padding-top: 15px;
+}
+@media (min-width: 48em) {  /* 768px @ 16px font size  -- MD */
+  .l-sidebar {
+    margin-top: 0;
+    border-top: 0;
+    padding-top: 0;
+  }
+}
+
+/*******************************************************************************
+ * Footer
+ ******************************************************************************/
+.l-footer {
+  border-top: 3px solid #E8E6E5;
+  border-bottom: 84px solid #E8E6E5;
+  font-size: 1rem; /* 16px */
+}
+.l-footer-inner {
+  position: relative;
+  padding-bottom: 60px;
+}
+.l-footer .block {
+  padding-top: 15px;
+  padding-bottom: 30px;
+}
+.l-footer h2.block-title {
+  font-weight: normal;
+  font-size: 1.125em; /* 18px */
+}
+.l-footer a {
+  color: #000;
+}
+.l-footer a:hover {
+  text-decoration: underline;
+}
+
+@media (min-width: 34em) { /* 544px @ 16px font size -- SM */
+  .l-footer-inner {
+    padding-bottom: 0;
+  }
+  .l-footer .block {
+    padding-top: 50px;
+    padding-bottom: 100px;
+  }
+}
+
+/*******************************************************************************
+ * XL containers get more breathing room.
+ ******************************************************************************/
+@media (min-width: 75em) {
+  .container-fluid {
+    padding-right: 2.9375rem;
+    padding-left: 2.9375rem;
+  }
+  /* But not the header. */
+  .l-header-inner {
+    padding-right: .9375rem;
+    padding-left: .9375rem;
+  }
+}
+
+/*******************************************************************************
+ * All pages with header image on wrapper.
+ ******************************************************************************/
+.l-wrapper.has-background {
+  background-size: 100%;
+  background-position: top center;
+  background-repeat: no-repeat;
+  position: relative;
+  padding-top: 100px;
+}
+
+@media (min-width: 26em) {
+  .l-wrapper.has-background {
+    padding-top: 150px;
+  }
+}
+@media (min-width: 48em) {
+  .l-wrapper.has-background {
+    padding-top: 175px;
+  }
+}
+@media (min-width: 62em) {
+  .l-wrapper.has-background {
+    padding-top: 200px;
+  }
+}
+@media (min-width: 75em) {
+  .l-wrapper.has-background {
+    padding-top: 250px;
+  }
+}
+
+.l-wrapper.has-background .l-wrapper-inner {
+  background-color: #fff;
+}

@@ -1,0 +1,36 @@
+/*******************************************************************************
+ * layout-pages.css
+ *
+ * Contains page specific overrides of the styles relating to layout. All
+ * element classes used as base identifiers in this file should start with .l-
+ ******************************************************************************/
+
+/*******************************************************************************
+ * Double Fixed Layouts
+ ******************************************************************************/
+.layout--double-fixed-inner-rev .l-sidebar-inner h2 {
+  font-size: 2.375rem; /* 38px */
+  margin: 0 0 .5em 0;
+}
+@media (min-width: 850px) {
+  .layout--double-fixed-inner-rev .l-sidebar-inner .block {
+    margin-left: 25px;
+    margin-bottom: 25px;
+  }
+}
+
+/*******************************************************************************
+ * Bottom region link blue.
+ * - Book node type pages
+******************************************************************************/
+body.node-type-book .l-bottom {
+  margin-top: 100px;
+  border-top: 3px solid #E8E6E5;
+  background-color: #007CBA;
+  color: #fff;
+  padding-bottom: 0;
+}
+body.node-type-book .l-footer {
+  margin-top: 0;
+}
+

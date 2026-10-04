@@ -1,0 +1,32 @@
+type = theme
+name = Borg
+description = The main theme for the backdropcms.org site.
+backdrop = 1.x
+
+; Core stylesheets to replace:
+stylesheets[all][] = css/system.theme.css
+
+; Custom stylesheets to be added:
+stylesheets[screen][] = css/base.css
+stylesheets[screen][] = css/layout.css
+stylesheets[screen][] = css/layout-pages.css
+stylesheets[screen][] = css/components.css
+stylesheets[screen][] = css/menu-dropdown.theme.css
+stylesheets[screen][] = css/menu-toggle.theme.css
+
+; These should be overridden in sub-themes:
+stylesheets[screen][] = css/components-header.css
+stylesheets[screen][] = css/components-nodes.css
+stylesheets[screen][] = css/components-styles.css
+stylesheets[screen][] = css/components-menus.css
+stylesheets[screen][] = css/components-views.css
+stylesheets[screen][] = css/components-blocks.css
+
+;stylesheets[screen][] = css/debug.css
+
+; Stylesheets to be added in the rich-text editor:
+ckeditor_stylesheets[] = css/base.css
+ckeditor_stylesheets[] = css/editor.css
+
+; Custom javascript to be added:
+scripts[] = js/borg.js
