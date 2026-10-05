@@ -17,7 +17,7 @@
     "user_picture_file_size": "800",
     "user_picture_guidelines": "",
     "language_default": "en",
-    "language_count": 31,
+    "language_count": 33,
     "site_frontpage": "translate/projects/backdropcms",
     "cache": 0,
     "page_cache_maximum_age": "300",
@@ -121,5 +121,8 @@
         "strip_sensitive_headers_on_host_change": true,
         "strip_sensitive_headers_on_https_downgrade": true
     },
-    "path_pattern": ""
+    "path_pattern": "",
+    "install_version": "1.7.x",
+    "user_login_appearance": "tabs",
+    "login_admin_theme": 1
 }

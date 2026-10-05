@@ -124,6 +124,14 @@
             "weight": "0",
             "native": "Magyar"
         },
+        "id": {
+            "langcode": "id",
+            "name": "Indonesian",
+            "direction": 0,
+            "native": "Bahasa Indonesia",
+            "enabled": true,
+            "weight": 0
+        },
         "it": {
             "langcode": "it",
             "name": "Italian",
@@ -211,6 +219,14 @@
             "enabled": "1",
             "weight": "0",
             "native": "Русский"
+        },
+        "sk": {
+            "langcode": "sk",
+            "name": "Slovak",
+            "direction": 0,
+            "native": "Slovenčina",
+            "enabled": true,
+            "weight": 0
         },
         "sv": {
             "langcode": "sv",
