@@ -159,12 +159,12 @@ nav.breadcrumb li a {
   mask: var(--icon-magnifying-glass) center center no-repeat;
   mask-size: 60%;
 }
-.search-block-form input.button-primary:focus,
-.search-block-form input.button-primary:hover,
+.search-block-form input[type="submit"].button-primary:focus,
+.search-block-form input[type="submit"].button-primary:hover,
 .search-block-form input[type="submit"]:focus,
 .search-block-form input[type="submit"]:hover {
   mask: none;
-  background: var(--color__accent--primary) var(--icon-magnifying-glass) center center no-repeat;
+  background: var(--color__border--gray-mid) var(--icon-magnifying-glass) center center no-repeat;
   background-size: 60%;
 }
 
