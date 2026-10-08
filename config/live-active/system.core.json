@@ -1,5 +1,12 @@
 {
     "_config_name": "system.core",
+    "_config_static": true,
+    "_config_translatables": [
+        "anonymous",
+        "site_name",
+        "site_slogan",
+        "maintenance_mode_message"
+    ],
     "user_admin_role": "3",
     "anonymous": "Anonymous",
     "user_email_verification": 1,
@@ -89,12 +96,6 @@
     "x_frame_options": "SAMEORIGIN",
     "form_cache_expiration": 21600,
     "config_sync_clear_staging": 1,
-    "_config_translatables": [
-        "anonymous",
-        "site_name",
-        "site_slogan",
-        "maintenance_mode_message"
-    ],
     "messages_dismissible": 1,
     "field_purge_batch_size": 200,
     "image_style_flood_limit": 5,
@@ -124,5 +125,6 @@
     "path_pattern": "",
     "install_version": "1.7.x",
     "user_login_appearance": "tabs",
-    "login_admin_theme": 1
+    "login_admin_theme": 1,
+    "icon_browser_icons_per_page": 110
 }
