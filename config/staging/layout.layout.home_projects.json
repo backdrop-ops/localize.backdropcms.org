@@ -17,7 +17,7 @@
     },
     "positions": {
         "header": [
-            "4568ee9f-b2bd-4ed3-8909-9fbb052a32cd"
+            "c7473c88-2a16-4cc7-8800-eac24fc4be2a"
         ],
         "top": [],
         "content": [
@@ -39,7 +39,7 @@
     "contexts": [],
     "relationships": [],
     "content": {
-        "4568ee9f-b2bd-4ed3-8909-9fbb052a32cd": {
+        "c7473c88-2a16-4cc7-8800-eac24fc4be2a": {
             "plugin": "copy_blocks:region_copy",
             "data": {
                 "status": 1,
@@ -55,7 +55,7 @@
                     "admin_description": "",
                     "source_region": "default:header"
                 },
-                "uuid": "4568ee9f-b2bd-4ed3-8909-9fbb052a32cd",
+                "uuid": "c7473c88-2a16-4cc7-8800-eac24fc4be2a",
                 "style": {
                     "plugin": "default",
                     "data": {
@@ -107,7 +107,7 @@
                     "style": "default",
                     "block_settings": [],
                     "contexts": [],
-                    "content": "Welcome! This website provides language files that are used to translate the Backdrop administrative interface into languages other than English.",
+                    "content": "Welcome to Backdrop translations! This website provides language files to translate the Backdrop interface into languages other than English.",
                     "format": "filtered_html",
                     "admin_label": "Custom block: Welcome",
                     "admin_description": "Welcome to Backdrop translations"

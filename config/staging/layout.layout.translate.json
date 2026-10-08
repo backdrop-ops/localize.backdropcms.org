@@ -17,7 +17,7 @@
     },
     "positions": {
         "header": [
-            "9346556c-ae1e-4b37-bf01-01209714a816"
+            "63e406e0-aa95-41a7-972b-435923a037c3"
         ],
         "top": [],
         "content": [
@@ -35,7 +35,7 @@
     "contexts": [],
     "relationships": [],
     "content": {
-        "9346556c-ae1e-4b37-bf01-01209714a816": {
+        "63e406e0-aa95-41a7-972b-435923a037c3": {
             "plugin": "copy_blocks:region_copy",
             "data": {
                 "status": 1,
@@ -51,7 +51,7 @@
                     "admin_description": "",
                     "source_region": "default:header"
                 },
-                "uuid": "9346556c-ae1e-4b37-bf01-01209714a816",
+                "uuid": "63e406e0-aa95-41a7-972b-435923a037c3",
                 "style": {
                     "plugin": "default",
                     "data": {

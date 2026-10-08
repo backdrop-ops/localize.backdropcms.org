@@ -17,8 +17,7 @@
     },
     "positions": {
         "header": [
-            "84c43df4-1165-4faf-8700-c362a7153c0b",
-            "b5b8ad8d-2dad-40a3-a10b-119a4f528b7c"
+            "84c43df4-1165-4faf-8700-c362a7153c0b"
         ],
         "top": [],
         "content": [
@@ -55,7 +54,7 @@
                     "title": "",
                     "style": "default",
                     "block_settings": {
-                        "menu": "",
+                        "menu": "main-menu",
                         "logo": 1,
                         "site_name": 1,
                         "site_slogan": 0
@@ -70,43 +69,6 @@
                     "data": {
                         "settings": {
                             "classes": ""
-                        }
-                    }
-                }
-            }
-        },
-        "b5b8ad8d-2dad-40a3-a10b-119a4f528b7c": {
-            "plugin": "system:main-menu",
-            "data": {
-                "status": 1,
-                "module": "system",
-                "delta": "main-menu",
-                "settings": {
-                    "title_display": "default",
-                    "title": "",
-                    "style": "default",
-                    "block_settings": {
-                        "menu_name": "main-menu",
-                        "style": "dropdown",
-                        "level": "1",
-                        "depth": "1",
-                        "expand_all": 0,
-                        "clickdown": "0",
-                        "toggle": 1,
-                        "toggle_text": "Menu",
-                        "collapse": "default",
-                        "accordion": 0
-                    },
-                    "contexts": [],
-                    "admin_label": "",
-                    "admin_description": ""
-                },
-                "uuid": "b5b8ad8d-2dad-40a3-a10b-119a4f528b7c",
-                "style": {
-                    "plugin": "default",
-                    "data": {
-                        "settings": {
-                            "classes": "col-xs-3 col-sm-4 col-md-6 col-lg-8"
                         }
                     }
                 }

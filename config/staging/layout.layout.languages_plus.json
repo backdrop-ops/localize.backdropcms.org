@@ -17,7 +17,7 @@
     },
     "positions": {
         "header": [
-            "91245fdd-bc2a-4377-b503-0346ea47e39b"
+            "d8c86e31-9f2f-4566-8404-4ff724f0ad3d"
         ],
         "top": [],
         "content": [
@@ -32,7 +32,7 @@
     "contexts": [],
     "relationships": [],
     "content": {
-        "91245fdd-bc2a-4377-b503-0346ea47e39b": {
+        "d8c86e31-9f2f-4566-8404-4ff724f0ad3d": {
             "plugin": "copy_blocks:region_copy",
             "data": {
                 "status": 1,
@@ -48,7 +48,7 @@
                     "admin_description": "",
                     "source_region": "default:header"
                 },
-                "uuid": "91245fdd-bc2a-4377-b503-0346ea47e39b",
+                "uuid": "d8c86e31-9f2f-4566-8404-4ff724f0ad3d",
                 "style": {
                     "plugin": "default",
                     "data": {
